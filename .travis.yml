@@ -4,7 +4,7 @@
  before_script:
    - npm install -g grunt-cli bower
    - npm install
-   - gen install compass --pre
+   - gem install compass --pre
    - bower install
  notifications:
    email:
