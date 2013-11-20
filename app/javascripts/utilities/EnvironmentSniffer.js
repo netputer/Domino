@@ -21,6 +21,19 @@
                 string : navigator.platform,
                 subString : 'Linux',
                 identity : 'Linux'
+            }],
+            CPU_CLASS : [{
+                string : navigator.userAgent,
+                subString : 'WOW64',
+                identity : '64bit'
+            }, {
+                string : navigator.userAgent,
+                subString : 'Win64',
+                identity : '64bit'
+            }, {
+                string : window.navigator.platform,
+                subString : 'Linux x86_64',
+                identity : '64bit'
             }]
         };
 
@@ -35,8 +48,14 @@
         var EnvironmentSniffer = function () {
             var OS = searchString.call(this, DATA.OS) || 'Unknown OS. ';
 
+            var CPU_CLASS = '64bit';
+            if (OS === 'Windows' || OS === 'Linux') {
+                CPU_CLASS = searchString.call(this, DATA.CPU_CLASS) || '32bit';
+            }
+
             return {
-                OS : OS
+                OS : OS,
+                CPU_CLASS : CPU_CLASS
             };
         };
 
