@@ -154,6 +154,11 @@ module.exports = function (grunt) {
         requirejs : {
             dist : {
                 options : {
+                    almond : true,
+                    appDir : '<%= paths.app %>/javascripts',
+                    dir :　'<%= paths.dist %>/javascripts',
+                    baseUrl : './',
+                    mainConfigFile : '<%= paths.app %>/javascripts/RequireConfig.js',
                     optimize : 'uglify',
                     uglify : {
                         toplevel : true,
@@ -162,7 +167,15 @@ module.exports = function (grunt) {
                     },
                     preserveLicenseComments : true,
                     useStrict : false,
-                    wrap : true
+                    wrap : true,
+                    modules : [{
+                        name : 'RequireConfig',
+                        include : ['angular', '_']
+                    }, {
+                        name : 'SetupLoader',
+                        include : ['SetupMain'],
+                        exclude : ['RequireConfig']
+                    }]
                 }
             }
         },
@@ -238,10 +251,10 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'concurrent:dist',
+        'requirejs:dist',
         'useminPrepare',
         'concat',
         'uglify',
-        // 'requirejs:dist', // Uncomment this line if using RequireJS in your project
         'imagemin',
         'htmlmin',
         'rev',

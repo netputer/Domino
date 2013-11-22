@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello world!</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="stylesheets/setup.css" />
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="row" ng-controller="EnvDetectionController">
+                <div class="col-xs-9 row">
+                    <h2>Choose your system environment: </h2>
+                    <div class="col-xs-6">
+                        <select class="form-control input-large" ng-model="target" ng-options="o.label group by o.cate for o in os" required></select>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <button ng-click="clickBtnDownload()" class="btn-download btn btn-primary btn-lg">Download Setup Script</button>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="components/showdown/compressed/showdown.js"></script>
+        <script type="text/javascript" data-main="javascripts/SetupLoader" src="components/requirejs/require.js"></script>
+    </body>
+</html>
