@@ -14,7 +14,10 @@ set installNodeFlag=1
 set installRubyFlag=1
 set script=tmp\download.vbs
 set Output=tmp\output
-set s=1
+
+set NodeLink=http://www.python.org/ftp/python/3.3.3/python-3.3.3.msi
+set PythonLink=http://nodejs.org/dist/v0.10.22/node-v0.10.22-x86.msi
+set RubyLink=http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.0.0-p353.exe?direct
 
 ::call:checkPython
 call:checkNode
@@ -136,7 +139,7 @@ echo     Dim NameArray, i, Name                                                 
 echo     NameArray = Split(URL, "/", -1, 1)                                                             >> %script%
 echo     Name = NameArray(UBound(NameArray))                                                            >> %script%
 echo     NameArray = Split(Name, "?", -1, 1)                                                            >> %script%
-echo     Name = NameArray(LBound(NameArray))                                                            >> %script%    
+echo     Name = NameArray(LBound(NameArray))                                                            >> %script%
 echo     IO.SaveToFile ROOT + Path + "\" + Name, 2                                                      >> %script%
 echo     WScript.StdOut.Write("OK ")                                                                    >> %script%
 echo     WScript.StdOut.Write(Name)                                                                     >> %script%
@@ -159,16 +162,16 @@ echo         On Error GoTo 0                                                    
 echo     END IF                                                                                         >> %script%
 echo END Function                                                                                       >> %script%
 
-if %installNodeFlag% EQU %s% (
-echo Download "http://www.python.org/ftp/python/3.3.3/python-3.3.3.msi", "tmp"                          >> %script%
+if %installNodeFlag% EQU 1 (
+echo Download "%NodeLink%", "tmp"                                                                       >> %script%
 )
 
 ::if %installPythonFlag% EQU %s% (
-::echo Download "http://nodejs.org/dist/v0.10.22/node-v0.10.22-x86.msi", "tmp"                            >> %script%
+::echo Download "%PythonLink%", "tmp"                                                                   >> %script%
 ::)
 
-if %installRubyFlag% EQU %s% (
-echo Download "http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.0.0-p353.exe?direct", "tmp"        >> %script%
+if %installRubyFlag% EQU 1 (
+echo Download "%RubyLink%", "tmp"                                                                       >> %script%
 )
 
 ::run script
@@ -180,10 +183,8 @@ goto :eof
 :: install env
 ::====================================
 :installEnv
-if exist %Output% (
-    for /F "tokens=4" %%A IN ('type %Output% ^| %WINDIR%\system32\find.exe /I "ok"') DO (
-        (tmp\%%~A)
-    )
+for /F "tokens=4" %%A IN ('type %Output% ^| %WINDIR%\system32\find.exe /I "ok"') DO (
+    (tmp\%%~A)
 )
 goto :eof
 
