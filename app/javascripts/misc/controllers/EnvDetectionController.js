@@ -1,11 +1,11 @@
 (function (window) {
-	define(['_'], function (_) {
-		var EnvDetectionController = function (
-			$scope,
-			$http,
-			Environment,
-			CONFIG
-		) {
+    define(['_'], function (_) {
+        var EnvDetectionController = function (
+            $scope,
+            $http,
+            Environment,
+            CONFIG
+        ) {
             $scope.os = [{
                 label : 'Mac OS',
                 value : 'Mac',
@@ -52,5 +52,5 @@
         };
 
         return EnvDetectionController;
-	});
+    });
 }(this));
