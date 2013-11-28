@@ -3,13 +3,12 @@
     <head>
         <title>Hello world!</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
+        <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css" />
 
-        <!-- build:js javascripts/main.js -->
-        <script type="text/javascript" src="javascripts/main.js"></script>
-        <!-- endbuild -->
+        <link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
     </head>
     <body>
-        <h1>Hello world!</h1>
+        <ng-view />
+        <script type="text/javascript" data-main="javascripts/MainLoader" src="components/requirejs/require.js"></script>
     </body>
 </html>

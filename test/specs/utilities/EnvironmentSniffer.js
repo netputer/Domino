@@ -1,6 +1,8 @@
 /*global describe, it*/
 (function () {
     define(['app/javascripts/utilities/EnvironmentSniffer'], function (EnvironmentSniffer) {
+        EnvironmentSniffer = new EnvironmentSniffer();
+
         describe('EnvironmentSniffer', function () {
             it('Should have `OS` property. ', function (done) {
                 if (EnvironmentSniffer.OS !== undefined) {

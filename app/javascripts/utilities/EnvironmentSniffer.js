@@ -59,6 +59,6 @@
             };
         };
 
-        return new EnvironmentSniffer();
+        return EnvironmentSniffer;
     });
 }(this));
