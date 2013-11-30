@@ -10,7 +10,9 @@
             var actions = {
                 ACCOUNT_LOGIN : 'account/login',
                 ACCOUNT_LOGOUT : 'account/logout',
-                DOWNLOAD_SETUP_SCRIPT : 'util/devEnvSetup/get'
+                DOWNLOAD_SETUP_SCRIPT : 'util/devEnvSetup/get',
+
+                PROJECTS_SYNC : 'project'
             };
 
             var key;
