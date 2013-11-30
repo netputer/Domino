@@ -1,7 +1,7 @@
 (function (window) {
     define([], function () {
         var AccountService = function ($q, $http, CONFIG) {
-            var isLogin = false;
+            var isLogin = true;
 
             var accountService = {
                 loginAsync : function (user) {

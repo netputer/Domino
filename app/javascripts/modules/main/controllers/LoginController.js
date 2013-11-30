@@ -1,21 +1,22 @@
 (function (window) {
     define([], function () {
+
         var LoginController = function ($scope, $location, AccountService) {
+            $scope.accountService = AccountService;
+
             if (AccountService.isLogin) {
                 $location.path('/main');
-            } else {
-                $scope.user = {
-                    username : '',
-                    password : ''
-                };
-
-                $scope.login = function () {
-                    AccountService.loginAsync($scope.user).then(function (user) {
-                        $location.path('/main');
-                    }, function (user) {
-                    });
-                };
             }
+
+            $scope.$watch(function () {
+                return AccountService.isLogin;
+            }, function (newVal, oldVal) {
+                if (newVal) {
+                    $location.path('/dashboard');
+                } else {
+                    $location.path('/');
+                }
+            });
         };
 
         LoginController.$injection = ['$scope', '$location', 'AccountService'];

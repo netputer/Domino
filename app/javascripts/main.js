@@ -7,7 +7,11 @@
         'modules/main/controllers/MainController',
         'modules/main/controllers/LoginController',
         'modules/main/controllers/NavbarController',
-        'modules/main/services/AccountService'
+        'modules/main/directives/LoginDirective',
+        'modules/main/directives/NavbarDirective',
+        'modules/main/services/AccountService',
+        'modules/projects/services/ProjectsService',
+        'modules/utils/controllers/UtilsController'
     ], function (
         angular,
         ngRouter,
@@ -16,25 +20,50 @@
         MainController,
         LoginController,
         NavbarController,
-        AccountService
+        LoginDirective,
+        NavbarDirective,
+        AccountService,
+        ProjectsService,
+        UtilsController
     ) {
         angular.module('domino', ['ngRoute', 'ngAnimate'])
             .factory('CONFIG', CONFIG)
             .factory('AccountService', AccountService)
+            .factory('ProjectsService', ProjectsService)
+            .controller('LoginController', LoginController)
             .controller('NavbarController', NavbarController)
-            .config(['$routeProvider', function ($routeProvider, $locationProvider) {
-                // $locationProvider.html5Mode(true);
-
-                $routeProvider.when('/main', {
-                    templateUrl : 'javascripts/modules/main/templates/main.html',
-                    controller : MainController
-                }).when('/login', {
-                    templateUrl : 'javascripts/modules/main/templates/login.html',
-                    controller : LoginController
-                }).when('/', {
-                    templateUrl : 'javascripts/modules/main/templates/login.html',
-                    controller : LoginController
+            .controller('ProjectsListController', ['$scope', 'ProjectsService', function ($scope, ProjectsService) {
+                $scope.projects = [];
+                ProjectsService.syncAsync().then(function (projects) {
+                    $scope.projects = projects;
                 });
+            }])
+            .directive('dmnLogin', LoginDirective)
+            .directive('dmnNavbar', NavbarDirective)
+            .config(['$routeProvider', function ($routeProvider, $locationProvider) {
+                // // $locationProvider.html5Mode(true);
+
+                $routeProvider.when('/projects', {
+                    templateUrl : 'javascripts/modules/projects/templates/main.html'
+                });
+
+                // $routeProvider.when('/main', {
+                //     templateUrl : 'javascripts/modules/main/templates/main.html',
+                //     controller : function () {
+
+                //     }
+                // }).when('/login', {
+                //     controller : function () {
+
+                //     }
+                // }).when('/', {
+                //     controller : function () {
+
+                //     }
+                // }).when('/utils', {
+                //     templateUrl : 'javascripts/modules/utils/templates/utils.html',
+                //     controller : UtilsController
+                // });
             }]);
 
         angular.bootstrap(document, ['domino']);

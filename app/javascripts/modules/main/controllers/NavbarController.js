@@ -1,10 +1,10 @@
 (function (window) {
     define([], function () {
         var NavbarController = function ($scope, $location, AccountService) {
-            $scope.logout = function () {
-                AccountService.logoutAsync().then(function () {
-                    $location.path('/login');
-                });
+            $scope.accountService = AccountService;
+
+            $scope.nav = function (target) {
+                $location.path('/' + target);
             };
         };
 
