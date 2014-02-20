@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>豌豆荚</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div class="content"></div>
+        <script type="text/javascript">
+                var QUERYSTRING_PATTERN_PREFIX = '[\\?\\&\\#]';
+                var QUERYSTRING_PATTERN_SUFFIX = '=([^&]*)';
+
+                var QueryString = {};
+
+                QueryString.get = function (key, string) {
+                    string = string || window.location.search;
+                    var matches = string.match(new RegExp(QUERYSTRING_PATTERN_PREFIX + key + QUERYSTRING_PATTERN_SUFFIX, 'i'));
+                    var encodedValue = matches && matches[1];
+                    var value = encodedValue && decodeURIComponent(encodedValue);
+                    return value;
+                };
+
+                var onReadystatechange = function  () {
+                    if (req.readyState === 4) {
+                        if (req.status === 200 && req.responseText) {
+                            var content = JSON.parse(req.responseText);
+                            document.getElementsByClassName('content')[0].innerHTML = content.contents[0];
+                        }
+                    }
+                };
+
+                var id = QueryString.get('id');
+                var url = 'http://games.wandoujia.com//api/v1/extensions/' + id + '?start=0&max=1';
+
+                var req = new XMLHttpRequest();
+                var method = 'GET';
+                var async = true;
+
+                req.open(method, url, async);
+                req.onreadystatechange = onReadystatechange;
+
+                req.send();
+
+        </script>
+    </body>
+</html>
