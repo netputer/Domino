@@ -8,11 +8,13 @@
         <link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
     </head>
     <body>
-        <div class="ng-cloak" dmn-navbar ng-show="accountService.isLogin"></div>
-        <div class="d-main ng-cloak">
-            <div ng-view></div>
+        <div class="wrap" ng-show="accountService.hasInit">
+            <div class="ng-cloak" dmn-navbar ng-show="accountService.isLogin"></div>
+            <div class="d-main ng-cloak" ng-show="accountService.isLogin">
+                <div ng-view></div>
+            </div>
+            <div class="ng-cloak" dmn-login ng-show="!accountService.isLogin"></div>
         </div>
-        <div class="ng-cloak" dmn-login ng-show="!accountService.isLogin"></div>
         <script type="text/javascript" data-main="javascripts/MainLoader" src="components/requirejs/require.js"></script>
     </body>
 </html>
