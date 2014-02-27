@@ -43,9 +43,12 @@
             .config(['$routeProvider', function ($routeProvider, $locationProvider) {
                 // // $locationProvider.html5Mode(true);
 
-                $routeProvider.when('/projects', {
-                    templateUrl : 'javascripts/modules/projects/templates/main.html'
-                });
+                // $routeProvider.when('/projects', {
+                //     templateUrl : 'javascripts/modules/projects/templates/main.html'
+                // }).when('/login', {
+                //     templateUrl: 'javascripts/modules/main/templates/login.html',
+                //     controller: LoginController
+                // });
 
                 // $routeProvider.when('/main', {
                 //     templateUrl : 'javascripts/modules/main/templates/main.html',
