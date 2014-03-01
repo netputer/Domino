@@ -2,10 +2,7 @@
     define([], function () {
 
         var LoginController = function ($scope, $location, AccountService) {
-            //alert(111);
             $scope.accountService = AccountService;
-            $scope.name = 'miaojian';
-            //alert(222);
 
             if (AccountService.isLogin) {
                 $location.path('/main');

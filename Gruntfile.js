@@ -15,7 +15,8 @@ module.exports = function (grunt) {
         app : 'app',
         dist : 'dist',
         tmp : '.tmp',
-        test : 'test'
+        test : 'test',
+        mock: 'mock'
     };
 
     grunt.initConfig({
@@ -57,7 +58,24 @@ module.exports = function (grunt) {
                         return [
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
-                            mountFolder(connect, pathConfig.app)
+                            mountFolder(connect, pathConfig.app),
+                            function(req, res, next) {
+
+                                // 测试数据，没有ext的暂定为服务器请求
+                                if (require('path').extname(req.url) === '') {
+
+                                    var filePath = __dirname + '/' + pathConfig.mock + req.url;
+                                    var fileStr = require('fs').readFileSync( filePath , 'utf-8');
+
+                                    //grunt.log.writeln(fileStr);
+
+                                    res.end(fileStr);
+                                }
+                                else {
+
+                                    next();
+                                }
+                            } 
                         ];
                     }
                 }
@@ -209,7 +227,8 @@ module.exports = function (grunt) {
                 singleRun : true
             },
             travis : {
-                browsers : ['PhantomJS'],
+                //browsers : ['PhantomJS'],
+                browsers: ['firefox'],
                 reporters : ['progress'],
                 singleRun : true
             }
@@ -229,7 +248,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('server', [
+    grunt.registerTask('serve', [
         'clean:server',
         'compass:server',
         'connect:server',

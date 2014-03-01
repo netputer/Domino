@@ -6,6 +6,7 @@
         var LoginDirective = function (AccountService, $q, $location) {
             return {
                 replace : true,
+                //scope: true,
                 template : template,
                 controller : 'LoginController',
                 link : function ($scope, $element, $attributes) {
@@ -13,7 +14,6 @@
                         token : '' // get google api token
                         //isLogin: false // 标示当前google login是否成功
                     };
-
 
                     var loginAsync = function () {
                         var deferred = $q.defer();
@@ -48,30 +48,32 @@
                             callback: function(authResult) {
 
                                 // 授权成功
-                                if (authResult['status']['signed_in']) {
+                                if (authResult.status.signed_in) {
 
                                     //$scope.googleLogin.isLogin = true;
                                     $scope.googleLogin.token = authResult.access_token;
                                     //loginAsync();
+                                    console.log('google sign in success');
+
+                                    // 登录状态验证完毕后显示页面，之前一片空白
+                                    loginAsync().finally(
+                                        function(){
+                                            
+                                            $scope.accountService.hasInit = true;
+                                        }
+                                    );
+
 
                                 }
                                 else {
-
-                                    //$scope.googleLogin.isLogin = false;
-                                    $scope.googleLogin.token = '';
+                                    
+                                    $scope.$apply(function() {
+                                        $scope.googleLogin.token = '';
+                                        $scope.accountService.hasInit = true;
+                                    });
                                     //loginAsync();
-                                    console.log('sign in state:' + authResult['error']);
+                                    console.log('google sign in error:' + authResult.error);
                                 }
-
-                                // 登录状态验证完毕后显示页面，之前一片空白
-                                loginAsync().then(
-                                    function(){
-                                        $scope.accountService.hasInit = true;
-                                    },
-                                    function(){
-                                        $scope.accountService.hasInit = true;
-                                    }
-                                );
                             }
                         };
 

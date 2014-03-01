@@ -2,7 +2,8 @@
     define(['_'], function (_) {
         var API_PROTOCAL = 'http';
         var API_HOST = '127.0.0.1';
-        var API_PORT = 1337;
+        var API_PORT = 9999;
+        //var API_MOCK = 'mock';
 
         var API_URL_PREFIX = API_PROTOCAL + '://' + API_HOST + ':' + API_PORT + '/';
 

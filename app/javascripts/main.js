@@ -41,7 +41,7 @@
             .directive('dmnLogin', LoginDirective)
             .directive('dmnNavbar', NavbarDirective)
             .config(['$routeProvider', function ($routeProvider, $locationProvider) {
-                // // $locationProvider.html5Mode(true);
+                //$locationProvider.html5Mode(true);
 
                 // $routeProvider.when('/projects', {
                 //     templateUrl : 'javascripts/modules/projects/templates/main.html'

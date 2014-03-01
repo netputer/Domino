@@ -5,11 +5,12 @@
 
         var NavbarDirective = function () {
             return {
+                //scope: true,
                 replace : true,
                 template : template,
                 controller : 'NavbarController',
                 link : function ($scope, $element, $attributes) {
-
+                    
                 }
             };
         };
