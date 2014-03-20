@@ -5,13 +5,18 @@
  */
 
 define([
-	'angular',
-	'common/Http',
-	'common/Modal',
-	'common/ServerEventCenter'
+    'angular',
+    'common/Http',
+    'common/Dao',
+    'common/Modal',
+    'common/ServerEventCenter',
+    'common/Config'
 ], function (
-	angular
+    angular
 ) {
 
-	angular.module('dmnCommon', [ 'httpModule', 'modalModule', 'serverEventCenterModule' ]);
+    angular.module('dmnCommon', [
+        'httpModule', 'daoModule', 'modalModule',
+        'configModule', 'serverEventCenterModule'
+    ]);
 });

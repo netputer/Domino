@@ -27,7 +27,13 @@ define([ 'angular', '_' ], function (angular, _) {
             // 获取当前project的content
             projectsDao.project.get({ id: $routeParams.id }).$promise.then(function (data) {
 
-                $scope.project = data;
+                var body = data.body;
+                // ....
+                body.stagingServers = body.stagingServers.join('|');
+                body.productionServers = body.productionServers.join('|');
+                body.notificationList = body.notificationList.join('|');
+
+                $scope.project = body;
             });
         }
 

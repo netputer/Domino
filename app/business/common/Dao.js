@@ -5,15 +5,13 @@
  */
 
 define([
-    'angular',
-    'common/httpStatusMsg'
-], function (angular, httpStatusMsgService) {
+    'angular'
+], function (angular) {
 
     angular.module('daoModule', [])
 
-    .constant('httpStatusMsg', httpStatusMsgService)
     // TODO 换成resource
-    .factory('dao', [ '$rootScope', '$q', '$http', 'httpStatusMsg', 'Alert', function ($rootScope, $q, $http, httpStatusMsg, Alert) {
+    .factory('dao', [ '$rootScope', '$q', '$http', 'httpStatusMsg', '$window', function ($rootScope, $q, $http, httpStatusMsg, window) {
         
         //var domain = 'http://localhost:1337';
         var domain = '';
@@ -27,7 +25,7 @@ define([
             var data   = typeof cfg.data === 'undefined' ? '' : cfg.data;
 
             //loading状态
-            $rootScope.isLoading = true;
+            //$rootScope.isLoading = true;
 
             $http({
                 method : method,
@@ -35,20 +33,20 @@ define([
                 data   : data
             }).success(function (data, status) {
 
-                $rootScope.isLoading = false;
+                //$rootScope.isLoading = false;
                 deferred.resolve(data);
             }).error(function (data, status) {
 
-                $rootScope.isLoading = false;
+                //$rootScope.isLoading = false;
 
                 //表单处理,传递给下层进行处理，其余进行统一弹窗处理
                 if (status === '508') {
                     
-                    deferred.reject(data, status);
+                    //deferred.reject(data, status);
                 }
                 else {
 
-                    Alert(httpStatusMsg[data.error.msg]);
+                    window.alert(httpStatusMsg[data.error.msg]);
                 }
 
                 deferred.reject(data, status);

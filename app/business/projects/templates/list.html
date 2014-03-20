@@ -22,7 +22,7 @@
 		  	</tr>
 		    <tr ng-repeat="item in projects">
 		      <td>{{ $index }}</td>
-		      <td><div style="margin-bottom: 20px" class="project-name">{{ item.name }}</div>
+		      <td><div style="margin-bottom: 20px" class="project-name">{{ item.title }}</div>
 		      	<div class="alert alert-{{item.lastStagingBuild.status == 3 ? 'danger' : 'warning'}} clearfix">
 					<h4 class="alert-heading">Staging</h4>
 					<div class="row">

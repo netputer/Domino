@@ -9,11 +9,11 @@ define(['angular'], function (angular) {
 
     angular.module('serverEventCenterModule', [])
     
-        .factory('serverEventCenter', [ '$rootScope', '$resource', '$timeout',
+        .factory('serverEventCenter', [ '$rootScope', '$resource', '$timeout', 'CONFIG',
 
-            function ($rootScope, $resource, $timeout) {
+            function ($rootScope, $resource, $timeout, CONFIG) {
 
-                var center = $resource('/api/server/event/center', {}, {
+                var center = $resource(CONFIG.API_URL_PREFIX + 'api/server/event/center', {}, {
                     query: {method: 'get', toArray: true, noLoading: true}
                 });
 

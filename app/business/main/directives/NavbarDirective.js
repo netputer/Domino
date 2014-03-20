@@ -31,7 +31,10 @@
 
                     function changeNavStyleStatus() {
                         var path = $location.path().substring(1).split('/')[0];
-                        console.info('path:' + path);
+                        
+                        // if blank, default projects
+                        path = path || 'projects';
+
                         angular.element('#navMenu > li')
                             .removeClass('active');
 

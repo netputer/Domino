@@ -51,8 +51,8 @@ define([ '_' ], function (_) {
         };
 
         // get project list
-        projectsDao.project.query().$promise.then(function (projects) {
-            $scope.projects = projects;
+        projectsDao.project.get().$promise.then(function (projects) {
+            $scope.projects = projects.body;
         });
     };
 

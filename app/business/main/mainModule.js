@@ -1,7 +1,6 @@
 (function (window) {
     define([
         'angular',
-        'common/CONFIG',
 
         'main/services/AccountService',
 
@@ -13,7 +12,6 @@
 
     ], function (
         angular,
-        CONFIG,
 
         AccountService,
 
@@ -25,7 +23,6 @@
     ) {
         angular.module('dmnMain', [])
 
-        .factory('CONFIG', CONFIG)
         .factory('AccountService', AccountService)
         .controller('LoginController', LoginController)
         .directive('dmnLogin', LoginDirective)

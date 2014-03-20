@@ -8,12 +8,14 @@
 
         'common/CommonModule',
         'main/mainModule',
-        'projects/ProjectsModule'
+        'projects/ProjectsModule',
+        'utils/UtilsModule'
     ], function (
         angular
     ) {
         angular.module('domino', [
-            'ngRoute', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'dmnCommon', 'dmnMain', 'dmnProjects'
+            'ngRoute', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'dmnCommon', 'dmnMain', 'dmnProjects',
+            'dmnUtils'
         ])
 
         .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -49,12 +51,12 @@
 
                 templateUrl : '/business/projects/templates/task.html',
                 controller : 'ProjectsTaskController'
-            });
-            // .when('/utils', {
+            })
+            .when('/utils', {
                 
-            //     templateUrl : 'business/utils/templates/utils.html',
-            //     controller : UtilsController
-            // });
+                templateUrl : '/business/utils/templates/utils.html',
+                controller : 'UtilsController'
+            });
         }]);
 
         angular.bootstrap(document, ['domino']);

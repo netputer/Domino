@@ -93,7 +93,7 @@ module.exports = function (grunt) {
                             require('connect-modrewrite')([
                                 //'^/$ /home [R]',
                                 //'^/account/?.*$ /templates/account/index.html',
-                                '^/projects/?[^.]*$ /index.html [L]'
+                                '^/(projects|utils)/?[^.]*$ /index.html [L]'
                             ]),
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, pathConfig.app),
@@ -110,7 +110,7 @@ module.exports = function (grunt) {
                             require('connect-modrewrite')([
                                 //'^/$ /home [R]',
                                 //'^/account/?.*$ /templates/account/index.html',
-                                '^/projects/?[^.]*$ /index.html [L]'
+                                '^/(projects|utils)/?[^.]*$ /index.html [L]'
                             ]),
                             mountFolder(connect, pathConfig.dist),
                             mockConnect

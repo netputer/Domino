@@ -4,7 +4,7 @@
 			<button type="button" class="btn btn-prev pull-right" ng-click="createProject();">
 				<i class="fa fa-arrow-left" ng-click="fallback()"> Prev</i>
 			</button>
-			{{  project.title || 'New project' }}
+			{{  isModify ? project.title : 'New project' }}
 		</h1>
 	</div>
 	<div class="list">

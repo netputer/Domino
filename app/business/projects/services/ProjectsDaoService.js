@@ -1,12 +1,6 @@
 (function (window) {
     define([ '_' ], function (_) {
-        var ProjectsDaoService = function ($resource, $rootScope) {
-            var API_PROTOCAL = 'http';
-            var API_HOST = '127.0.0.1';
-            var API_PORT = 9999;
-            var API_PROFIX = '';
-
-            var API_URL_PREFIX = API_PROTOCAL + '://' + API_HOST + ':' + API_PORT + '/' + API_PROFIX;
+        var ProjectsDaoService = function ($resource, $rootScope, CONFIG) {
 
             var actions = {
 
@@ -21,7 +15,7 @@
 
                 if (actions.hasOwnProperty(key)) {
 
-                    actions[key] = API_URL_PREFIX + actions[key];
+                    actions[key] = CONFIG.API_URL_PREFIX + actions[key];
                 }
             }
 
@@ -29,8 +23,7 @@
                 project: $resource(actions.projectApi, {}, {
                     getTasks: {
                         url: actions.projectTasksList,
-                        method: 'get',
-                        isArray: true
+                        method: 'get'
                     },
                     update: {
                         method: 'put'
@@ -48,7 +41,7 @@
             };
         };
 
-        ProjectsDaoService.$inject = [ '$resource', '$rootScope' ];
+        ProjectsDaoService.$inject = [ '$resource', '$rootScope', 'CONFIG' ];
 
         return ProjectsDaoService;
     });
