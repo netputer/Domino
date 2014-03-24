@@ -16,7 +16,10 @@
                     };
 
                     $scope.accountService.hasInit = true;
-                    return;
+
+                    if (true) {
+                        return;
+                    }
 
                     var loginAsync = function () {
                         var deferred = $q.defer();
@@ -27,7 +30,7 @@
                     };
 
                     // load google sign in Script
-                   (function() {
+                   ;(function () {
                         var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
                         po.src = 'https://apis.google.com/js/client:plusone.js?onload=GOOGLE_GET_AUTH';
                         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
@@ -39,7 +42,7 @@
                     *
                     * @const
                     */
-                   window.GOOGLE_GET_AUTH = function() {
+                    window.GOOGLE_GET_AUTH = function () {
                         
                         var additionalParams = {
 
@@ -48,7 +51,7 @@
                             cookiepolicy: 'single_host_origin',
                             requestvisibleactions: 'http://schemas.google.com/AddActivity',
 
-                            callback: function(authResult) {
+                            callback: function (authResult) {
 
                                 // 授权成功
                                 if (authResult.status.signed_in) {
@@ -60,7 +63,7 @@
 
                                     // 登录状态验证完毕后显示页面，之前一片空白
                                     loginAsync().finally(
-                                        function(){
+                                        function () {
                                             
                                             $scope.accountService.hasInit = true;
                                         }
@@ -70,7 +73,7 @@
                                 }
                                 else {
                                     
-                                    $scope.$apply(function() {
+                                    $scope.$apply(function () {
                                         $scope.googleLogin.token = '';
                                         $scope.accountService.hasInit = true;
                                     });

@@ -47,13 +47,14 @@ define([ 'angular', '_' ], function (angular, _) {
                 console.info(JSON.stringify($scope.saved));
 
                 // 如果为新建页面，则做creat操作，否则做update操作
+                var req;
                 if ($scope.isModify) {
                     
-                    var req = projectsDao.project.update({ id: $routeParams.id }, $scope.saved);
+                    req = projectsDao.project.update({ id: $routeParams.id }, $scope.saved);
                 }
                 else {
 
-                    var req = projectsDao.project.save($scope.saved);
+                    req = projectsDao.project.save($scope.saved);
                 }
 
                 req.$promise.then(function (data) {
@@ -81,7 +82,7 @@ define([ 'angular', '_' ], function (angular, _) {
 
                     if (input.hasOwnProperty('$dirty')) {
                         
-                        if (input.$pristine && (input.$viewValue == null)) {
+                        if (input.$pristine && (input.$viewValue === null || input.$viewValue === undefined)) {
                             input.$setViewValue('');
                         }
                         else {

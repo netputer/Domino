@@ -16,14 +16,14 @@ define(['angular'], function (angular) {
                 var deferred = $q.defer();
 
                 $modal.open({
-                    template: ''
-                        + '<div class="modal-body">'
-                            + '<h3>' + msg + '</h3>'
-                        + '</div>'
-                        + '<div class="modal-footer">'
-                            + '<button class="btn btn-primary" ng-click="ok()">OK</button>'
-                            + '<button class="btn btn-warning" ng-click="cancel()">Cancel</button>'
-                        + '</div>',
+                    template: '' +
+                        '<div class="modal-body">' +
+                            '<h3>' + msg + '</h3>' +
+                        '</div>' +
+                        '<div class="modal-footer">' +
+                            '<button class="btn btn-primary" ng-click="ok()">OK</button>' +
+                            '<button class="btn btn-warning" ng-click="cancel()">Cancel</button>' +
+                        '</div>',
 
                     controller: function ($scope, $modalInstance) {
 
@@ -57,13 +57,13 @@ define(['angular'], function (angular) {
                 var deferred = $q.defer();
 
                 $modal.open({
-                    template: ''
-                        + '<div class="modal-body">'
-                            + '<h3>' + msg + '</h3>'
-                        + '</div>'
-                        + '<div class="modal-footer">'
-                            + '<button class="btn btn-primary" ng-click="ok()">sure</button>'
-                        + '</div>',
+                    template: '' +
+                        '<div class="modal-body">' +
+                            '<h3>' + msg + '</h3>' +
+                        '</div>' +
+                        '<div class="modal-footer">' +
+                            '<button class="btn btn-primary" ng-click="ok()">sure</button>' +
+                        '</div>',
 
                     controller: function ($scope, $modalInstance) {
 
