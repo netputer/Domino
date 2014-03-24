@@ -63,10 +63,10 @@ define([ 'angular', '_' ], function (angular, _) {
                     
                     if (res.status === 508) {
 
-                        _.forEach(res.data.error, function (val, name, item) {
+                        // _.forEach(res.data.error, function (val, name, item) {
 
-                            item[name] = statusMsgMapping[val];
-                        });
+                        //     item[name] = statusMsgMapping[val];
+                        // });
 
                         $scope.newForm.serverInvalid = res.data.error;
                     }

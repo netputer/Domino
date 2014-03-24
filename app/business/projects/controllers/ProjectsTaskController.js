@@ -30,7 +30,7 @@ define([ '_', 'moment'], function (_, moment) {
 
             // TODO filter
             _.forEach(tasks, function (item, name) {
-                filterTask(item);     
+                filterTask(item);
             });
 
             $scope.tasks = tasks;
@@ -61,6 +61,21 @@ define([ '_', 'moment'], function (_, moment) {
                 });
             });
         };
+
+        // listen status
+        $scope.$on('eventcenter.server', function (data) {
+
+            if (data.channel === 'taskStatusChange') {
+                
+                _.forEach($scope.tasks, function (task, name, tasks) {
+
+                    if (task.id === data.body.id) {
+                        
+                        task.status = data.body.status;
+                    }
+                });
+            }
+        });
     };
 
     ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams' ];

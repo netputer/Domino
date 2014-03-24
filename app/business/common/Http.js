@@ -62,8 +62,13 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                 };
             }
         ])
+
         .config(['$httpProvider',
             function ($httpProvider) {
+                // $httpProvider.defaults.transformRequest.push(function (data) {
+                //     console.log(data);
+                //     return data;
+                // });
                 $httpProvider.interceptors.push('httpInterceptor');
             }
         ]);

@@ -10,13 +10,15 @@ define([
     'common/Dao',
     'common/Modal',
     'common/ServerEventCenter',
-    'common/Config'
+    'common/Config',
+    'common/CommonDirective'
 ], function (
     angular
 ) {
 
     angular.module('dmnCommon', [
         'httpModule', 'daoModule', 'modalModule',
-        'configModule', 'serverEventCenterModule'
+        'configModule', 'serverEventCenterModule',
+        'directiveModule'
     ]);
 });
