@@ -19,16 +19,11 @@ define([ 'angular', '_' ], function (angular, _) {
                 custom: '=custom'
             },
 
-            template: ''
-                + '<span>'
-                + '<span class="help-block col-sm-8 form-hint" ng-if="hint" ng-show="showHint">{{hint}}</span>'
-                + '<span class="help-block col-sm-8" ng-repeat="errorMsg in errorMsgs" ng-show="!showHint && errorMsgs.length">{{ errorMsg }}</span>'
-                + '<span class="help-block col-sm-8" ng-show="customMsg" ng-show="!showHint && customMsg">{{customMsg}}</span>'
-                + '</span>',
-            link: function (scope, el, attrs, ctrl) {
+            templateUrl: '/business/common/templates/formTooltip.html',
+            link: function ($scope, el, attrs, ctrl) {
 
-                scope.showHint = true;
-                scope.hint = attrs.hint || '';
+                $scope.showHint = true;
+                $scope.hint = attrs.hint || '';
 
                 var fieldName = attrs['for'];
                 var fieldCtrl = ctrl[fieldName];
@@ -40,9 +35,9 @@ define([ 'angular', '_' ], function (angular, _) {
                 }
 
                 // listen custom, access custom show status
-                scope.$watch('custom', function (msg) {
+                $scope.$watch('custom', function (msg) {
 
-                    scope.customMsg = msg ? (statusMsgMapping[msg] ? statusMsgMapping[msg] : '') : '';
+                    $scope.customMsg = msg ? (statusMsgMapping[msg] ? statusMsgMapping[msg] : '') : '';
 
                     if (msg) {
 
@@ -80,27 +75,27 @@ define([ 'angular', '_' ], function (angular, _) {
                  */
                 function showHint() {
 
-                    scope.showHint = true;
-                    scope.errorMsgs = [];
-                    scope.custom = '';
+                    $scope.showHint = true;
+                    $scope.errorMsgs = [];
+                    $scope.custom = '';
                 }
 
                 /**
                  * show error dom, hide hint custom dom
                  */
                 function showError() {
-                    scope.showHint = false;
+                    $scope.showHint = false;
 
-                    scope.errorMsgs = [];
+                    $scope.errorMsgs = [];
                     _.forEach(fieldCtrl.$error, function (val, key) {
 
                         if (val) {
 
-                            scope.errorMsgs.push(statusMsgMapping[attrs[key]] || 'error');
+                            $scope.errorMsgs.push(statusMsgMapping[attrs[key]] || 'error');
                         }
                     });
 
-                    scope.custom = '';
+                    $scope.custom = '';
                 }
 
                 /**
@@ -108,8 +103,8 @@ define([ 'angular', '_' ], function (angular, _) {
                  */
                 function showCustomError() {
 
-                    scope.showHint = false;
-                    scope.errorMsgs = [];
+                    $scope.showHint = false;
+                    $scope.errorMsgs = [];
                 }
             }
         };
