@@ -3,7 +3,6 @@
         var ProjectsDaoService = function ($resource, $rootScope, CONFIG) {
 
             var actions = {
-
                 projectApi: 'project/:id',
                 projectTasksList: 'project/:id/tasks',
                 hookApi: 'hook/:id',
@@ -12,9 +11,7 @@
             };
 
             for (var key in actions) {
-
                 if (actions.hasOwnProperty(key)) {
-
                     actions[key] = CONFIG.API_URL_PREFIX + actions[key];
                 }
             }
