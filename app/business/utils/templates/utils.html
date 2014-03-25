@@ -1,0 +1,20 @@
+<div>
+    <div class="page-header clearfix">
+        <h1>
+            Download bootstrap script
+        </h1>
+    </div>
+    <div class="list">
+        <div class="form-group clearfix">
+            <div class="col-xs-6 row">
+                <label class="control-label" for="date01">Choose your system environment:</label>
+                <select class="form-control input-large" ng-model="target" ng-options="o.label group by o.cate for o in os" required></select>
+            </div>
+        </div>
+        <h1></h1>
+        <div id="form-actions">
+            <button ng-click="clickBtnDownload()" class="btn-download btn btn-primary btn-lg">Download Setup Script</button>
+        </div>
+    </div>
+
+</div>

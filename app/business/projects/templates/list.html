@@ -1,0 +1,58 @@
+<div>
+	<div class="page-header clearfix">
+		<button type="button" class="btn btn-primary btn-lg pull-right" ng-click="createProject();">New project</button>
+		<!-- <h1>Project</h1> -->
+	</div>
+	<div class="list">
+		<table class="table table-striped table-hover ">
+		  <thead>
+		    <tr>
+		    	<th width="50">#</th>
+		      <th>Project List</th>
+<!-- 		      <th>Last build date</th>
+		      <th>Status</th> -->
+		      <th width="150">Actions</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	<tr ng-if="!projects || !projects.length">
+		  		<td colspan="3" align="center">
+		  			暂无内容
+		  		</td>
+		  	</tr>
+		    <tr ng-repeat="item in projects">
+		      <td>{{ $index }}</td>
+		      <td><div style="margin-bottom: 20px" class="project-name">{{ item.title }}</div>
+		      	<div class="alert alert-{{item.lastStagingBuild.status == 3 ? 'danger' : 'warning'}} clearfix">
+					<h4 class="alert-heading">Staging</h4>
+					<div class="row">
+						<div class="col-md-3 pull-left">VERSION: {{ item.lastStagingBuild.version }}</div>
+						<div class="col-md-9 pull-left">STATUS:  {{ statusText[item.lastStagingBuild.status] }}</div>
+					</div>
+				</div>
+				<div class="alert alert-{{item.lastProdctuionBuild.status == 3 ? 'dange' : 'success'}} clearfix">
+					<h4 class="alert-heading">Producting</h4>
+					<div class="row">
+						<div class="col-md-3 pull-left">VERSION: {{ item.lastProdctuionBuild.version }}</div>
+						<div class="col-md-9 pull-left">STATUS: {{ statusText[item.lastProdctuionBuild.status] }}</div>
+					</div>
+				</div>
+		      </td>
+<!-- 		      <td>{{ item.lastBuildDate }}</td>
+		      <td><span class="label label-{{statusMap.style[item.status]}}">{{ statusMap.text[item.status] }}</td>
+ -->		      <td>
+		      	<a class="btn btn-success" ng-href="/projects/task/{{item.id}}" title="go to task list">
+					<i class="fa fa-external-link "></i>  
+				</a>
+		      	<a href="" ng-href="/projects/{{item.id}}" class="btn btn-info" title="edit">
+		      		<i class="fa fa-edit"></i>
+		      	</a>
+		      	<a class="btn btn-danger" ng-click="delete(item.id)" title="delete">
+					<i class="fa fa-trash-o "></i> 
+				</a>
+		      </td>
+		    </tr>
+		  </tbody>
+</table> 
+	</div>
+</div>

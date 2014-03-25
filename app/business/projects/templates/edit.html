@@ -1,0 +1,82 @@
+<div>
+	<div class="page-header clearfix">
+		<h1>
+			<button type="button" class="btn btn-prev pull-right" ng-click="createProject();">
+				<i class="fa fa-arrow-left" ng-click="fallback()"> Prev</i>
+			</button>
+			{{  isModify ? project.title : 'New project' }}
+		</h1>
+	</div>
+	<div class="list">
+		<form class="form-horizontal" name="newForm" novalidate>
+			<div class="form-group" ng-class="{'has-error': newForm.serverInvalid.projectTitle || (newForm.projectTitle.$dirty && newForm.projectTitle.$invalid)}" ng-show="isModify">
+				<label class="control-label" for="projectTitle">Project Title<span class="red">*</span></label>
+				<div class="controls">
+				  <input class="form-control" id="projectTitle" name="projectTitle" type="text" ng-model="project.title" required autofocus>
+				  <form-tooltip hint="ex.Domino" required="NO_BLANK" for="projectTitle" custom="newForm.serverInvalid.projectTitle">
+				  </form-tooltip>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.url || (newForm.gitUrl.$dirty && newForm.gitUrl.$invalid)}">
+				<label class="control-label" for="gitUrl">Git Url<span class="red">*</span></label>
+				<div class="controls">
+				  <input class="form-control" id="gitUrl" name="gitUrl" type="url" ng-model="project.url" required>
+				  <form-tooltip hint="ex. https://github.com/wandoulab.git" required="NO_BLANK" for="gitUrl" custom="newForm.serverInvalid.url" url="NOT_URL">
+				  </form-tooltip>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Environment Type<span class="red">*</span></label>
+				<div class="controls">
+				  <label class="radio">
+					<input type="radio" name="type" id="optionsRadios1" value="0" checked ng-model="project.type">
+					Github
+				  </label>
+				  <div style="clear:both"></div>
+				  <label class="radio">
+					<input type="radio" name="type" id="optionsRadios2" value="1" ng-model="project.type">
+					Self Host Git
+				  </label>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.stagingServers || (newForm.stagingServers.$dirty && newForm.stagingServers.$invalid)}">
+			  <label class="control-label" for="stagingServer">StagingServers<span class="red">*</span></label>
+			  <div class="controls">
+				<input class="form-control" id="stagingServer" name="stagingServers" type="text" ng-model="project.stagingServers" required ng-pattern="/^(([\w-]+\.)+([\w]+)\|?)+$/">
+				<form-tooltip hint="ex. 127.0.0.1 | tc00.xx.xxx" required="NO_BLANK" for="stagingServers" custom="newForm.serverInvalid.stagingServers" pattern="INPUT_INVALID">
+				</form-tooltip>
+
+			  </div>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.productionServers || (newForm.productionServers.$dirty && newForm.productionServers.$invalid)}">
+			  <label class="control-label" for="productionServers">ProductionServers<span class="red">*</span></label>
+			  <div class="controls">
+				<input class="form-control" id="productionServers" name="productionServers" type="text" ng-model="project.productionServers" required ng-pattern="/^(([\w-]+\.)+([\w]+)\|?)+$/">
+				<form-tooltip hint="ex. 127.0.0.1 | tc00.xx.xxx" required="NO_BLANK" for="productionServers" custom="newForm.serverInvalid.productionServers" pattern="INPUT_INVALID">
+				</form-tooltip>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label" for="notificationList">NotificationList</label>
+			  <div class="controls">
+				<input class="form-control" id="notificationList" name="notificationList" type="text" ng-model="project.notificationList">
+				<form-tooltip hint="note. Email address prefix. ex. xxx|xxx|xxx" for="notificationList" custom="newForm.serverInvalid.notificationList" >
+				</form-tooltip>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="control-label" for="inputDesc">Project Description</label>
+			  <div class="controls">
+				<textarea id="inputDesc" rows="6" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 126px;" ng-model="project.description" name="description"></textarea>
+			  </div>
+			</div>
+			<div class="form-actions">
+			  <button type="submit" class="btn btn-primary" ng-click="saveFun(project)">Save</button>
+			  <button type="reset" class="btn" ng-click="cancel();">Cancel</button>
+			</div>
+		</form>
+	</div>
+</div>
