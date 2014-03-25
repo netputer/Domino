@@ -7,9 +7,12 @@
         "angular" : "1.2.2",
         "angular-route" : "1.2.2",
         "angular-animate" : "1.2.2",
+        "angular-resource" : "1.2.2",
         "underscore" : "1.5.2",
         "requirejs" : "2.1.9",
-        "requirejs-text" : "2.0.10"
+        "requirejs-text" : "2.0.10",
+        "angular-bootstrap": "0.10.0",
+        "moment": "2.5.1"
     }
 }
 
