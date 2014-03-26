@@ -1,3 +1,4 @@
+console.info(111);
 require.config({
     baseUrl: '/business',
     paths : {
@@ -8,6 +9,7 @@ require.config({
         ngRouter : '../components/angular-route/angular-route',
         ngAnimate : '../components/angular-animate/angular-animate',
         ngResource : '../components/angular-resource/angular-resource',
+        ngMock :     '../components/angular-mocks/angular-mocks',
         uiBootstrap: '../components/angular-bootstrap/ui-bootstrap-tpls',
         text : '../components/requirejs-text/text'
     },
@@ -33,6 +35,10 @@ require.config({
         ngResource : {
             deps : ['angular'],
             exports : 'ngResource'
+        },
+        ngMock : {
+            deps : ['angular'],
+            exports : 'ngMock'
         },
         uiBootstrap: {
             deps : ['angular'],

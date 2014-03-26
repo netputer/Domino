@@ -35,10 +35,10 @@ module.exports = function (grunt) {
             //grunt.log.writeln(fileJson);
             var fileStr  = JSON.stringify(fileJson);
 
-            grunt.log.writeln(res.statusCode);
-            grunt.log.writeln(req.method);
+            //grunt.log.writeln(res.statusCode);
+            //grunt.log.writeln(req.method);
 
-            if (req.method == 'PUT') {
+            if (req.method === 'PUT') {
                 
                 res.statusCode = '508';
             }
@@ -49,6 +49,27 @@ module.exports = function (grunt) {
 
             next();
         }
+    };
+
+    var injector = require('connect-injector');
+    var injectRequireConfig = function (configPath) {
+        
+        return injector(function (req, res) {
+            //console.log('req.url:', req.url);
+            grunt.log.writeln('req.url----:' + req.url);
+
+            return (/\/app.js/).test(require('url').parse(req.url).pathname);
+        }, function (callback, content, req, res) {
+            console.log('content:', content);
+            require('fs').readFile(configPath, function (err, data) {
+                var lineSeparator = /\r\n/.test(content) ? '\r\n' : '\n';
+                if (err) {
+                    callback(err, content);
+                } else {
+                    callback(null, data + lineSeparator + content);
+                }
+            });
+        });
     };
 
 
@@ -95,8 +116,11 @@ module.exports = function (grunt) {
                                 //'^/account/?.*$ /templates/account/index.html',
                                 '^/(projects|utils)/?[^.]*$ /index.html [L]'
                             ]),
-                            mountFolder(connect, '.tmp'),
+                            //injectRequireConfig('<%= paths.app %>/components/angular-mocks/angular-mocks.js'),
+                            //injectRequireConfig('<%= paths.test %>/e2e-mocks.js'),
+                            mountFolder(connect, pathConfig.tmp),
                             mountFolder(connect, pathConfig.app),
+                            mountFolder(connect, pathConfig.test),
                             mockConnect
                         ];
                     }

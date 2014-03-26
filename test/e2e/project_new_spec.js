@@ -190,4 +190,12 @@ describe('projects/new', function () {
             });
         });
     });
+
+    describe('submit', function () {
+        it('invalid submit', function () {
+            var submitBtn = element(by.css('button[type=submit]'));
+
+            submit.click();
+        });
+    });
 });

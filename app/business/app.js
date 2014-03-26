@@ -58,7 +58,5 @@
                 controller : 'UtilsController'
             });
         }]);
-
-        angular.bootstrap(document, ['domino']);
     });
 }(this));
