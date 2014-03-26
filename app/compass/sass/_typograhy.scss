@@ -1,0 +1,31 @@
+@import "compass/css3/font-face";
+
+@include font-face('Hiragino Sans GB W3', '../images/font/Hiragino Sans GB W3.otf');
+@include font-face('Hiragino Sans GB W6', '../images/font/Hiragino Sans GB W6.otf');
+
+body {
+    font-family: "Lucida Grande", "Helvetica", "Hiragino Sans GB W3", sans-serif;
+    font-size: 12px;
+    line-height: 1.5em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: "Lucida Gran2de", "Helveti2ca", "Hiragino Sans GB W6", sans-serif;
+}
+
+code,
+pre,
+.code {
+    font-family: "Consolas", "Microsoft Yahei";
+}

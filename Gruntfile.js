@@ -1,5 +1,14 @@
 'use strict';
 
+// configurable paths
+var pathConfig = {
+    app : 'app',
+    dist : 'dist',
+    tmp : '.tmp',
+    test : 'test',
+    mock: 'mock'
+};
+
 var lrSnippet = require('connect-livereload')();
 
 var mountFolder = function (connect, dir) {
@@ -10,13 +19,38 @@ module.exports = function (grunt) {
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-    // configurable paths
-    var pathConfig = {
-        app : 'app',
-        dist : 'dist',
-        tmp : '.tmp',
-        test : 'test'
+    // 动态数据构造, 映射到mock文件夹
+    var mockConnect = function (req, res, next) {
+        grunt.log.writeln(req.url);
+        // 测试数据，没有ext的暂定为服务器请求
+        if (require('path').extname(req.url) === '') {
+
+            var filePath = __dirname + '/' + pathConfig.mock + req.url + '/' + req.method;
+            //var fileStr = require('fs').readFileSync( filePath , 'utf-8');
+
+            // 删除数据缓存,以免修改后不更新
+            delete require.cache[filePath];
+            // 请求数据文件ç
+            var fileJson = require(filePath);
+            //grunt.log.writeln(fileJson);
+            var fileStr  = JSON.stringify(fileJson);
+
+            grunt.log.writeln(res.statusCode);
+            grunt.log.writeln(req.method);
+
+            if (req.method == 'PUT') {
+
+                res.statusCode = '508';
+            }
+            //grunt.log.writeln(fileStr);
+            res.end(fileStr);
+        }
+        else {
+
+            next();
+        }
     };
+
 
     grunt.initConfig({
         paths : pathConfig,
@@ -56,8 +90,29 @@ module.exports = function (grunt) {
                     middleware : function (connect) {
                         return [
                             lrSnippet,
+                            require('connect-modrewrite')([
+                                //'^/$ /home [R]',
+                                //'^/account/?.*$ /templates/account/index.html',
+                                '^/(projects|utils)/?[^.]*$ /index.html [L]'
+                            ]),
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, pathConfig.app)
+                        ];
+                    }
+                }
+            },
+            build: {
+                options : {
+                    middleware : function (connect) {
+                        return [
+                            lrSnippet,
+                            require('connect-modrewrite')([
+                                //'^/$ /home [R]',
+                                //'^/account/?.*$ /templates/account/index.html',
+                                '^/(projects|utils)/?[^.]*$ /index.html [L]'
+                            ]),
+                            mountFolder(connect, pathConfig.dist),
+                            mockConnect
                         ];
                     }
                 }
@@ -103,7 +158,9 @@ module.exports = function (grunt) {
                     cwd : '<%= paths.app %>',
                     dest : '<%= paths.dist %>',
                     src : [
-                        'images/**/*.{webp,gif,png,jpg,jpeg}'
+                        'images/**/*.{webp,gif,png,jpg,jpeg}',
+                        'lib/**/*',
+                        '**/*.{sh,bat}'
                     ]
                 }]
             }
@@ -112,7 +169,7 @@ module.exports = function (grunt) {
             options : {
                 sassDir : '<%= paths.app %>/compass/sass',
                 imagesDir : '<%= paths.app %>/compass/images',
-                fontsDir : '<%= paths.app %>/compass/fonts',
+                fontsDir : '/images/fonts',
                 relativeAssets : true
             },
             dist : {
@@ -134,7 +191,7 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     src: [
-                        '<%= paths.dist %>/javascripts/**/*.js',
+                        '<%= paths.dist %>/business/**/*.js',
                         '<%= paths.dist %>/stylesheets/**/*.css',
                         '<%= paths.dist %>/images/**/*.*'
                     ]
@@ -152,29 +209,28 @@ module.exports = function (grunt) {
             }
         },
         requirejs : {
+            options: {
+                appDir : '<%= paths.app %>/business',
+                dir :　'<%= paths.dist %>/business',
+                baseUrl : './',
+                mainConfigFile : '<%= paths.app %>/business/RequireConfig.js',
+                optimize : 'uglify',
+                removeCombined: true,
+                wrap: true,
+                useStrict: false,
+                preserveLicenseComments: true
+            },
             dist : {
                 options : {
                     almond : true,
-                    appDir : '<%= paths.app %>/javascripts',
-                    dir :　'<%= paths.dist %>/javascripts',
-                    baseUrl : './',
-                    mainConfigFile : '<%= paths.app %>/javascripts/RequireConfig.js',
-                    optimize : 'uglify',
-                    uglify : {
-                        toplevel : true,
-                        ascii_only : false,
-                        beautify : false
-                    },
-                    preserveLicenseComments : true,
-                    useStrict : false,
-                    wrap : true,
+                    replaceRequireScript: [
+                        {
+                            files: ['<%= paths.dist %>/index.html'],
+                            module: 'AppLoader'
+                        }
+                    ],
                     modules : [{
-                        name : 'RequireConfig',
-                        include : ['angular', '_']
-                    }, {
-                        name : 'SetupLoader',
-                        include : ['SetupMain'],
-                        exclude : ['RequireConfig']
+                        name : 'AppLoader'
                     }]
                 }
             }
@@ -183,7 +239,10 @@ module.exports = function (grunt) {
             dist : ['copy:dist', 'compass:dist']
         },
         jshint : {
-            test : ['<%= paths.app %>/javascripts/**/*.js']
+            options : {
+                jshintrc : '.jshintrc'
+            },
+            test : ['<%= paths.app %>/business/**/*.js']
         },
         karma : {
             options : {
@@ -260,4 +319,10 @@ module.exports = function (grunt) {
         'rev',
         'usemin'
     ]);
+
+    grunt.registerTask('serve:build', [
+        'build',
+        'connect:build:keepalive'
+    ]);
+
 };
