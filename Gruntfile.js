@@ -51,28 +51,6 @@ module.exports = function (grunt) {
         }
     };
 
-    var injector = require('connect-injector');
-    var injectRequireConfig = function (configPath) {
-        
-        return injector(function (req, res) {
-            //console.log('req.url:', req.url);
-            grunt.log.writeln('req.url----:' + req.url);
-
-            return (/\/app.js/).test(require('url').parse(req.url).pathname);
-        }, function (callback, content, req, res) {
-            console.log('content:', content);
-            require('fs').readFile(configPath, function (err, data) {
-                var lineSeparator = /\r\n/.test(content) ? '\r\n' : '\n';
-                if (err) {
-                    callback(err, content);
-                } else {
-                    callback(null, data + lineSeparator + content);
-                }
-            });
-        });
-    };
-
-
     grunt.initConfig({
         paths : pathConfig,
         watch : {
@@ -116,8 +94,6 @@ module.exports = function (grunt) {
                                 //'^/account/?.*$ /templates/account/index.html',
                                 '^/(projects|utils)/?[^.]*$ /index.html [L]'
                             ]),
-                            //injectRequireConfig('<%= paths.app %>/components/angular-mocks/angular-mocks.js'),
-                            //injectRequireConfig('<%= paths.test %>/e2e-mocks.js'),
                             mountFolder(connect, pathConfig.tmp),
                             mountFolder(connect, pathConfig.app),
                             mountFolder(connect, pathConfig.test),
