@@ -141,16 +141,16 @@ module.exports = function (grunt) {
                 dirs : ['<%= paths.dist %>']
             }
         },
-        // htmlmin : {
-        //     dist : {
-        //         files : [{
-        //             expand : true,
-        //             cwd : '<%= paths.app %>',
-        //             src : ['*.html'],
-        //             dest : '<%= paths.dist %>'
-        //         }]
-        //     }
-        // },
+        htmlmin : {
+            dist : {
+                files : [{
+                    expand : true,
+                    cwd : '<%= paths.app %>',
+                    src : ['*.html'],
+                    dest : '<%= paths.dist %>'
+                }]
+            }
+        },
         copy : {
             dist : {
                 files : [{
@@ -160,9 +160,7 @@ module.exports = function (grunt) {
                     dest : '<%= paths.dist %>',
                     src : [
                         'images/**/*.{webp,gif,png,jpg,jpeg}',
-                        'components/**/*',
                         'lib/**/*',
-                        '*.html',
                         '**/*.{sh,bat}'
                     ]
                 }]
@@ -172,7 +170,7 @@ module.exports = function (grunt) {
             options : {
                 sassDir : '<%= paths.app %>/compass/sass',
                 imagesDir : '<%= paths.app %>/compass/images',
-                fontsDir : '<%= paths.app %>/compass/fonts',
+                fontsDir : '/images/fonts',
                 relativeAssets : true
             },
             dist : {
@@ -218,7 +216,6 @@ module.exports = function (grunt) {
                 baseUrl : './',
                 mainConfigFile : '<%= paths.app %>/business/RequireConfig.js',
                 optimize : 'uglify',
-                //optimize : 'none',
                 removeCombined: true,
                 wrap: true,
                 useStrict: false,
@@ -231,10 +228,8 @@ module.exports = function (grunt) {
                         {
                             files: ['<%= paths.dist %>/index.html'],
                             module: 'AppLoader'
-                            //modulePath: './modules/'
                         }
                     ],
-                    //rjs: 'node_modules/grunt-contrib-requirejs',
                     modules : [{
                         name : 'AppLoader'
                     }]
@@ -245,6 +240,9 @@ module.exports = function (grunt) {
             dist : ['copy:dist', 'compass:dist']
         },
         jshint : {
+            options : {
+                jshintrc : '.jshintrc'
+            },
             test : ['<%= paths.app %>/business/**/*.js']
         },
         karma : {
@@ -271,8 +269,7 @@ module.exports = function (grunt) {
                 singleRun : true
             },
             travis : {
-                //browsers : ['PhantomJS'],
-                browsers: ['firefox'],
+                browsers : ['PhantomJS'],
                 reporters : ['progress'],
                 singleRun : true
             }
@@ -309,7 +306,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('serve', [
+    grunt.registerTask('server', [
         'clean:server',
         'compass:server',
         'connect:server',
@@ -333,10 +330,10 @@ module.exports = function (grunt) {
         'concurrent:dist',
         'requirejs:dist',
         'useminPrepare',
-        //'concat',
-        //'uglify',
+        'concat',
+        'uglify',
         'imagemin',
-        //'htmlmin',
+        'htmlmin',
         'rev',
         'usemin'
     ]);
