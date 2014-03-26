@@ -1,4 +1,4 @@
-/* global describe,beforeEach,browser,it,expect,element,by,driver */
+/* global describe,beforeEach,browser,it,expect,element,by,driver, protractor */
 
 describe('projects/new', function () {
     'use strict';
@@ -47,7 +47,7 @@ describe('projects/new', function () {
 
 
     // open new page
-    browser.get('http://localhost:9999/projects/new');
+    browser.get('/projects/new?e2e');
 
     describe('title', function () {
         var input, wrap, hint, error;
@@ -195,7 +195,12 @@ describe('projects/new', function () {
         it('invalid submit', function () {
             var submitBtn = element(by.css('button[type=submit]'));
 
-            submit.click();
+            submitBtn.click();
+
+            browser.getCurrentUrl().then(function (url) {
+                
+                expect(url).toEqual(browser.baseUrl + '/projects?e2e');
+            });
         });
     });
 });

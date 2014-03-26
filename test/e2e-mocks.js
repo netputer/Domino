@@ -11,13 +11,7 @@ define(['angular', 'ngMock'], function (angular) {
         var baseApiUrl = CONFIG.API_URL_PREFIX;
 
         var projectRes = {
-            'status': '200',
-            'error': {
-                'projectTitle': '对不起，错咯',
-                'url': 'url error',
-                'stagingServers': 'StagingServers error',
-                'productionServers': 'ProductionServers, error'
-            }
+            'status': '200'
         };
 
         var projectListRes = {
@@ -66,6 +60,5 @@ define(['angular', 'ngMock'], function (angular) {
         $httpBackend.whenDELETE(/^\w+.*/).passThrough();
     }]);
     
-    console.info(4444);
     angular.module('domino').requires.push('e2e-mocks');
 });
