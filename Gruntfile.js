@@ -40,7 +40,7 @@ module.exports = function (grunt) {
 
             if (req.method === 'PUT') {
                 
-                res.statusCode = '508';
+                //res.statusCode = '508';
             }
             //grunt.log.writeln(fileStr);
             res.end(fileStr);

@@ -62,6 +62,14 @@ define([ '_', 'moment'], function (_, moment) {
             });
         };
 
+        $scope.goHookList = function () {
+            $location.path('/projects/' + $routeParams.title + '/hooks');
+        };
+
+        $scope.goEdit = function () {
+            $location.path('/projects/' + $routeParams.title);
+        };
+
         // listen status
         $scope.$on('eventcenter.server', function (data) {
 

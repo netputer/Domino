@@ -38,7 +38,7 @@ define([ '_' ], function (_) {
 
             confirm('Are you sure to delete this Project?').then(function () {
 
-                projectsDao.project.delete({id: id}).$promise.then(function () {
+                projectsDao.project.delete({title: title}).$promise.then(function () {
 
                     //删除成功后刷新当前页面
                     //$route.reload();

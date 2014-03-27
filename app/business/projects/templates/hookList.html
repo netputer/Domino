@@ -1,0 +1,41 @@
+<div>
+    <div class="page-header clearfix">
+      <button type="button" class="btn btn-prev pull-right" ng-click="createProject();">
+        <i class="fa fa-arrow-left" ng-click="fallback();"> Prev</i>
+      </button>
+        <h1>Hook</h1>
+    </div>
+    <div class="list">
+        <table class="table table-striped table-hover ">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Order</th>
+                <th>Event</th>
+                <th>Script</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-if="!hooks || !hooks.length">
+                <td colspan="5" align="center">
+                    暂无内容
+                </td>
+            </tr>
+            <tr ng-repeat="item in hooks">
+              <td>
+                {{ item.title }}
+              </td>
+              <td>{{ item.order }}</td>
+              <td>{{ item.event }}</td>
+              <td><a href="javascript:void(0)" dmn-script-edit class="task-script-edit" script="item.script" save="save(script, item.id);">Edit</a></td>
+              <td>
+                <button class="btn btn-success" ng-click="run(item.id);" title="run" >
+                    <i class="fa fa-external-link "></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+        </table> 
+     </div>
+</div>

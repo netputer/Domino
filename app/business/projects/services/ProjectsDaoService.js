@@ -3,11 +3,12 @@
         var ProjectsDaoService = function ($resource, $rootScope, CONFIG) {
 
             var actions = {
-                projectApi: 'project/:id',
-                projectTasksList: 'project/:id/tasks',
-                hookApi: 'hook/:id',
-                hookRun: 'hook/:id/run',
-                taskApi: 'task/:id'
+                projectApi: 'project/:title',
+                projectTasksList: 'project/:title/tasks',
+                projectHooksList: 'project/:title/hooks',
+                hookApi: 'hook/:title',
+                hookRun: 'hook/:title/run',
+                taskApi: 'task/:title'
             };
 
             for (var key in actions) {
@@ -24,6 +25,10 @@
                     },
                     update: {
                         method: 'put'
+                    },
+                    getHooks: {
+                        url: actions.projectHooksList,
+                        method: 'get'
                     }
                 }),
 
@@ -31,6 +36,9 @@
                     run: {
                         url: actions.hookRun,
                         method: 'get'
+                    },
+                    update: {
+                        method: 'put'
                     }
                 }),
 

@@ -3,6 +3,7 @@
 }
 
 .d-project-item {
+    padding-bottom: 30px;
     .status  {
         border-right: 1px #e7e7e7 solid;
         color: #78cd51;
@@ -59,4 +60,16 @@
         -webkit-align-items: center;
         -webkit-justify-content: center;
     }
+}
+
+.task-link {
+    margin-bottom: 10px;
+}
+
+.task-script-edit {
+    color: #428bca;
+}
+
+.script-edit-area {
+    width: 100%;
 }
