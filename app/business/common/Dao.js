@@ -40,12 +40,8 @@ define([
                 //$rootScope.isLoading = false;
 
                 //表单处理,传递给下层进行处理，其余进行统一弹窗处理
-                if (status === '508') {
+                if (status !== '508') {
                     
-                    //deferred.reject(data, status);
-                }
-                else {
-
                     window.alert(httpStatusMsg[data.error.msg]);
                 }
 

@@ -45,7 +45,8 @@ define(['angular'], function (angular) {
                 };
             }
         ])
-        .run(['serverEventCenter',
+        .run([
+            'serverEventCenter',
             function (serverEventCenter) {
                 //serverEventCenter.init();
             }

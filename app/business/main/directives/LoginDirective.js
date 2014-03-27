@@ -30,12 +30,15 @@
                     };
 
                     // load google sign in Script
-                   ;(function () {
-                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                    (function () {
+                        var po = document.createElement('script');
+                        po.type = 'text/javascript';
+                        po.async = true;
                         po.src = 'https://apis.google.com/js/client:plusone.js?onload=GOOGLE_GET_AUTH';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(po, s);
 
-                   })();
+                    })();
 
                    /**
                     * google api回调函数
@@ -83,9 +86,9 @@
                             }
                         };
 
-                        gapi.signin.render('googleLogin', additionalParams);
+                        //gapi.signin.render('googleLogin', additionalParams);
 
-                   };
+                    };
                 }
             };
         };
