@@ -1,6 +1,6 @@
 /*global describe, it*/
 (function () {
-    define(['app/javascripts/utilities/EnvironmentSniffer'], function (EnvironmentSniffer) {
+    define(['app/business/utils/services/EnvironmentSniffer'], function (EnvironmentSniffer) {
         EnvironmentSniffer = new EnvironmentSniffer();
 
         describe('EnvironmentSniffer', function () {

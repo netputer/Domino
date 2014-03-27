@@ -257,7 +257,7 @@ module.exports = function (grunt) {
             test : {
                 reporters : ['progress', 'junit', 'coverage'],
                 preprocessors : {
-                    '<%= paths.app %>/javascripts/**/*.js' : 'coverage'
+                    '<%= paths.app %>/business/**/*.js' : 'coverage'
                 },
                 junitReporter : {
                     outputFile : '<%= paths.test %>/output/test-results.xml'
