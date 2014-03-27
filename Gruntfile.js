@@ -323,7 +323,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test:travis', [
         'jshint:test',
-        'karma:travis'
+        'karma:travis',
+        'protractor:test'
     ]);
 
     grunt.registerTask('build', [
