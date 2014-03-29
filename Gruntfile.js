@@ -39,7 +39,7 @@ module.exports = function (grunt) {
             //grunt.log.writeln(req.method);
 
             if (req.method === 'PUT') {
-                
+
                 //res.statusCode = '508';
             }
             //grunt.log.writeln(fileStr);
@@ -214,7 +214,7 @@ module.exports = function (grunt) {
                 appDir : '<%= paths.app %>/business',
                 dir :　'<%= paths.dist %>/business',
                 baseUrl : './',
-                mainConfigFile : '<%= paths.app %>/business/RequireConfig.js',
+                mainConfigFile : '<%= paths.app %>/business/AppLoader.js',
                 optimize : 'uglify',
                 removeCombined: true,
                 wrap: true,
@@ -317,6 +317,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', [
         'jshint:test',
+        'connect:server',
         'karma:test',
         'protractor:test'
     ]);
@@ -330,17 +331,17 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'concurrent:dist',
-        'requirejs:dist',
         'useminPrepare',
-        'concat',
-        'uglify',
+        //'concat',
+        //'uglify',
         'imagemin',
         'htmlmin',
+        'requirejs:dist',
         'rev',
         'usemin'
     ]);
 
-    grunt.registerTask('serve:build', [
+    grunt.registerTask('server:build', [
         'build',
         'connect:build:keepalive'
     ]);
