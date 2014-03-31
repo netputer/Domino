@@ -9,7 +9,7 @@
 	</div>
 	<div class="list">
 		<form class="form-horizontal" name="newForm" novalidate>
-			<div class="form-group" ng-class="{'has-error': newForm.serverInvalid.projectTitle || (newForm.projectTitle.$dirty && newForm.projectTitle.$invalid)}" ng-show="isModify">
+			<div class="form-group" ng-class="{'has-error': newForm.serverInvalid.projectTitle || (newForm.projectTitle.$dirty && newForm.projectTitle.$invalid)}" ng-show="!isModify" id="projectTitleWrap">
 				<label class="control-label" for="projectTitle">Project Title<span class="red">*</span></label>
 				<div class="controls">
 				  <input class="form-control" id="projectTitle" name="projectTitle" type="text" ng-model="project.title" required autofocus>
@@ -17,7 +17,7 @@
 				  </form-tooltip>
 				</div>
 			</div>
-			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.url || (newForm.gitUrl.$dirty && newForm.gitUrl.$invalid)}">
+			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.url || (newForm.gitUrl.$dirty && newForm.gitUrl.$invalid)}" id="projectUrlWrap">
 				<label class="control-label" for="gitUrl">Git Url<span class="red">*</span></label>
 				<div class="controls">
 				  <input class="form-control" id="gitUrl" name="gitUrl" type="url" ng-model="project.url" required>
@@ -39,7 +39,7 @@
 				  </label>
 				</div>
 			</div>
-			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.stagingServers || (newForm.stagingServers.$dirty && newForm.stagingServers.$invalid)}">
+			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.stagingServers || (newForm.stagingServers.$dirty && newForm.stagingServers.$invalid)}" id="stagingServersWrap">
 			  <label class="control-label" for="stagingServer">StagingServers<span class="red">*</span></label>
 			  <div class="controls">
 				<input class="form-control" id="stagingServer" name="stagingServers" type="text" ng-model="project.stagingServers" required ng-pattern="/^(([\w-]+\.)+([\w]+)\|?)+$/">
@@ -49,7 +49,7 @@
 			  </div>
 			</div>
 
-			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.productionServers || (newForm.productionServers.$dirty && newForm.productionServers.$invalid)}">
+			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.productionServers || (newForm.productionServers.$dirty && newForm.productionServers.$invalid)}" id="productionServersWrap">
 			  <label class="control-label" for="productionServers">ProductionServers<span class="red">*</span></label>
 			  <div class="controls">
 				<input class="form-control" id="productionServers" name="productionServers" type="text" ng-model="project.productionServers" required ng-pattern="/^(([\w-]+\.)+([\w]+)\|?)+$/">

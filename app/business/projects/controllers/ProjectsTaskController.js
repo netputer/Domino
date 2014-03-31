@@ -6,7 +6,7 @@
  */
 
 define([ '_', 'moment'], function (_, moment) {
-    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams) {
+    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm) {
 
         $scope.tasks = [];
 
@@ -62,6 +62,28 @@ define([ '_', 'moment'], function (_, moment) {
             });
         };
 
+        $scope.goHookList = function () {
+            $location.path('/projects/' + $routeParams.title + '/hooks');
+        };
+
+        $scope.goEdit = function () {
+            $location.path('/projects/' + $routeParams.title);
+        };
+
+        // 删除当前项目
+        $scope.delete = function () {
+
+            confirm('Are you sure to delete this Project?').then(function () {
+
+                projectsDao.project.delete({title:  $routeParams.title}).$promise.then(function () {
+
+                    //删除成功后返回到list页面
+                    $location.path('/projects');
+                    
+                });
+            });
+        };
+
         // listen status
         $scope.$on('eventcenter.server', function (data) {
 
@@ -78,7 +100,7 @@ define([ '_', 'moment'], function (_, moment) {
         });
     };
 
-    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams' ];
+    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm' ];
 
     return ProjectsTaskController;
 });
