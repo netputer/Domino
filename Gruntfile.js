@@ -60,7 +60,7 @@ module.exports = function (grunt) {
                 tasks : ['compass:server']
             },
             test : {
-                files : ['<%= paths.app %>/javascripts/**/*.js', '<%= paths.test %>/**/*.js'],
+                files : ['<%= paths.app %>/business/**/*.js', '<%= paths.test %>/**/*.js'],
                 tasks : ['jshint:test', 'karma:server:run'],
                 options : {
                     spawn : false
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
             livereload: {
                 files: [
                     '<%= paths.app %>/*.html',
-                    '<%= paths.app %>/javascripts/**/*.js',
+                    '<%= paths.app %>/business/**/*.js',
                     '<%= paths.app %>/images/**/*.*',
                     '<%= paths.tmp %>/stylesheets/**/*.css',
                     '<%= paths.tmp %>/images/**/*.*'

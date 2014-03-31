@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: '/business',
+    baseUrl : '/business',
     paths : {
         jQuery : '../components/jquery/jquery',
         _ : '../components/underscore/underscore',
@@ -9,7 +9,8 @@ require.config({
         ngAnimate : '../components/angular-animate/angular-animate',
         ngResource : '../components/angular-resource/angular-resource',
         uiBootstrap: '../components/angular-bootstrap/ui-bootstrap-tpls',
-        text : '../components/requirejs-text/text'
+        text : '../components/requirejs-text/text',
+        io : '../components/socket.io-client/dist/socket.io'
     },
     shim : {
         _ : {
@@ -34,9 +35,14 @@ require.config({
             deps : ['angular'],
             exports : 'ngResource'
         },
-        uiBootstrap: {
+        uiBootstrap : {
             deps : ['angular'],
             exports : 'uiBootstrap'
+        },
+        io : {
+            exports : 'io'
         }
     }
 });
+
+
