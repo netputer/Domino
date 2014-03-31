@@ -19,13 +19,13 @@ define([ 'angular', '_' ], function (angular, _) {
         //console.info('routeParams', $routeParams.id);
         
         // 检测是否为修改页面
-        if (typeof $routeParams.id !== 'undefined') {
+        if (typeof $routeParams.title !== 'undefined') {
 
             // 当前类型
             $scope.isModify = true;
 
             // 获取当前project的content
-            projectsDao.project.get({ id: $routeParams.id }).$promise.then(function (data) {
+            projectsDao.project.get({ title: $routeParams.title }).$promise.then(function (data) {
 
                 var body = data.body;
                 // ....
@@ -50,7 +50,7 @@ define([ 'angular', '_' ], function (angular, _) {
                 var req;
                 if ($scope.isModify) {
                     
-                    req = projectsDao.project.update({ id: $routeParams.id }, $scope.saved);
+                    req = projectsDao.project.update({ title: $routeParams.title }, $scope.saved);
                 }
                 else {
 

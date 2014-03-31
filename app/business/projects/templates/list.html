@@ -4,12 +4,15 @@
         <h1>Project</h1>
     </div>
     <div class="list">
+        <div ng-if="!projects || !projects.length" class="text-center">
+            哦啦啦，暂无内容
+        </div>
         <li class="d-project-item hbox" ng-repeat="item in projects">
             <div class="status checked vbox">
                 <i class="fa fa-check-circle"></i>
             </div>
             <div class="body">
-                <div class="title h3">
+                <div class="title">
                     <i class="icon fa fa-github" ng-if="item.type === 0"></i>
                     <!-- TODO: replace this icon with Git -->
                     <i class="icon fa fa-github" ng-if="item.type === 1"></i>
@@ -70,7 +73,9 @@
                 -->
             </div>
             <div class="btn-open vbox">
-                <i class="fa fa-angle-right"></i>
+                <a href="" ng-href="/projects/task/{{item.title}}" title="edit">
+                    <i class="fa fa-angle-right"></i>
+                </a>
             </div>
         </li>
         <!--

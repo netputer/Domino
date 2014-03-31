@@ -11,14 +11,19 @@ define([
     'projects/services/ProjectsDaoService',
     'projects/controllers/ProjectsListController', //项目列表
     'projects/controllers/ProjectsEditController', //项目编辑
-    'projects/controllers/ProjectsTaskController' //项目任务编辑
+    'projects/controllers/ProjectsTaskController', //项目任务编辑
+    'projects/controllers/ProjectsHookListController', //项目hook列表
+
+    'projects/directives/editScriptDirective'
 ], function (
     angular,
     ngRouter,
     ProjectsDaoService,
     ProjectsListController,
     ProjectsEditController,
-    ProjectsTaskController
+    ProjectsTaskController,
+    ProjectsHookListController,
+    editScriptDirective
 ) {
     angular.module('dmnProjects', [])
 
@@ -28,6 +33,10 @@ define([
 
     .controller('ProjectsEditController', ProjectsEditController)
 
-    .controller('ProjectsTaskController', ProjectsTaskController);
+    .controller('ProjectsTaskController', ProjectsTaskController)
+
+    .controller('ProjectsHookListController', ProjectsHookListController)
+
+    .directive('dmnScriptEdit', editScriptDirective);
 
 });

@@ -35,12 +35,12 @@ module.exports = function (grunt) {
             //grunt.log.writeln(fileJson);
             var fileStr  = JSON.stringify(fileJson);
 
-            grunt.log.writeln(res.statusCode);
-            grunt.log.writeln(req.method);
+            //grunt.log.writeln(res.statusCode);
+            //grunt.log.writeln(req.method);
 
-            if (req.method == 'PUT') {
+            if (req.method === 'PUT') {
 
-                res.statusCode = '508';
+                //res.statusCode = '508';
             }
             //grunt.log.writeln(fileStr);
             res.end(fileStr);
@@ -50,7 +50,6 @@ module.exports = function (grunt) {
             next();
         }
     };
-
 
     grunt.initConfig({
         paths : pathConfig,
@@ -95,8 +94,10 @@ module.exports = function (grunt) {
                                 //'^/account/?.*$ /templates/account/index.html',
                                 '^/(projects|utils)/?[^.]*$ /index.html [L]'
                             ]),
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, pathConfig.app)
+                            mountFolder(connect, pathConfig.tmp),
+                            mountFolder(connect, pathConfig.app),
+                            mountFolder(connect, pathConfig.test),
+                            mockConnect
                         ];
                     }
                 }
@@ -213,7 +214,7 @@ module.exports = function (grunt) {
                 appDir : '<%= paths.app %>/business',
                 dir :　'<%= paths.dist %>/business',
                 baseUrl : './',
-                mainConfigFile : '<%= paths.app %>/business/RequireConfig.js',
+                mainConfigFile : '<%= paths.app %>/business/AppLoader.js',
                 optimize : 'uglify',
                 removeCombined: true,
                 wrap: true,
@@ -256,7 +257,7 @@ module.exports = function (grunt) {
             test : {
                 reporters : ['progress', 'junit', 'coverage'],
                 preprocessors : {
-                    '<%= paths.app %>/javascripts/**/*.js' : 'coverage'
+                    '<%= paths.app %>/business/**/*.js' : 'coverage'
                 },
                 junitReporter : {
                     outputFile : '<%= paths.test %>/output/test-results.xml'
@@ -285,6 +286,23 @@ module.exports = function (grunt) {
                 tagMessage : 'Version %VERSION%',
                 push : false
             }
+        },
+        protractor: {
+            options: {
+                keepAlive : true,
+                noColor : false
+            },
+            test: {
+                options: {
+                    args: {
+                        specs: [
+                            'test/e2e/*.js'
+                        ],
+                        baseUrl: 'http://127.0.0.1:9999'
+                    }
+                    //debug: true
+                }
+            },
         }
     });
 
@@ -299,28 +317,31 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', [
         'jshint:test',
-        'karma:test'
+        'connect:server',
+        'karma:test',
+        'protractor:test'
     ]);
 
     grunt.registerTask('test:travis', [
         'jshint:test',
         'karma:travis'
+        //'protractor:test'
     ]);
 
     grunt.registerTask('build', [
         'clean:dist',
         'concurrent:dist',
-        'requirejs:dist',
         'useminPrepare',
-        'concat',
-        'uglify',
+        //'concat',
+        //'uglify',
         'imagemin',
         'htmlmin',
+        'requirejs:dist',
         'rev',
         'usemin'
     ]);
 
-    grunt.registerTask('serve:build', [
+    grunt.registerTask('server:build', [
         'build',
         'connect:build:keepalive'
     ]);

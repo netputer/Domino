@@ -42,7 +42,7 @@
                         isLogin = false;
                         accountService.userInfo = '';
                         deferred.reject(user);
-                    });             
+                    });
 
                     return deferred.promise;
                 },

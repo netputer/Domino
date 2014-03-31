@@ -41,24 +41,29 @@
                 controller : 'ProjectsEditController'
             })
 
-            .when('/projects/:id', {
+            .when('/projects/:title', {
 
                 templateUrl : '/business/projects/templates/edit.html',
                 controller : 'ProjectsEditController'
             })
 
-            .when('/projects/task/:id', {
+            .when('/projects/task/:title', {
 
                 templateUrl : '/business/projects/templates/task.html',
                 controller : 'ProjectsTaskController'
             })
+
+            .when('/projects/:title/hooks', {
+
+                templateUrl : '/business/projects/templates/hookList.html',
+                controller : 'ProjectsHookListController'
+            })
+
             .when('/utils', {
                 
                 templateUrl : '/business/utils/templates/utils.html',
                 controller : 'UtilsController'
             });
         }]);
-
-        angular.bootstrap(document, ['domino']);
     });
 }(this));

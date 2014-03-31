@@ -33,23 +33,6 @@ define([ '_' ], function (_) {
             $location.path('/projects/new');
         };
 
-        // 删除当前项目
-        $scope.delete = function (id) {
-
-            confirm('Are you sure to delete this Project?').then(function () {
-
-                projectsDao.project.delete({id: id}).$promise.then(function () {
-
-                    //删除成功后刷新当前页面
-                    //$route.reload();
-                    
-                    $scope.projects = _.reject($scope.projects, function (project, name) {
-                        return project.id === id;
-                    });
-                });
-            });
-        };
-
         // get project list
         projectsDao.project.get().$promise.then(function (projects) {
             $scope.projects = projects.body;
