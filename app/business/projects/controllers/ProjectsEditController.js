@@ -6,7 +6,7 @@
  */
 
 define([ 'angular', '_' ], function (angular, _) {
-    var ProjectsEditController = function ($scope, $location, projectsDao, confirm, $routeParams, statusMsgMapping) {
+    var ProjectsEditController = function ($scope, $location, $window, projectsDao, confirm, $routeParams, statusMsgMapping) {
 
         // 初始化
         $scope.saved = {};
@@ -17,7 +17,7 @@ define([ 'angular', '_' ], function (angular, _) {
 
 
         //console.info('routeParams', $routeParams.id);
-        
+
         // 检测是否为修改页面
         if (typeof $routeParams.title !== 'undefined') {
 
@@ -49,7 +49,7 @@ define([ 'angular', '_' ], function (angular, _) {
                 // 如果为新建页面，则做creat操作，否则做update操作
                 var req;
                 if ($scope.isModify) {
-                    
+
                     req = projectsDao.project.update({ title: $routeParams.title }, $scope.saved);
                 }
                 else {
@@ -61,7 +61,7 @@ define([ 'angular', '_' ], function (angular, _) {
 
                     $location.path('/projects');
                 }, function (res) {
-                    
+
                     if (res.status === 508) {
 
                         // _.forEach(res.data.error, function (val, name, item) {
@@ -81,7 +81,7 @@ define([ 'angular', '_' ], function (angular, _) {
                 angular.forEach(form, function (input, key) {
 
                     if (input.hasOwnProperty('$dirty')) {
-                        
+
                         if (input.$pristine && (input.$viewValue === null || input.$viewValue === undefined)) {
                             input.$setViewValue('');
                         }
@@ -99,7 +99,7 @@ define([ 'angular', '_' ], function (angular, _) {
          */
         $scope.fallback = function () {
 
-            $location.path('/projects');
+            $window.history.back(-1);
         };
 
         /**
@@ -112,7 +112,7 @@ define([ 'angular', '_' ], function (angular, _) {
         };
     };
 
-    ProjectsEditController.$inject = [ '$scope', '$location', 'projectsDao', 'confirm', '$routeParams', 'statusMsgMapping' ];
+    ProjectsEditController.$inject = [ '$scope', '$location', '$window', 'projectsDao', 'confirm', '$routeParams', 'statusMsgMapping' ];
 
     return ProjectsEditController;
 });

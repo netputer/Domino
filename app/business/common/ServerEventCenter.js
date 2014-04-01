@@ -8,17 +8,19 @@ define(['angular'], function (angular) {
     'use strict';
 
     angular.module('serverEventCenterModule', [])
-    
-        .factory('serverEventCenter', [ '$rootScope', '$resource', '$timeout', 'CONFIG',
 
-            function ($rootScope, $resource, $timeout, CONFIG) {
+        .factory('serverEventCenter', [ '$rootScope', 'socket', '$timeout', 'CONFIG',
 
-                var center = $resource(CONFIG.API_URL_PREFIX + 'api/server/event/center', {}, {
-                    query: {method: 'get', toArray: true, noLoading: true}
-                });
+            function ($rootScope, socket, $timeout, CONFIG) {
+
+
+                // var center = $resource(CONFIG.API_URL_PREFIX + 'api/server/event/center', {}, {
+                //     query: {method: 'get', toArray: true, noLoading: true}
+                // });
 
                 function init() {
-    
+                    //console.info(socket);
+                    return;
                     $timeout(polling, 5000);
                 }
 
@@ -39,7 +41,7 @@ define(['angular'], function (angular) {
                     $rootScope.$broadcast('eventcenter.server', data);
                 }
 
-                
+
                 return {
                     init: init
                 };
@@ -48,7 +50,7 @@ define(['angular'], function (angular) {
         .run([
             'serverEventCenter',
             function (serverEventCenter) {
-                //serverEventCenter.init();
+                serverEventCenter.init();
             }
         ]);
 });

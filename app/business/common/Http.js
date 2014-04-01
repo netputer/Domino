@@ -8,7 +8,7 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
     'use strict';
 
     angular.module('httpModule', [])
-    
+
         .constant('statusMsgMapping', statusMsgMapping)
 
         .factory('httpInterceptor', ['$q', '$rootScope', '$window', 'statusMsgMapping',
@@ -19,7 +19,7 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                     request: function (config) {
 
                         if (config.noLoading !== true) {
-                            
+
                             //loading状态
                             $rootScope.isLoading = true;
 
