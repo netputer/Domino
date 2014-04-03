@@ -29,7 +29,7 @@ define([ 'angular', '_' ], function (angular, _) {
                 var fieldCtrl = ctrl[fieldName];
 
                 if (fieldCtrl) {
-                    
+
                     fieldCtrl.$formatters.push(validateFn);
                     fieldCtrl.$parsers.push(validateFn);
                 }
@@ -61,7 +61,7 @@ define([ 'angular', '_' ], function (angular, _) {
                     var isDirty = fieldCtrl.$dirty;
 
                     if (!isDirty || isValid) {
-                        
+
                         showHint();
                     }
                     else {
@@ -107,6 +107,63 @@ define([ 'angular', '_' ], function (angular, _) {
                     $scope.errorMsgs = [];
                 }
             }
+        };
+    }])
+
+    // console log
+    .directive('logConsole', [ function () {
+
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {
+                allLog: '=allLog', // 所有的log
+                incrementLog: '=incrementLog' // 增量log
+            },
+            templateUrl: '/business/common/templates/logConsole.html',
+            link: function ($scope, el, attrs, ctrl) {
+
+                $scope.isLoading = true;
+
+                render($scope.allLog);
+
+                // note: 此处监听allLog，如果监听incrementLog, 当每次增量log相同的时候不能更新
+                $scope.$watch('allLog', function () {
+
+                    render($scope.incrementLog);
+                });
+
+                function render(log) {
+
+                    if (!log) {
+                        return;
+                    }
+
+                    $scope.isLoading = false;
+
+                    var arr = log.split('\n');
+
+                    var currArr = _.map(arr, function (item) {
+
+                        return '<p><a class="num"></a><span>' + item + '</span></p>';
+                    });
+
+                    el.find('.pre-log').append(currArr.join(''));
+                }
+            }
+        };
+    }])
+
+    // 内部loading
+    .directive('innerLoading', [ function () {
+
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {
+                text: '@text'
+            },
+            templateUrl: '/business/common/templates/innerLoading.html'
         };
     }]);
 });

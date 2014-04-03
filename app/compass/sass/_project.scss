@@ -73,3 +73,38 @@
 .script-edit-area {
     width: 100%;
 }
+
+.pre-log {
+    min-height: 12px;
+    padding: 1em 0;
+    color: #f1f1f1;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 19px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #222;
+    overflow-x: scroll;
+    counter-reset: line-numbering;
+    p {
+        padding-right: 15px;
+        margin: 0;
+        min-height: 16px;
+    }
+    a {
+        color: #5ff;
+    }
+    a.num {
+        display: inline-block;
+        text-align: right;
+        min-width: 40px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #666;
+        &:before {
+            content: counter(line-numbering);
+            counter-increment: line-numbering;
+            padding-right: 1em;
+        }
+    }
+}

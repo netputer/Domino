@@ -4,8 +4,9 @@
 
             var actions = {
                 projectApi: 'project/:title',
-                projectTasksList: 'project/:title/tasks',
+                projectTasksList: 'project/:title/task',
                 projectHooksList: 'project/:title/hooks',
+                trigger: 'project/:title/trigger/:evt',
                 hookApi: 'hook/:title',
                 hookRun: 'hook/:title/run',
                 taskApi: 'task/:title'
@@ -28,6 +29,10 @@
                     },
                     getHooks: {
                         url: actions.projectHooksList,
+                        method: 'get'
+                    },
+                    trigger: {
+                        url: actions.trigger,
                         method: 'get'
                     }
                 }),

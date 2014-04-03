@@ -5,61 +5,70 @@
  * @date 2014/03/17
  */
 
-define([ '_', 'moment'], function (_, moment) {
-    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm) {
+define([ 'angular', '_', 'moment'], function (angular, _, moment) {
+    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm, socket) {
 
         $scope.tasks = [];
 
         // 根据返回的status，添加状态class
-        $scope.statusClass = [ 'info', 'warning', 'default', 'danger', 'warning', 'success' ];
+        $scope.statusClass = [ 'info', 'warning', 'default', 'warning', 'danger', 'default', 'success' ];
 
         $scope.statusText = {
             0 : 'created',
-            1 : 'executing',
-            2 : 'pause',
-            3 : 'fail',
-            4 : 'executing',
-            5 : 'success'
+            1 : 'queue',
+            2 : 'executing',
+            3 : 'pause',
+            4 : 'fail',
+            5 : 'force executing',
+            6 : 'success'
         };
 
         //$scope.totalItems = 64;
         //$scope.currentPage = 4;
 
         // get project list
-        projectsDao.project.getTasks({ id: $routeParams.id }).$promise.then(function (tasks) {
+        projectsDao.project.getTasks({ title: $routeParams.title }).$promise.then(function (tasks) {
 
             // TODO filter
-            _.forEach(tasks, function (item, name) {
+            _.forEach(tasks.body, function (item, name) {
                 filterTask(item);
             });
 
-            $scope.tasks = tasks;
+            $scope.tasks = tasks.body;
         });
 
         // 过滤处理item数据
         function filterTask(item) {
 
-            var duration = item.endingTimestamp - item.timestamp;
+            var duration = moment(item.endTine).valueOf() - moment(item.startTime).valueOf();
 
             item.duration = moment.duration(duration).asMilliseconds();
 
-            item.timestamp = moment(parseInt(item.timestamp, 10)).format('YYYY-MM-DD hh:mm:ss');
+            item.timestamp = moment(item.startTime).format('YYYY-MM-DD hh:mm:ss');
+
+            item.initor = item.initor || '-';
+
+            return item;
 
         }
 
-        // public handler
-        $scope.publish = function (id) {
+        /**
+         * publish hooks
+         * @param  {string} evt staging or producting
+         */
+        $scope.publish = function (evt) {
 
             //$scope['disabled-hookItem' + id] = true;
-            projectsDao.hook.run({ id: id }).$promise.then(function (result) {
-                var taskId = result.id;
+            projectsDao.project.trigger({ evt: evt,  title: $routeParams.title })
+                .$promise.then(function (result) {
+                    var taskId = result.id;
 
-                projectsDao.task.get({ id: taskId }).$promise.then(function (task) {
+                    // projectsDao.task.get({ id: taskId }).$promise.then(function (task) {
 
-                    filterTask(task);
-                    $scope.tasks.unshift(task);
+                    //     filterTask(task);
+                    //     $scope.tasks.unshift(task);
+                    // });
                 });
-            });
         };
 
         $scope.goHookList = function () {
@@ -79,28 +88,87 @@ define([ '_', 'moment'], function (_, moment) {
 
                     //删除成功后返回到list页面
                     $location.path('/projects');
-                    
+
                 });
             });
         };
 
-        // listen status
-        $scope.$on('eventcenter.server', function (data) {
 
-            if (data.channel === 'taskStatusChange') {
-                
-                _.forEach($scope.tasks, function (task, name, tasks) {
+        $scope.toggleConsole = function (id) {
 
-                    if (task.id === data.body.id) {
-                        
-                        task.status = data.body.status;
-                    }
-                });
-            }
+            var tasks = $scope.tasks;
+
+            _.forEach(tasks, function (task) {
+
+                if (task.id === id) {
+
+                    task.showConsole = !task.showConsole;
+                }
+                else {
+
+                    task.showConsole = false;
+                }
+
+            });
+        };
+
+
+        /**
+         * socket listen
+         *
+         */
+        socket.on('task.add', function (data) {
+
+            console.info('task.add:', data);
+
+            // progress 初始化为空
+            data.log = '';
+
+            // 关闭所有console 面板
+            _.forEach($scope.tasks, function (task) {
+
+                task.showConsole = false;
+            });
+
+            // 主动打开当前console panle
+            data.showConsole = true;
+
+            // 添加到tasks列表
+            $scope.tasks.unshift(filterTask(data));
+        });
+
+        socket.on('task.change', function (data) {
+
+            console.info('task.change:', data);
+            _.forEach($scope.tasks, function (task, name, tasks) {
+
+                if (task.id === data.id) {
+                    task.status = data.status;
+                    $scope.$apply();
+                }
+            });
+        });
+
+        socket.on('task.progress', function (data) {
+
+            console.info('task.progress:', data.id, data);
+
+            _.forEach($scope.tasks, function (task) {
+
+                if (data.id === task.id) {
+
+                    $scope.$apply(function () {
+
+                        // log 增量
+                        task.incrementLog = data.progress;
+                        task.log += data.progress;
+                    });
+                }
+            });
         });
     };
 
-    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm' ];
+    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm', 'socket' ];
 
     return ProjectsTaskController;
 });

@@ -4,6 +4,7 @@
         'ngRouter',
         'ngAnimate',
         'ngResource',
+        'ngSanitize',
         'uiBootstrap',
 
         'common/CommonModule',
@@ -14,7 +15,7 @@
         angular
     ) {
         angular.module('domino', [
-            'ngRoute', 'ngAnimate', 'ngResource', 'ui.bootstrap', 'dmnCommon', 'dmnMain', 'dmnProjects',
+            'ngRoute', 'ngAnimate', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'dmnCommon', 'dmnMain', 'dmnProjects',
             'dmnUtils'
         ])
 
@@ -60,7 +61,7 @@
             })
 
             .when('/utils', {
-                
+
                 templateUrl : '/business/utils/templates/utils.html',
                 controller : 'UtilsController'
             });
