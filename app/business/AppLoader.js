@@ -1,7 +1,7 @@
 require.config({
     baseUrl: '/business',
     paths : {
-        jQuery : '../components/jquery/jquery',
+        jQuery : '../components/jquery/dist/jquery',
         _ : '../components/underscore/underscore',
         moment: '../components/moment/min/moment.min',
         angular : '../components/angular/angular',
