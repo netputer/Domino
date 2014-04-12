@@ -40,16 +40,28 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         // 过滤处理item数据
         function filterTask(item) {
 
-            var duration = moment(item.endTine).valueOf() - moment(item.startTime).valueOf();
+            item.duration =  getDuration(item, item);
 
-            item.duration = moment.duration(duration).asMilliseconds();
-
-            item.timestamp = moment(item.startTime).format('YYYY-MM-DD hh:mm:ss');
+            item.startTimeStr = moment(item.startTime).format('YYYY-MM-DD hh:mm:ss');
 
             item.initor = item.initor || '-';
 
             return item;
 
+        }
+
+        /**
+         * 获取持续时间，note: 在change 的过程中没有结束时间
+         * @param  {Object} item 获取结束时间
+         * @param  {Object} task 用来获取开始时间
+         */
+        function getDuration(item, task) {
+            var endTime = item.endTime || (new Date());
+            var duration = moment(endTime).valueOf() - moment(task.startTime).valueOf();
+
+            duration = moment.duration(duration).asMilliseconds();
+
+            return duration;
         }
 
         /**
@@ -144,6 +156,8 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
 
                 if (task.id === data.id) {
                     task.status = data.status;
+
+                    task.duration = getDuration(data, task);
                     $scope.$apply();
                 }
             });
@@ -158,6 +172,8 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                 if (data.id === task.id) {
 
                     $scope.$apply(function () {
+
+                        task.duration = getDuration(data, task);
 
                         // log 增量
                         task.incrementLog = data.progress;
