@@ -1,15 +1,11 @@
- language: node_js
+language: node_js
  node_js:
    - "0.10"
  before_script:
    - npm install -g grunt-cli bower
+   - npm install
    - gem install compass --pre
    - bower install
-   - export DISPLAY=:99.0
-   - sh -e /etc/init.d/xvfb start
-   - ./node_modules/protractor/bin/install_selenium_standalone
-   - java -jar selenium/selenium-server-standalone-2.35.0.jar -Dwebdriver.chrome.driver=./selenium/chromedriver &
-   - sleep 3
  notifications:
    email:
      - frontend@wandoujia.com
