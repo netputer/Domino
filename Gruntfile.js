@@ -38,9 +38,10 @@ module.exports = function (grunt) {
             //grunt.log.writeln(res.statusCode);
             //grunt.log.writeln(req.method);
 
-            if (req.method === 'PUT') {
+            grunt.log.writeln(req.url);
+            if (req.url === '/project') {
 
-                //res.statusCode = '508';
+                res.statusCode = '403';
             }
             //grunt.log.writeln(fileStr);
             res.end(fileStr);

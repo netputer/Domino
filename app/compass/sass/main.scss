@@ -17,3 +17,13 @@
 .d-login-title {
 	padding-bottom: 20px;
 }
+
+.login-mask {
+    z-index: 10001;
+    background: #383e4b;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}

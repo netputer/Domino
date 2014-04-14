@@ -34,6 +34,7 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                             $rootScope.isLoading = false;
                         }
 
+
                         return response;
                     },
 
@@ -41,16 +42,20 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                         var status = response.status;
                         var data   = response.data;
 
-                        if (response.config.noLoading !== true) {
-
-                            $rootScope.isLoading = false;
-                        }
-
                         //表单处理,传递给下层进行处理，其余进行统一弹窗处理
-                        if (status === 508) {
-                            return $q.reject(response);
+                        // if (status === 508) {
+
+                        // }
+                        if (status === 403) {
+
+                            $rootScope.accountService.isLogin = false;
                         }
                         else {
+
+                            if (response.config.noLoading !== true) {
+
+                                $rootScope.isLoading = false;
+                            }
 
                             //window.alert(statusMsgMapping[data.error.msg]);
 
@@ -58,6 +63,8 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
 
                             // Alert(httpStatusMsg[data.error.msg]);
                         }
+
+                        return $q.reject(response);
                     }
                 };
             }
