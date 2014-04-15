@@ -18,7 +18,9 @@
 
                 logout: $resource(actions.logout),
 
-                user: $resource('https://www.googleapis.com/plus/v1/people/me')
+                user: $resource('https://www.googleapis.com/plus/v1/people/me', {
+                    withCredentials: false
+                })
             };
         };
 
