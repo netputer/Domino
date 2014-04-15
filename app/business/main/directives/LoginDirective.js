@@ -95,7 +95,7 @@
                                                     console.info('replace');
 
                                                     // 登录成功后，刷新当前view, 以便获取数据
-                                                    //$route.reload();
+                                                    $route.reload();
                                                 }
                                             )
                                             .finally(
