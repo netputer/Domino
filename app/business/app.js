@@ -19,7 +19,9 @@
             'dmnUtils'
         ])
 
-        .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+        .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+            $httpProvider.defaults.withCredentials = true;
+
             $locationProvider.html5Mode(true);
 
             $routeProvider
