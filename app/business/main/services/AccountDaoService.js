@@ -13,12 +13,14 @@
                 }
             }
 
+            var googleApi = 'https://www.googleapis.com/plus/v1/people/me';
+
             return {
                 login: $resource(actions.login),
 
                 logout: $resource(actions.logout),
 
-                user: $resource('https://www.googleapis.com/plus/v1/people/me', {}, {
+                user: $resource(googleApi, {}, {
                     get: {
                         method: 'GET',
                         withCredentials: false
