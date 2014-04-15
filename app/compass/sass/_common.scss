@@ -1,3 +1,5 @@
+// TODO: Re-implement animaion, key-frames with Compass mixins
+// TODO: Add `d-` as prefix for all Domino specified styles
 #content {
   min-height: 600px;
 }
@@ -7,7 +9,7 @@
 	display: none;
 }
 
-/** loading  start**/
+/** loading  start **/
 .loading-mask {
 	width: 100%;
 	height: 100%;
@@ -28,6 +30,7 @@
         -webkit-transform: rotate(360deg);
     }
 }
+
 @-moz-keyframes spinner1 {
     from {
         -moz-transform: rotate(0deg);
@@ -37,6 +40,7 @@
         -moz-transform: rotate(360deg);
     }
 }
+
 @-o-keyframes spinner1 {
     from {
         -o-transform: rotate(0deg);
@@ -46,6 +50,7 @@
         -o-transform: rotate(360deg);
     }
 }
+
 @keyframes spinner1 {
     from {
         transform: rotate(0deg);
@@ -55,6 +60,7 @@
         transform: rotate(360deg);
     }
 }
+
 @-webkit-keyframes spinner2 {
     from {
         -webkit-transform: rotate(0deg);
@@ -64,6 +70,7 @@
         -webkit-transform: rotate(-360deg);
     }
 }
+
 @-moz-keyframes spinner2 {
     from {
         -moz-transform: rotate(0deg);
@@ -73,6 +80,7 @@
         -moz-transform: rotate(-360deg);
     }
 }
+
 @-o-keyframes spinner2 {
     from {
         -o-transform: rotate(0deg);
@@ -82,6 +90,7 @@
         -o-transform: rotate(-360deg);
     }
 }
+
 @keyframes spinner2 {
     from {
         transform: rotate(0deg);
@@ -91,6 +100,7 @@
         transform: rotate(-360deg);
     }
 }
+
 .loading {
     position: fixed;
     width: 34px;
@@ -100,18 +110,22 @@
     margin-left: -17px;
     margin-top: -17px;
 }
-.loading:after, .loading:before {
+
+.loading:after,
+.loading:before {
     position: fixed;
     content: "";
     border: 2px solid #36a9e1;
     width: 32px;
     height: 32px;
 }
+
 .loading:after {
     -webkit-animation: spinner1 2.5s linear infinite;
     -moz-animation: spinner1 2.5s linear infinite;
     animation: spinner1 2.5s linear infinite;
 }
+
 .loading:before {
     width: 44px;
     height: 44px;
