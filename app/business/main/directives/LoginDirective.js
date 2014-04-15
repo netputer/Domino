@@ -75,7 +75,7 @@
                                 clientid: '389328904191.apps.googleusercontent.com',
                                 cookiepolicy: 'single_host_origin',
                                 requestvisibleactions: 'http://schemas.google.com/AddActivity',
-                                scope: ' https://www.googleapis.com/auth/plus.login',
+                                scope: ' https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
 
                                 callback: function (authResult) {
 
