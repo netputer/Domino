@@ -16,13 +16,19 @@
             var googleApi = 'https://www.googleapis.com/plus/v1/people/me';
 
             return {
-                login: $resource(actions.login),
+                login: $resource(actions.login, {}, {
+                    save: {
+                        method: 'POST',
+                        noLoading: true
+                    }
+                }),
 
                 logout: $resource(actions.logout),
 
                 user: $resource(googleApi, {}, {
                     get: {
                         method: 'GET',
+                        noLoading: true,
                         withCredentials: false
                     }
                 })

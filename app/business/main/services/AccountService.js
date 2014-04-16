@@ -5,7 +5,7 @@
 
             var accountService = {
 
-                isLogin: true,
+                isLogin: false,
 
                 userInfo: '', //标记登录后的用户信息,
 
@@ -25,6 +25,7 @@
 
                             // 获取用户数据
                             accountDao.user.get({access_token: user.access_token}).$promise.then(function (data) {
+
                                 accountService.isLogin = true;
                                 accountService.userInfo = data;
                                 deferred.resolve(data);

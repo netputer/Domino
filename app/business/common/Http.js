@@ -18,6 +18,7 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                 return {
                     request: function (config) {
 
+                        console.info('config.noLoading', config.noLoading, config.url);
                         if (config.noLoading !== true) {
 
                             //loading状态
