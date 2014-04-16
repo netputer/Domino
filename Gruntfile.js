@@ -220,13 +220,13 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        requirejs : {
+        requirejs: {
             options: {
-                appDir : '<%= paths.app %>/business',
-                dir :　'<%= paths.dist %>/business',
-                baseUrl : './',
-                mainConfigFile : '<%= paths.app %>/business/AppLoader.js',
-                optimize : 'uglify',
+                appDir: '<%= paths.app %>/business',
+                dir:　'<%= paths.dist %>/business',
+                baseUrl: './',
+                mainConfigFile: '<%= paths.app %>/business/AppLoader.js',
+                optimize: 'uglify',
                 removeCombined: true,
                 // wrap: true,
                 useStrict: false,
@@ -235,14 +235,12 @@ module.exports = function (grunt) {
             dist : {
                 options : {
                     almond : true,
-                    replaceRequireScript: [
-                        {
-                            files: ['<%= paths.dist %>/index.html'],
-                            module: 'AppLoader'
-                        }
-                    ],
-                    modules : [{
-                        name : 'AppLoader'
+                    replaceRequireScript: [{
+                        files: ['<%= paths.dist %>/index.html'],
+                        module: 'AppLoader'
+                    }],
+                    modules: [{
+                        name: 'AppLoader'
                     }]
                 }
             }
@@ -356,15 +354,15 @@ module.exports = function (grunt) {
     grunt.registerTask('build:production', [
         'clean:dist',
         'concurrent:dist',
-        'useminPrepare',
-        'concat',
-        // 'uglify',
-        'cssmin',
-        'imagemin',
-        'htmlmin',
         'requirejs:dist',
-        'rev',
-        'usemin'
+        // 'useminPrepare',
+        // 'concat',
+        // // 'uglify',
+        // 'cssmin',
+        // 'imagemin',
+        // 'htmlmin',
+        // 'rev',
+        // 'usemin'
     ]);
 
     grunt.registerTask('server:build', [
