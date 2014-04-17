@@ -6,7 +6,10 @@
  */
 
 define([ 'angular', '_' ], function (angular, _) {
-    var ProjectsEditController = function ($scope, $location, $window, projectsDao, confirm, $routeParams, statusMsgMapping) {
+    var ProjectsEditController = function (
+            $scope, $location, $window, projectsDao,
+            confirm, $routeParams, statusMsgMapping
+        ) {
 
         // 初始化
         $scope.saved = {};
@@ -99,7 +102,10 @@ define([ 'angular', '_' ], function (angular, _) {
          */
         $scope.fallback = function () {
 
-            $window.history.back(-1);
+            //$window.history.back(-1);
+            $location.path(
+                $scope.isModify ?  '/projects/task/' + $routeParams.title : '/projects'
+            );
         };
 
         /**
@@ -112,7 +118,10 @@ define([ 'angular', '_' ], function (angular, _) {
         };
     };
 
-    ProjectsEditController.$inject = [ '$scope', '$location', '$window', 'projectsDao', 'confirm', '$routeParams', 'statusMsgMapping' ];
+    ProjectsEditController.$inject = [
+        '$scope', '$location', '$window', 'projectsDao',
+        'confirm', '$routeParams', 'statusMsgMapping'
+    ];
 
     return ProjectsEditController;
 });

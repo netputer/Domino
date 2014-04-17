@@ -46,7 +46,8 @@ define([ 'angular', '_' ], function (angular, _) {
         };
 
         $scope.fallback = function () {
-            $window.history.go(-1);
+            //$window.history.go(-1);
+            $location.path('/projects/task/' + $routeParams.title);
         };
 
         // get hook run

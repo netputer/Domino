@@ -11,7 +11,6 @@ define([
     'common/Modal',
     'common/Socketio',
     'common/Notification',
-    'common/ServerEventCenter',
     'common/Config',
     'common/CommonDirective'
 ], function (
@@ -25,7 +24,6 @@ define([
         'notificationModule',
         'configModule',
         'ioModule',
-        'serverEventCenterModule',
         'directiveModule'
     ]);
 });
