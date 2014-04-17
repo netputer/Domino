@@ -19,8 +19,13 @@ define([
 ) {
 
     angular.module('dmnCommon', [
-        'httpModule', 'daoModule', 'modalModule', 'notificationModule',
-        'configModule', 'ioModule', 'serverEventCenterModule',
+        'httpModule',
+        'daoModule',
+        'modalModule',
+        'notificationModule',
+        'configModule',
+        'ioModule',
+        'serverEventCenterModule',
         'directiveModule'
     ]);
 });

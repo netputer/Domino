@@ -160,9 +160,19 @@ module.exports = function (grunt) {
                     cwd : '<%= paths.app %>',
                     dest : '<%= paths.dist %>',
                     src : [
+                        'images/**/*.{webp,gif,png,jpg,jpeg}'
+                    ]
+                }]
+            },
+            tmp : {
+                files : [{
+                    expand : true,
+                    dot : true,
+                    cwd : '<%= paths.app %>',
+                    dest : '<%= paths.tmp %>',
+                    src : [
                         'images/**/*.{webp,gif,png,jpg,jpeg}',
-                        'lib/**/*',
-                        '**/*.{sh,bat}'
+                        'lib/**/*'
                     ]
                 }]
             }
@@ -176,7 +186,7 @@ module.exports = function (grunt) {
             },
             dist : {
                 options : {
-                    cssDir : '<%= paths.dist %>/stylesheets',
+                    cssDir : '<%= paths.tmp %>/stylesheets',
                     generatedImagesDir : '<%= paths.dist %>/images',
                     outputStyle : 'compressed'
                 }
@@ -210,13 +220,13 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        requirejs : {
+        requirejs: {
             options: {
-                appDir : '<%= paths.app %>/business',
-                dir :　'<%= paths.dist %>/business',
-                baseUrl : './',
-                mainConfigFile : '<%= paths.app %>/business/AppLoader.js',
-                optimize : 'uglify',
+                appDir: '<%= paths.app %>/business',
+                dir:　'<%= paths.dist %>/business',
+                baseUrl: './',
+                mainConfigFile: '<%= paths.app %>/business/AppLoader.js',
+                optimize: 'uglify',
                 removeCombined: true,
                 //wrap: true,
                 useStrict: false,
@@ -225,20 +235,18 @@ module.exports = function (grunt) {
             dist : {
                 options : {
                     almond : true,
-                    replaceRequireScript: [
-                        {
-                            files: ['<%= paths.dist %>/index.html'],
-                            module: 'AppLoader'
-                        }
-                    ],
-                    modules : [{
-                        name : 'AppLoader'
+                    replaceRequireScript: [{
+                        files: ['<%= paths.dist %>/index.html'],
+                        module: 'AppLoader'
+                    }],
+                    modules: [{
+                        name: 'AppLoader'
                     }]
                 }
             }
         },
         concurrent: {
-            dist : ['copy:dist', 'compass:dist']
+            dist : ['copy:dist', 'copy:tmp', 'compass:dist']
         },
         jshint : {
             options : {
@@ -329,12 +337,27 @@ module.exports = function (grunt) {
         //'protractor:test'
     ]);
 
-    grunt.registerTask('build', [
+    grunt.registerTask('build:staging', [
         'clean:dist',
         'concurrent:dist',
         'useminPrepare',
-        //'concat',
-        //'uglify',
+        'concat',
+        // 'uglify',
+        'cssmin',
+        'imagemin',
+        'htmlmin',
+        'requirejs:dist',
+        'rev',
+        'usemin'
+    ]);
+
+    grunt.registerTask('build:production', [
+        'clean:dist',
+        'concurrent:dist',
+        'useminPrepare',
+        'concat',
+        // 'uglify',
+        'cssmin',
         'imagemin',
         'htmlmin',
         'requirejs:dist',
