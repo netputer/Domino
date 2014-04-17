@@ -129,22 +129,21 @@ define([ 'angular', '_' ], function (angular, _) {
 
                 // note: 此处监听allLog，如果监听incrementLog, 当每次增量log相同的时候不能更新
                 $scope.$watch('allLog', function () {
-
                     render($scope.incrementLog);
                 });
 
                 function render(log) {
-
                     if (!log) {
                         return;
                     }
 
                     $scope.isLoading = false;
 
-                    var arr = log.split('\n');
+                    var arr = _.filter(log.split(/\r?\n/), function (line) {
+                        return line !== '';
+                    });
 
                     var currArr = _.map(arr, function (item) {
-
                         return '<p><a class="num"></a><span>' + item + '</span></p>';
                     });
 
@@ -155,8 +154,7 @@ define([ 'angular', '_' ], function (angular, _) {
     }])
 
     // 内部loading
-    .directive('innerLoading', [ function () {
-
+    .directive('innerLoading', [function () {
         return {
             restrict: 'E',
             replace: true,
