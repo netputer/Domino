@@ -26,7 +26,6 @@
                      * 3. session过期，google账户没有过期
                      */
                     $scope.$watch(function () {
-
                         return AccountService.isLogin;
                     }, function (isLogin) {
 

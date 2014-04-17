@@ -4,7 +4,6 @@
             var isLogin;
 
             var accountService = {
-
                 isLogin: false,
                 userInfo: '', //标记登录后的用户信息,
                 loginAsync : function (user) {
@@ -38,8 +37,7 @@
 
                     return deferred.promise;
                 },
-
-                logoutAsync : function () {
+                logoutAsync: function () {
                     var deferred = $q.defer();
 
                     accountDao.logout.save().$promise.then(

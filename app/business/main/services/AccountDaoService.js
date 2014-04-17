@@ -1,7 +1,6 @@
 (function (window) {
     define([ '_' ], function (_) {
         var AccountDaoService = function ($resource, $rootScope, CONFIG) {
-
             var actions = {
                 login: 'account/auth',
                 logout: 'account/logout'
@@ -35,7 +34,7 @@
             };
         };
 
-        AccountDaoService.$inject = [ '$resource', '$rootScope', 'CONFIG' ];
+        AccountDaoService.$inject = ['$resource', '$rootScope', 'CONFIG'];
 
         return AccountDaoService;
     });

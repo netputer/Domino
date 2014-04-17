@@ -10,7 +10,7 @@ define([
             restrict: 'EA',
             replace : true,
             template : template,
-            controller : [ '$scope', function ($scope) {
+            controller : ['$scope', function ($scope) {
                 $scope.sidebarIsShow = true;
             } ]
         };

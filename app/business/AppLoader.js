@@ -55,7 +55,7 @@ require.config({
     }
 });
 
-require([ 'app' ], function (app) {
+require(['app'], function (app) {
 
     var angular = require('angular');
 
