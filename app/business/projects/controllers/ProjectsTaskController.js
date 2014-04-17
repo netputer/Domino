@@ -136,7 +136,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
             // progress 初始化为空
             data.log = '';
 
-            // 关闭所有console 面板
+            // 关闭所有 console 面板
             _.forEach($scope.tasks, function (task) {
 
                 task.showConsole = false;
