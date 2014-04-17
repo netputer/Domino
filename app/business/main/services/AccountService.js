@@ -5,10 +5,8 @@
 
             var accountService = {
 
-                isLogin: true,
-
+                isLogin: false,
                 userInfo: '', //标记登录后的用户信息,
-
                 loginAsync : function (user) {
                     var deferred = $q.defer();
 
@@ -25,6 +23,7 @@
 
                             // 获取用户数据
                             accountDao.user.get({access_token: user.access_token}).$promise.then(function (data) {
+
                                 accountService.isLogin = true;
                                 accountService.userInfo = data;
                                 deferred.resolve(data);
@@ -57,14 +56,6 @@
                     return deferred.promise;
                 }
             };
-
-            // Object.defineProperties(accountService, {
-            //     isLogin : {
-            //         get : function () {
-            //             return isLogin;
-            //         }
-            //     }
-            // });
 
             return accountService;
         };

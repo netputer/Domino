@@ -16,7 +16,7 @@ define([ 'angular', '_' ], function (angular, _) {
          * @param  {number} id  当前id
          */
         $scope.save = function (script, id) {
-            
+
             var item, index;
             for (var i = 0, len = $scope.hooks.length; i < len; i++) {
 
@@ -31,7 +31,7 @@ define([ 'angular', '_' ], function (angular, _) {
             item.script = script;
 
             projectsDao.hook.update({ id:  id }, item).$promise.then(function (hooks) {
-            
+
                 //$scope.hooks[index] = hooks.body;
                 $scope.hooks[index] = item;
             });
@@ -46,13 +46,13 @@ define([ 'angular', '_' ], function (angular, _) {
         };
 
         $scope.fallback = function () {
-            $window.history.back(-1);
+            $window.history.go(-1);
         };
 
         // get hook run
         //projectsDao.hook.run({ id: id }).$promise.then(function (result) {
         projectsDao.project.getHooks({ title:  $routeParams.title }).$promise.then(function (hooks) {
-            
+
             $scope.hooks = hooks.body;
         });
     };
