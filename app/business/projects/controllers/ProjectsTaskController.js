@@ -39,10 +39,9 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
 
         // 过滤处理item数据
         function filterTask(item) {
-
             item.duration =  getDuration(item, item);
 
-            item.startTimeStr = moment(item.startTime).format('YYYY-MM-DD hh:mm:ss');
+            item.startTimeStr = moment(item.startTime).fromNow();
 
             item.initor = item.initor || '-';
 
@@ -59,7 +58,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
             var endTime = item.endTime || (new Date());
             var duration = moment(endTime).valueOf() - moment(task.startTime).valueOf();
 
-            duration = moment.duration(duration).asMilliseconds();
+            duration = moment.duration(duration, 'milliseconds').asSeconds();
 
             return duration;
         }
