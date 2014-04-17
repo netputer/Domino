@@ -10,6 +10,7 @@ define([
     'common/Dao',
     'common/Modal',
     'common/Socketio',
+    'common/Notification',
     'common/ServerEventCenter',
     'common/Config',
     'common/CommonDirective'
@@ -18,7 +19,7 @@ define([
 ) {
 
     angular.module('dmnCommon', [
-        'httpModule', 'daoModule', 'modalModule',
+        'httpModule', 'daoModule', 'modalModule', 'notificationModule',
         'configModule', 'ioModule', 'serverEventCenterModule',
         'directiveModule'
     ]);

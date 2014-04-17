@@ -43,7 +43,6 @@
                 //用来记录登录面板的状态
                 loginPanelShow: false
             };
-            console.info(222);
 
             for (var key in config) {
 

@@ -18,7 +18,6 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                 return {
                     request: function (config) {
 
-                        console.info('config.noLoading', config.noLoading, config.url);
                         if (config.noLoading !== true) {
 
                             //loading状态
@@ -43,10 +42,7 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                         var status = response.status;
                         var data   = response.data;
 
-                        //表单处理,传递给下层进行处理，其余进行统一弹窗处理
-                        // if (status === 508) {
-
-                        // }
+                        // 没有权限，目前为非登录状态
                         if (status === 403) {
 
                             $rootScope.accountService.isLogin = false;

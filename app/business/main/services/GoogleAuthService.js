@@ -50,7 +50,7 @@
                             // 授权成功
                             if (authResult.status.signed_in) {
 
-                                console.log('google sign in success1111');
+                                console.log('google sign in success');
                                 callback(authResult);
                             }
                             else {

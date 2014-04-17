@@ -6,7 +6,7 @@
  */
 
 define([ 'angular', '_', 'moment'], function (angular, _, moment) {
-    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm, socket) {
+    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm, socket, notification) {
 
         $scope.tasks = [];
 
@@ -149,14 +149,36 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
             $scope.tasks.unshift(filterTask(data));
         });
 
+        /**
+         * 当task的任何一个值变化的时候触发
+         */
         socket.on('task.change', function (data) {
 
             console.info('task.change:', data);
             _.forEach($scope.tasks, function (task, name, tasks) {
 
                 if (task.id === data.id) {
-                    task.status = data.status;
 
+                    // 状态变化的时候，fail or success会触发notification
+                    if (task.status !== data.status) {
+                        //添加通知
+                        switch (data.status) {
+                        case 4:
+                            notification.createNotification('Fail', {
+                                icon: '/images/fail.png',
+                                body: data.title + ' of ' + data.projectTitle + ' build fail'
+                            });
+                            break;
+                        case 6:
+                            notification.createNotification('Success', {
+                                icon: '/images/success.png',
+                                body: data.title + ' of ' + data.projectTitle + ' build success'
+                            });
+                            break;
+                        }
+                    }
+
+                    task.status = data.status;
                     task.duration = getDuration(data, task);
                     $scope.$apply();
                 }
@@ -184,7 +206,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         });
     };
 
-    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm', 'socket' ];
+    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm', 'socket', 'notification' ];
 
     return ProjectsTaskController;
 });
