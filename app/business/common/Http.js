@@ -46,6 +46,7 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                         if (status === 403) {
 
                             $rootScope.accountService.isLogin = false;
+                            $rootScope.viewNeedRerander = true;
                         }
                         else {
 

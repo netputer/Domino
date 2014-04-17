@@ -40,7 +40,10 @@
                                             function (data) {
                                                 console.info('auth succ');
                                                 // 登录成功后，刷新当前view, 以便获取数据
-                                                $route.reload();
+                                                if ($rootScope.viewNeedRerander) {
+
+                                                    $route.reload();
+                                                }
                                             }
                                         )
                                         .finally(
@@ -56,7 +59,6 @@
                                         $rootScope.isLoading = false;
                                         $rootScope.loginPanelShow = true;
                                     });
-
                                 }
                             );
                         }
