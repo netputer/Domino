@@ -5,21 +5,21 @@ define([
     'text!main/templates/header.html'
 ], function (template) {
 
-    var HeaderDirective = function () {
+    var HeaderDirective = function (AccountService, $q, $location) {
         return {
             restrict: 'EA',
             replace : true,
             template : template,
-            controller : [ '$scope', function ($scope) {
+            controller : ['$scope', 'AccountService', function ($scope, AccountService) {
                 $scope.sidebarIsShow = true;
-            } ],
+            }],
             link : function ($scope, $element, $attributes) {
                 //alert(111);
             }
         };
     };
 
-    //HeaderDirective.$inject = ['AccountService', '$q', '$location'];
+    HeaderDirective.$inject = ['AccountService', '$q', '$location'];
 
     return HeaderDirective;
 });

@@ -1,7 +1,6 @@
 (function (window) {
     define([ '_' ], function (_) {
         var AccountDaoService = function ($resource, $rootScope, CONFIG) {
-
             var actions = {
                 login: 'account/auth',
                 logout: 'account/logout'
@@ -15,16 +14,16 @@
 
             return {
                 login: $resource(actions.login),
-
                 logout: $resource(actions.logout),
-
-                user: $resource('https://www.googleapis.com/plus/v1/people/me', {
-                    withCredentials: false
+                user: $resource('https://www.googleapis.com/plus/v1/people/me', {}, {
+                    get : {
+                        withCredentials: false
+                    }
                 })
             };
         };
 
-        AccountDaoService.$inject = [ '$resource', '$rootScope', 'CONFIG' ];
+        AccountDaoService.$inject = ['$resource', '$rootScope', 'CONFIG'];
 
         return AccountDaoService;
     });
