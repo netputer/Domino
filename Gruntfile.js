@@ -228,7 +228,7 @@ module.exports = function (grunt) {
                 mainConfigFile: '<%= paths.app %>/business/AppLoader.js',
                 optimize: 'uglify',
                 removeCombined: true,
-                // wrap: true,
+                //wrap: true,
                 useStrict: false,
                 preserveLicenseComments: true
             },

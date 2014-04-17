@@ -1,112 +1,73 @@
-/* global gapi */
 (function (window) {
     define([
         'text!main/templates/login.html'
     ], function (template) {
 
-        var LoginDirective = function (AccountService, $q, $route, $rootScope) {
+        var LoginDirective = function (AccountService, $q, $route, $rootScope, googleAuth) {
             return {
-                replace: true,
-                template: template,
-                controller: 'LoginController',
-                link: function ($scope, $element, $attributes) {
-                    $scope.googleLogin = {
-                        authResult : ''
-                    };
-                    $scope.googleHasInit = false;
+                replace : true,
+                template : template,
+                link : function ($scope, $element, $attributes) {
 
-                    // 页面加载时需要去google验证是否已经登录，此时为loading状态
-                    $rootScope.isLoading = true;
-
-                    function loginAsync() {
+                    function loginAsync(authResult) {
                         var deferred = $q.defer();
 
-                        AccountService.loginAsync($scope.googleLogin.authResult).then(deferred.resolve, deferred.reject);
+                        AccountService.loginAsync(authResult).then(deferred.resolve, deferred.reject);
 
                         return deferred.promise;
                     }
 
+                    /**
+                     * 此处的登录逻辑为：
+                     * 1. 每次加载页面都会向google获取数据
+                     * 分为3种逻辑情况
+                     * 1. session过期，google过期
+                     * 2. session没有过期，google账户过期（此处还需要登录google账户，取回用户数据）
+                     * 3. session过期，google账户没有过期
+                     */
                     $scope.$watch(function () {
-                        return $rootScope.accountService.isLogin;
+                        return AccountService.isLogin;
                     }, function (isLogin) {
+
                         if (!isLogin) {
-                            renderGoogleSignIn();
-                        }
-                    });
 
-                    function renderGoogleSignIn() {
-                        // 防止多次加载google api
-                        if ($scope.googleHasInit) {
-                            // 打开登录弹层，以便用户重新登录
-                            $rootScope.loginPanelShow = true;
-                            return;
-                        }
-
-                        $scope.googleHasInit = true;
-
-                        // load google sign in Script
-                        (function () {
-                            var po = document.createElement('script');
-                            po.type = 'text/javascript';
-                            po.async = true;
-                            po.src = 'https://apis.google.com/js/client:plusone.js?onload=GOOGLE_GET_AUTH';
-                            var s = document.getElementsByTagName('script')[0];
-                            s.parentNode.insertBefore(po, s);
-
-                        })();
-
-                       /**
-                        * google api回调函数
-                        *
-                        * @const
-                        */
-                        window.GOOGLE_GET_AUTH = function () {
-
-                            var additionalParams = {
-                                theme : 'dark',
-                                clientid: '389328904191.apps.googleusercontent.com',
-                                cookiepolicy: 'single_host_origin',
-                                requestvisibleactions: 'http://schemas.google.com/AddActivity',
-                                scope: ' https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
-                                callback: function (authResult) {
-                                    // 授权成功
-                                    if (authResult.status.signed_in) {
-                                        $scope.googleLogin.authResult = authResult;
-
-                                        // google auth登录succ, 进一步进行系统后台验证
-                                        loginAsync().then(
-                                            function () {
-                                                console.info('replace');
-
+                            googleAuth.renderSignIn(
+                                function (authResult) {
+                                    // google auth登录succ, 进一步进行系统后台验证
+                                    loginAsync(authResult)
+                                        .then(
+                                            function (data) {
+                                                console.info('auth succ');
                                                 // 登录成功后，刷新当前view, 以便获取数据
-                                                //$route.reload();
+                                                if ($rootScope.viewNeedRerander) {
+
+                                                    $route.reload();
+                                                }
                                             }
-                                        ).finally(function () {
-                                            $rootScope.loginPanelShow = false;
-                                            $rootScope.isLoading = false;
-                                        });
-                                    } else {
-                                        // 授权失败，打开登录弹层，以便用户点击登录
-                                        $scope.$apply(function () {
-                                            $scope.googleLogin.token = '';
-                                            $rootScope.loginPanelShow = true;
-                                            $rootScope.isLoading = false;
-                                        });
-
-                                        console.log('google sign in error:' + authResult.error);
-                                    }
+                                        )
+                                        .finally(
+                                            function () {
+                                                $rootScope.loginPanelShow = false;
+                                                $rootScope.isLoading = false;
+                                            }
+                                        );
+                                },
+                                function () {
+                                    // 授权失败，打开登录弹层，以便用户点击登录
+                                    $rootScope.$apply(function () {
+                                        $rootScope.isLoading = false;
+                                        $rootScope.loginPanelShow = true;
+                                    });
                                 }
-                            };
+                            );
+                        }
 
-                            gapi.signin.render('googleLogin', additionalParams);
-
-                        };
-                    }
+                    });
                 }
             };
         };
 
-        LoginDirective.$inject = ['AccountService', '$q', '$route', '$rootScope'];
+        LoginDirective.$inject = ['AccountService', '$q', '$route', '$rootScope', 'googleAuth'];
 
         return LoginDirective;
     });

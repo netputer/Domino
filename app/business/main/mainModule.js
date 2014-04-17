@@ -4,8 +4,7 @@
 
         'main/services/AccountService',
         'main/services/AccountDaoService',
-
-        'main/controllers/LoginController',
+        'main/services/GoogleAuthService',
 
         'main/directives/LoginDirective',
         'main/directives/HeaderDirective',
@@ -16,8 +15,7 @@
 
         AccountService,
         AccountDaoService,
-
-        LoginController,
+        GoogleAuth,
 
         LoginDirective,
         HeaderDirective,
@@ -27,7 +25,7 @@
 
         .factory('accountDao', AccountDaoService)
         .factory('AccountService', AccountService)
-        .controller('LoginController', LoginController)
+        .factory('googleAuth', GoogleAuth)
         .directive('dmnLogin', LoginDirective)
         .directive('dmnHeader', HeaderDirective)
         .directive('dmnNavbar', NavbarDirective)
@@ -37,7 +35,7 @@
             var config = {
 
                 //全局账户信息配置
-                accontService: accountService,
+                accountService: accountService,
 
                 //用于记录全局loading状态
                 isLoading: false,
