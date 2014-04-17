@@ -354,15 +354,15 @@ module.exports = function (grunt) {
     grunt.registerTask('build:production', [
         'clean:dist',
         'concurrent:dist',
+        'useminPrepare',
+        'concat',
+        // 'uglify',
+        'cssmin',
+        'imagemin',
+        'htmlmin',
         'requirejs:dist',
-        // 'useminPrepare',
-        // 'concat',
-        // // 'uglify',
-        // 'cssmin',
-        // 'imagemin',
-        // 'htmlmin',
-        // 'rev',
-        // 'usemin'
+        'rev',
+        'usemin'
     ]);
 
     grunt.registerTask('server:build', [
