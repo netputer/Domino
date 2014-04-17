@@ -139,11 +139,11 @@ define([ 'angular', '_' ], function (angular, _) {
 
                     $scope.isLoading = false;
 
-                    var arr = _.filter(log.split('\n'), function (line) {
+                    var arr = _.filter(log.split(/\r?\n/), function (line) {
                         return line !== '';
                     });
 
-                    var currArr = _.map(arr, function (item, index) {
+                    var currArr = _.map(arr, function (item) {
                         return '<p><a class="num"></a><span>' + item + '</span></p>';
                     });
 
