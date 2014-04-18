@@ -160,7 +160,7 @@ define([ 'angular', 'jQuery', '_' ], function (angular, $, _) {
                 }
 
                 // 绑定滚动事件
-                var getScrollHandler = util.throttle(scrollHandler, 64);
+                var getScrollHandler = _.throttle(scrollHandler, 64);
 
                 $(window).bind('scroll', getScrollHandler);
                 function scrollHandler() {
@@ -171,7 +171,7 @@ define([ 'angular', 'jQuery', '_' ], function (angular, $, _) {
 
                         if (bodyScrollTop + $(window).height() < panelPos.top + el.height()) {
                             btn.css({
-                                right: 40,
+                                right:  $(window).width() - (panelPos.left + el.width() - 2),
                                 bottom: 4,
                                 position: 'fixed'
                             });
@@ -193,7 +193,7 @@ define([ 'angular', 'jQuery', '_' ], function (angular, $, _) {
                 // dispose
                 $scope.$on('$destroy', function () {
 
-                    $(document.body).unbind('scroll', getScrollHandler);
+                    $(window).unbind('scroll', getScrollHandler);
                     getScrollHandler = null;
 
                     btn.unbind('click', btnClickHandler);

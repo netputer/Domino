@@ -15,21 +15,6 @@ define([
 
     .value('util', {
 
-        // 函数节流
-        throttle: function (fn, delay) {
-            var time = null;
-
-            return function () {
-                var context = this;
-                var args    = arguments;
-
-                clearTimeout(time);
-                time = setTimeout(function () {
-
-                    fn.apply(context, args);
-                }, delay);
-            };
-        }
     });
 
 });
