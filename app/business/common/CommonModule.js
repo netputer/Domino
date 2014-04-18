@@ -12,6 +12,7 @@ define([
     'common/Socketio',
     'common/Notification',
     'common/Config',
+    'common/Util',
     'common/CommonDirective'
 ], function (
     angular
@@ -24,6 +25,7 @@ define([
         'notificationModule',
         'configModule',
         'ioModule',
+        'utilModule',
         'directiveModule'
     ]);
 });

@@ -4,7 +4,7 @@
  * @author  miaojian@wandoujia.com
  */
 
-define([ 'angular', '_' ], function (angular, _) {
+define([ 'angular', 'jQuery', '_' ], function (angular, $, _) {
 
     angular.module('directiveModule', [])
 
@@ -111,7 +111,7 @@ define([ 'angular', '_' ], function (angular, _) {
     }])
 
     // console log
-    .directive('logConsole', [ function () {
+    .directive('logConsole', [ 'util', function (util) {
 
         return {
             restrict: 'E',
@@ -149,6 +149,56 @@ define([ 'angular', '_' ], function (angular, _) {
 
                     el.find('.pre-log').append(currArr.join(''));
                 }
+
+                // toTopBtn add click event
+                var btn  = el.find('.to-top-btn');
+
+                btn.bind('click', btnClickHandler);
+                function btnClickHandler() {
+                    var panelPos = el.offset();
+                    $(document).scrollTop(panelPos.top);
+                }
+
+                // 绑定滚动事件
+                var getScrollHandler = _.throttle(scrollHandler, 64);
+
+                $(window).bind('scroll', getScrollHandler);
+                function scrollHandler() {
+                    var panelPos      = el.offset();
+                    var bodyScrollTop = $(document).scrollTop();
+
+                    if (panelPos.top < bodyScrollTop) {
+
+                        if (bodyScrollTop + $(window).height() < panelPos.top + el.height()) {
+                            btn.css({
+                                right:  $(window).width() - (panelPos.left + el.width() - 2),
+                                bottom: 4,
+                                position: 'fixed'
+                            });
+                        }
+                        else {
+                            btn.css({
+                                right: 2,
+                                bottom: 4,
+                                position: 'absolute'
+                            });
+                        }
+                        btn.show();
+                    }
+                    else {
+                        btn.hide();
+                    }
+                }
+
+                // dispose
+                $scope.$on('$destroy', function () {
+
+                    $(window).unbind('scroll', getScrollHandler);
+                    getScrollHandler = null;
+
+                    btn.unbind('click', btnClickHandler);
+                });
+
             }
         };
     }])
