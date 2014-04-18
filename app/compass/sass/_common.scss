@@ -153,9 +153,9 @@
     position: relative;
 
     .to-top-btn {
+        display: none;
         z-index: 99;
         position: absolute;
-        display: block;
         bottom: 4px;
         right: 2px;
         width: 58px;
