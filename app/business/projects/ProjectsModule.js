@@ -37,6 +37,12 @@ define([
 
     .controller('ProjectsHookListController', ProjectsHookListController)
 
-    .directive('dmnScriptEdit', editScriptDirective);
+    .directive('dmnScriptEdit', editScriptDirective)
+
+    .run(['socket', function (socket) {
+
+        // 添加project模块的所有socket配置
+        socket.addEventName('task.add', 'task.change', 'task.progress');
+    }]);
 
 });
