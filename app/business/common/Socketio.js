@@ -39,7 +39,7 @@ define([
             function addEventName() {
                 _.forEach(arguments, function (name) {
                     socket.on(name, function (data) {
-                        $rootScope.$broadcast(name, data);
+                        $rootScope.$broadcast('io.' + name, data);
                     });
                 });
             }
