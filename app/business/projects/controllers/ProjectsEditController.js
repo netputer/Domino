@@ -104,7 +104,7 @@ define([ 'angular', '_' ], function (angular, _) {
 
             //$window.history.back(-1);
             $location.path(
-                $scope.isModify ?  '/projects/task/' + $routeParams.title : '/projects'
+                $scope.isModify ?  '/projects/' + $routeParams.title + '/task': '/projects'
             );
         };
 

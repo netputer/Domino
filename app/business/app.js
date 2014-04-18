@@ -50,7 +50,7 @@
                 controller : 'ProjectsEditController'
             })
 
-            .when('/projects/task/:title', {
+            .when('/projects/:title/task', {
 
                 templateUrl : '/business/projects/templates/task.html',
                 controller : 'ProjectsTaskController'
