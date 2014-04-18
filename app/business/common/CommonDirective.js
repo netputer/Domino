@@ -123,8 +123,6 @@ define([ 'angular', 'jQuery', '_' ], function (angular, $, _) {
             templateUrl: '/business/common/templates/logConsole.html',
             link: function ($scope, el, attrs, ctrl) {
 
-                console.info('start');
-
                 $scope.isLoading = true;
 
                 render($scope.allLog);
