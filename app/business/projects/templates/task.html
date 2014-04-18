@@ -45,7 +45,7 @@
             <tr>
               <th>Title</th>
               <th>StartTime</th>
-              <th width="350">Duration(ms)</th>
+              <th width="350">Duration(s)</th>
               <th>Initiator</th>
               <th width="145">Status</th>
               <th width="150">Console Log</th>
@@ -62,7 +62,7 @@
                 {{ item.title }}
               </td>
               <td>{{ item.startTimeStr }}</td>
-              <td>{{ item.duration }}</td>
+              <td>{{ item.duration }}s</td>
               <td>{{ item.initor }}</td>
               <td>
                 <span class="label label-{{statusClass[item.status]}}">{{ statusText[item.status] }}
