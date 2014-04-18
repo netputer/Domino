@@ -6,7 +6,7 @@
  */
 
 define([ 'angular', '_', 'moment'], function (angular, _, moment) {
-    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm, socket, notification, AccountService) {
+    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm, notification, AccountService) {
 
         $scope.tasks = [];
 
@@ -128,7 +128,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
          * socket listen
          *
          */
-        socket.on('task.add', function (data) {
+        $scope.$on('io.task.add', function (event, data) {
 
             console.info('task.add:', data);
 
@@ -156,7 +156,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         /**
          * 当task的任何一个值变化的时候触发
          */
-        socket.on('task.change', function (data) {
+        $scope.$on('io.task.change', function (event, data) {
 
             console.info('task.change:', data);
             _.forEach($scope.tasks, function (task, name, tasks) {
@@ -189,7 +189,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
             });
         });
 
-        socket.on('task.progress', function (data) {
+        $scope.$on('io.task.progress', function (event, data) {
 
             console.info('task.progress:', data.id, data);
 
@@ -210,7 +210,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         });
     };
 
-    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm', 'socket', 'notification', 'AccountService' ];
+    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm', 'notification', 'AccountService' ];
 
     return ProjectsTaskController;
 });
