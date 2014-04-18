@@ -6,7 +6,7 @@
  */
 
 define([ 'angular', '_', 'moment'], function (angular, _, moment) {
-    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm, socket, notification) {
+    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm, socket, notification, AccountService) {
 
         $scope.tasks = [];
 
@@ -136,14 +136,19 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
             // progress 初始化为空
             data.log = '';
 
-            // 关闭所有 console 面板
-            _.forEach($scope.tasks, function (task) {
+            // 当此task操作人为当前用户时，打开log panel
+            if (data.accountName === AccountService.userInfo.accountName) {
 
-                task.showConsole = false;
-            });
+                // 关闭所有 console 面板
+                _.forEach($scope.tasks, function (task) {
 
-            // 主动打开当前console panle
-            data.showConsole = true;
+                    task.showConsole = false;
+                });
+
+                // 主动打开当前console panle
+                data.showConsole = true;
+
+            }
 
             // 添加到tasks列表
             $scope.tasks.unshift(filterTask(data));
@@ -206,7 +211,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         });
     };
 
-    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm', 'socket', 'notification' ];
+    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm', 'socket', 'notification', 'AccountService' ];
 
     return ProjectsTaskController;
 });

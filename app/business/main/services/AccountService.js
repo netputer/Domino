@@ -5,7 +5,7 @@
 
             var accountService = {
                 isLogin: false,
-                userInfo: '', //标记登录后的用户信息,
+                userInfo: {}, //标记登录后的用户信息,
                 loginAsync : function (user) {
                     var deferred = $q.defer();
 
