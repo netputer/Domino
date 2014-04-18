@@ -147,3 +147,24 @@
     }
 }
 /** loading  over**/
+
+/** log console **/
+.d-log-console {
+    position: relative;
+
+    .to-top-btn {
+        z-index: 99;
+        position: absolute;
+        display: block;
+        bottom: 4px;
+        right: 2px;
+        width: 58px;
+        font-size: 13px;
+        margin-right: 2px;
+        padding-right: 12px;
+        text-align: right;
+        color: #999;
+        text-decoration: none;
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAFCAMAAABLuo1aAAAABlBMVEXCwsL///+2aL1UAAAAAnRSTlP/AOW3MEoAAAAeSURBVAjXY2AEAgYGMAlmgdkMEBaIzQBlMSAYQAAAAzkAFfQAfJYAAAAASUVORK5CYII=') no-repeat right 6px;
+    }
+}
