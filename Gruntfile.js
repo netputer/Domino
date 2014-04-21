@@ -160,7 +160,8 @@ module.exports = function (grunt) {
                     cwd : '<%= paths.app %>',
                     dest : '<%= paths.dist %>',
                     src : [
-                        'images/**/*.{webp,gif,png,jpg,jpeg}'
+                        'images/**/*.{webp,gif,png,jpg,jpeg}',
+                        'lib/**/*'
                     ]
                 }]
             },
