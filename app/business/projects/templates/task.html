@@ -1,6 +1,9 @@
 <div>
     <div class="page-header clearfix">
         <div class="row">
+            <div class="pull-left task-project-title">
+                <h1><a ng-href="{{project.url}}" target="_blank">{{title}}</a></h1>
+            </div>
             <div class="col-lg-4 pull-right">
                 <div class="box">
                     <div class="box-header">
@@ -45,10 +48,11 @@
             <tr>
               <th>Title</th>
               <th>StartTime</th>
-              <th width="350">Duration(s)</th>
+              <th>Duration(s)</th>
               <th>Initiator</th>
               <th width="145">Status</th>
-              <th width="150">Console Log</th>
+              <th width="50">jenkins</th>
+              <th width="130" class="text-right">Console Log</th>
             </tr>
           </thead>
           <tbody>
@@ -67,6 +71,12 @@
               <td>
                 <span class="label label-{{statusClass[item.status]}}">{{ statusText[item.status] }}
               </td>
+              <td ng-if="item.entrance">
+                <a ng-href="{{item.entrance}}" class="task-script-edit" target="_blank">Go</a>
+              </td>
+              <td ng-if="!item.entrance">
+                  -
+              </td>
               <td class="text-center">
                 <a class="btn btn-success" ng-click="toggleConsole(item.id)">
                     <i class="fa fa-chevron-up" ng-class="{'fa-chevron-up':!item.showConsole, 'fa-chevron-down':item.showConsole}"></i>
@@ -74,19 +84,19 @@
               </td>
             </tr>
             <tr ng-repeat-end ng-if="item.showConsole">
-                <td colspan="6"><log-console all-log="item.log" increment-log="item.incrementLog"></log-console></td>
+                <td colspan="7"><log-console all-log="item.log" increment-log="item.incrementLog"></log-console></td>
             </tr>
           </tbody>
     </table>
     </div>
-<!--    <div class="row">
+   <div class="row">
         <div class="col-lg-12">
-            <div class="dataTables_info" id="DataTables_Table_0_info">Showing 1 to 10 of 32 entries</div>
+            <div class="dataTables_info" id="DataTables_Table_0_info">Showing {{tasks.length}} in totals {{max}}</div>
         </div>
         <div class="col-lg-12 center">
             <div class="dataTables_paginate">
-                <pagination total-items="totalItems" page="currentPage" class="dataTables_paginate"></pagination>
+                <pagination items-per-page="pageSize" total-items="max" page="page" on-select-page="setPage(page);" class="dataTables_paginate"></pagination>
             </div>
         </div>
     </div>
- --></div>
+</div>
