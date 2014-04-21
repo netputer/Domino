@@ -23,19 +23,40 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
             6 : 'success'
         };
 
-        //$scope.totalItems = 64;
-        //$scope.currentPage = 4;
+        $scope.title = $routeParams.title;
 
-        // get project list
-        projectsDao.project.getTasks({ title: $routeParams.title }).$promise.then(function (tasks) {
+        $scope.page = 1;
+        $scope.pageSize = 20;
 
-            // TODO filter
-            _.forEach(tasks.body, function (item, name) {
-                filterTask(item);
-            });
+        // 观察page，向后端获取数据
+        $scope.setPage = function (page) {
+            // get project list
+            projectsDao.project.getTasks(
+                { title: $routeParams.title, page: page, pageSize: $scope.pageSize }
+            )
+                .$promise.then(function (tasks) {
 
-            $scope.tasks = tasks.body;
+                    // TODO filter
+                    _.forEach(tasks.body, function (item, name) {
+                        filterTask(item);
+                    });
+
+                    $scope.tasks = tasks.body;
+                    $scope.max   = tasks.max;
+                });
+        };
+
+        $scope.setPage($scope.page);
+
+
+        // 获取project 内容
+        projectsDao.project.getUnloading({ title: $scope.title }).$promise.then(function (data) {
+
+            var body = data.body;
+
+            $scope.project = body;
         });
+
 
         // 过滤处理item数据
         function filterTask(item) {
@@ -163,6 +184,17 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
 
                 if (task.id === data.id) {
 
+                    task.status = data.status;
+                    task.duration = getDuration(data, task);
+
+                    if (!task.timer) {
+                        task.timer = setInterval(function () {
+                            task.duration = getDuration({}, task);
+                        }, 1000);
+                    }
+                    //$scope.$apply();
+
+
                     // 状态变化的时候，fail or success会触发notification
                     if (task.status !== data.status) {
                         //添加通知
@@ -172,19 +204,19 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                                 icon: '/images/fail.png',
                                 body: data.title + ' of ' + data.projectTitle + ' build fail'
                             });
+                            clearInterval(task.timer);
+
                             break;
                         case 6:
                             notification.createNotification('Success', {
                                 icon: '/images/success.png',
                                 body: data.title + ' of ' + data.projectTitle + ' build success'
                             });
+                            clearInterval(task.timer);
+
                             break;
                         }
                     }
-
-                    task.status = data.status;
-                    task.duration = getDuration(data, task);
-                    $scope.$apply();
                 }
             });
         });

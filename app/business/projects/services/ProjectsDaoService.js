@@ -20,6 +20,10 @@
 
             return {
                 project: $resource(actions.projectApi, {}, {
+                    getUnloading: {
+                        method: 'get',
+                        noLoading: true
+                    },
                     getTasks: {
                         url: actions.projectTasksList,
                         method: 'get'
