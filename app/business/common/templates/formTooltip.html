@@ -1,5 +1,5 @@
 <span>
-	<span class="help-block col-sm-8 form-hint" ng-if="hint" ng-show="showHint">{{hint}}</span>
+	<span class="help-block col-sm-8 form-hint" ng-if="hint" ng-show="showHint">{{ hint }}</span>
 	<span class="help-block col-sm-8" ng-repeat="errorMsg in errorMsgs" ng-show="!showHint && errorMsgs.length">{{ errorMsg }}</span>
-	<span class="help-block col-sm-8" ng-show="customMsg" ng-show="!showHint && customMsg">{{customMsg}}</span>
+	<span class="help-block col-sm-8" ng-show="customMsg" ng-show="!showHint && customMsg">{{ customMsg }}</span>
 </span>

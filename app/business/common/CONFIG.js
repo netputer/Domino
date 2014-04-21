@@ -4,21 +4,17 @@
  * @author miaojian(miaojian@wandoujia.com)
  */
 
-define([ 'angular' ], function (angular) {
+define(['angular'], function (angular) {
     angular.module('configModule', [])
         .factory('CONFIG', function () {
             var API_PROTOCAL = 'http';
-            var API_HOST = '127.0.0.1';
-            var API_PORT = 1337;
-
-            var API_URL_PREFIX = API_PROTOCAL + '://' + API_HOST + ':' + API_PORT + '/';
+            var API_HOST = location.hostname;
+            var API_URL_PREFIX = API_PROTOCAL + '://' + API_HOST + '/api/';
 
             return {
                 API_PROTOCAL : API_PROTOCAL,
                 API_HOST : API_HOST,
-                API_PORT : API_PORT,
-                API_URL_PREFIX : API_URL_PREFIX,
-                ACTIONS : ''
+                API_URL_PREFIX : window.API_URL_PREFIX || API_URL_PREFIX
             };
         });
 });

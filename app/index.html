@@ -3,11 +3,11 @@
     <head>
         <title>Hello world!</title>
         <meta charset="utf-8">
-        <!-- build:css(.tmp) /stylesheets/main.css -->
+        <!-- TODO: Polish this -->
         <link rel="stylesheet" type="text/css" href="/lib/simpliq/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/lib/simpliq/assets/css/style.min.css" />
         <link rel="stylesheet" type="text/css" href="/lib/simpliq/assets/css/retina.min.css" />
-
+        <!-- build:css(.tmp) /stylesheets/main.css -->
         <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
         <!-- endbuild -->
     </head>
@@ -31,6 +31,12 @@
         <div class="loading-mask" ng-show="isLoading">
             <div class="loading"></div>
         </div>
+
+        <!--(if target !(staging || production))><!-->
+        <script>
+            window.API_URL_PREFIX = 'http://127.0.0.1:1337/';
+        </script>
+        <!--<!(endif)-->
         <script type="text/javascript" data-main="/business/AppLoader" src="/components/requirejs/require.js"></script>
     </body>
 </html>
