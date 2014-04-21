@@ -131,7 +131,7 @@ module.exports = function (grunt) {
             server : '<%= paths.tmp %>'
         },
         useminPrepare : {
-            html : ['<%= paths.app %>/*.html'],
+            html : ['<%= paths.tmp %>/*.html'],
             options : {
                 dest : '<%= paths.dist %>'
             }
@@ -146,7 +146,7 @@ module.exports = function (grunt) {
             dist : {
                 files : [{
                     expand : true,
-                    cwd : '<%= paths.app %>',
+                    cwd : '<%= paths.tmp %>',
                     src : ['*.html'],
                     dest : '<%= paths.dist %>'
                 }]
@@ -312,6 +312,18 @@ module.exports = function (grunt) {
                     //debug: true
                 }
             },
+        },
+        targethtml: {
+            staging: {
+                files: {
+                    '<%= paths.tmp %>/index.html': '<%= paths.app %>/index.html',
+                }
+            },
+            production: {
+                files: {
+                    '<%= paths.tmp %>/index.html': '<%= paths.app %>/index.html',
+                }
+            }
         }
     });
 
@@ -340,9 +352,9 @@ module.exports = function (grunt) {
     grunt.registerTask('build:staging', [
         'clean:dist',
         'concurrent:dist',
+        'targethtml:staging',
         'useminPrepare',
         'concat',
-        // 'uglify',
         'cssmin',
         'imagemin',
         'htmlmin',
@@ -354,9 +366,9 @@ module.exports = function (grunt) {
     grunt.registerTask('build:production', [
         'clean:dist',
         'concurrent:dist',
+        'targethtml:production',
         'useminPrepare',
         'concat',
-        // 'uglify',
         'cssmin',
         'imagemin',
         'htmlmin',
