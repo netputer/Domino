@@ -11,13 +11,12 @@ define([
     'common/Modal',
     'common/Socketio',
     'common/Notification',
-    'common/Config',
+    'common/CONFIG',
     'common/Util',
     'common/CommonDirective'
 ], function (
     angular
 ) {
-
     angular.module('dmnCommon', [
         'httpModule',
         'daoModule',
