@@ -6,8 +6,9 @@
 
 define([
     'angular',
-    'io'
-], function (angular, io) {
+    'io',
+    '_'
+], function (angular, io, _) {
     'use strict';
 
     angular.module('ioModule', [])
@@ -16,22 +17,41 @@ define([
 
         function ($rootScope, $timeout, CONFIG) {
 
-            // TODO 连接成功时，可能页面还没有初始化完毕，page intialize时
-            var socket = io.connect(CONFIG.API_URL_PREFIX, {
+            var socket;
 
-                transports : [ 'websocket', 'polling' ]
-            });
+            function createSocket() {
+                // TODO 连接成功时，可能页面还没有初始化完毕，page intialize时
+                socket = io.connect(CONFIG.API_URL_PREFIX, {
 
-            socket.on('connect', function () {
-                console.log('socket connect success');
-
-                socket.on('disconnect', function () {
-
-                    console.log('socket has disconnect');
+                    transports : [ 'websocket', 'polling' ]
                 });
-            });
 
-            return socket;
+                socket.on('connect', function () {
+                    console.log('socket connect success');
+
+                    socket.on('disconnect', function () {
+
+                        console.log('socket has disconnect');
+                    });
+                });
+            }
+
+            function addEventName() {
+                _.forEach(arguments, function (name) {
+                    socket.on(name, function (data) {
+                        $rootScope.$broadcast('io.' + name, data);
+                    });
+                });
+            }
+
+            return {
+                init: createSocket,
+                addEventName: addEventName,
+                io: socket
+            };
         }
-    ]);
+    ]).run(['socket', function (socket) {
+
+        socket.init();
+    }]);
 });
