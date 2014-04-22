@@ -2,7 +2,7 @@
     <div class="page-header clearfix">
         <div class="row">
             <div class="pull-left task-project-title">
-                <h1><a ng-href="{{project.url}}" target="_blank">{{title}}</a></h1>
+                <h1><a ng-href="{{project.url | getGithubUrl}}" target="_blank">{{title}}</a></h1>
             </div>
             <div class="col-lg-4 pull-right">
                 <div class="box">
