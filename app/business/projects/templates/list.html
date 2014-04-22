@@ -13,9 +13,8 @@
             </div>
             <div class="body">
                 <div class="title">
-                    <i class="icon fa fa-github" ng-if="item.type === 0"></i>
                     <!-- TODO: replace this icon with Git -->
-                    <a ng-href="{{item.url}}" target="_blank"><i class="icon fa fa-github" ng-if="item.type === 1"></i>
+                    <a ng-href="{{item.url | getGithubUrl}}" target="_blank"><i class="icon fa fa-github" ng-if="item.type === 0"></i>
                     <span>{{ item.title }}</span></a>
                 </div>
                 <!-- TODO: replace this with data from server -->

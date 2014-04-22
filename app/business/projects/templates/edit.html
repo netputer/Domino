@@ -20,7 +20,7 @@
 			<div class="form-group" ng-class="{'has-error':newForm.serverInvalid.url || (newForm.gitUrl.$dirty && newForm.gitUrl.$invalid)}" id="projectUrlWrap">
 				<label class="control-label" for="gitUrl">Git Url<span class="red">*</span></label>
 				<div class="controls">
-				  <input class="form-control" id="gitUrl" name="gitUrl" type="text" ng-model="project.url" required ng-pattern="/^((git|ssh|http(s)?)|(git@[\w.]+))(:(\/\/)?)([\w.@:/\-~]+)(\.git)(/)?$/">
+				  <input class="form-control" id="gitUrl" name="gitUrl" type="text" ng-model="project.url" required ng-pattern="/^((git|ssh|http(s)?)|(git@[\w.]+))(:(\/\/)?)([\w.@:/\-~]+)(\.git)(\/)?$/">
 				  <form-tooltip hint="ex. https://github.com/wandoulab.git" required="NO_BLANK" for="gitUrl" custom="newForm.serverInvalid.url" pattern="NOT_URL">
 				  </form-tooltip>
 				</div>
