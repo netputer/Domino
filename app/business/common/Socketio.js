@@ -18,9 +18,10 @@ define([
 
                 function createSocket() {
                     // TODO 连接成功时，可能页面还没有初始化完毕，page intialize时
-                    socket = io.connect(CONFIG.API_URL_PREFIX, {
-                        transports: ['websocket', 'polling'],
-                        resource: window.API_URL_PREFIX ? 'socket.io' : 'api/socket.io'
+                    var server = 'http://' + location.hostname + ':1337';
+                    socket = io.connect(server, {
+                        transports: ['websocket', 'polling']
+                        // resource: window.API_URL_PREFIX ? 'socket.io' : 'api/socket.io'
                     });
 
                     socket.on('connect', function () {
