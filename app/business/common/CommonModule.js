@@ -13,7 +13,8 @@ define([
     'common/Notification',
     'common/CONFIG',
     'common/Util',
-    'common/CommonDirective'
+    'common/CommonDirective',
+    'common/CommonFilter'
 ], function (
     angular
 ) {
@@ -25,6 +26,7 @@ define([
         'configModule',
         'ioModule',
         'utilModule',
-        'directiveModule'
+        'directiveModule',
+        'filterModule'
     ]);
 });
