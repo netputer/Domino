@@ -57,7 +57,7 @@
           </thead>
           <tbody>
             <tr ng-if="!tasks || !tasks.length">
-                <td colspan="5" align="center">
+                <td colspan="7" align="center">
                     暂无内容
                 </td>
             </tr>
@@ -89,7 +89,7 @@
           </tbody>
     </table>
     </div>
-   <div class="row">
+   <div class="row" ng-if="tasks && tasks.length">
         <div class="col-lg-12">
             <div class="dataTables_info" id="DataTables_Table_0_info">Showing {{tasks.length}} in totals {{max}}</div>
         </div>
