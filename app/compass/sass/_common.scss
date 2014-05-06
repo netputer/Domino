@@ -1,3 +1,5 @@
+@import "compass/css3";
+
 // TODO: Re-implement animaion, key-frames with Compass mixins
 // TODO: Add `d-` as prefix for all Domino specified styles
 #content {
@@ -165,5 +167,50 @@
         color: #999;
         text-decoration: none;
         background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAFCAMAAABLuo1aAAAABlBMVEXCwsL///+2aL1UAAAAAnRSTlP/AOW3MEoAAAAeSURBVAjXY2AEAgYGMAlmgdkMEBaIzQBlMSAYQAAAAzkAFfQAfJYAAAAASUVORK5CYII=') no-repeat right 6px;
+    }
+
+    .scroll-to-end {
+        display: none;
+        top: 0;
+        z-index: 99;
+        position: absolute;
+        right: 2px;
+        margin: 13px 10px 0 0;
+        padding: 0 2px 0 3px;
+        color: #666;
+        @include single-text-shadow(0, 1px, 0, #fff);
+        font-size: 11px;
+        line-height: 14px;
+        text-decoration: none;
+        white-space: nowrap;
+        border: 1px solid #bbb;
+        border-top-color: #ddd;
+        @include border-radius(8px);
+        @include background-image(linear-gradient(white, #e0e0e0));
+        &:hover {
+            padding: 1px 4px 1px 6px;
+            label {
+                display: inline;
+            }
+        }
+        &.active {
+            .status {
+                background-color: #6b0;
+            }
+        }
+        .status {
+            display: inline-block;
+            margin-right: 1px;
+            width: 8px;
+            height: 8px;
+            background-color: #aaa;
+            @include border-radius(4px);
+            @include single-box-shadow(#fff, 1px, 1px, 2px);
+        }
+        label {
+            display: none;
+            cursor: pointer;
+            font-weight: normal;
+        }
     }
 }
