@@ -2,9 +2,11 @@
     <div class="page-header clearfix">
         <div class="row">
             <div class="pull-left task-project-title">
-                <h1><a ng-href="{{project.url | getGithubUrl}}" target="_blank">{{title}}</a></h1>
+                <h1>{{title}}<a ng-href="{{project.url | getGithubUrl}}" target="_blank" class="link-icon-hover">
+                    <i class="fa fa-github"></i></a>
+                </h1>
             </div>
-            <div class="col-lg-4 pull-right">
+            <div class="col-lg-4 pull-right project-operate">
                 <div class="box">
                     <div class="box-header">
                         <h2><i class="fa fa-hand-o-up"></i>Project operate</h2>
