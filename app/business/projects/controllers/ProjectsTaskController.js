@@ -186,16 +186,24 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
 
                     task.status = data.status;
                     task.duration = getDuration(data, task);
+                    $scope.$apply();
 
-                    if (!task.timer) {
-                        task.timer = setInterval(function () {
+                    clearInterval(task.timer);
+                    task.timer = setInterval(function () {
+                        $scope.$apply(function () {
                             task.duration = getDuration({}, task);
-                        }, 1000);
+                        });
+                    }, 1000);
+
+                    // build完成后，停止监听
+                    if (data.status === 4 || data.status === 6) {
+
+                        clearInterval(task.timer);
                     }
-                    //$scope.$apply();
 
 
                     // 状态变化的时候，fail or success会触发notification
+                    // 可能两个change的status是一样的
                     if (task.status !== data.status) {
                         //添加通知
                         switch (data.status) {
@@ -204,7 +212,6 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                                 icon: '/images/fail.png',
                                 body: data.title + ' of ' + data.projectTitle + ' build fail'
                             });
-                            clearInterval(task.timer);
 
                             break;
                         case 6:
@@ -212,7 +219,6 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                                 icon: '/images/success.png',
                                 body: data.title + ' of ' + data.projectTitle + ' build success'
                             });
-                            clearInterval(task.timer);
 
                             break;
                         }
@@ -238,6 +244,14 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                         task.log += data.progress;
                     });
                 }
+            });
+        });
+
+        $scope.$on('$destroy', function () {
+            // 干掉监听器
+            _.forEach($scope.tasks, function (task) {
+
+                clearInterval(task.timer);
             });
         });
     };
