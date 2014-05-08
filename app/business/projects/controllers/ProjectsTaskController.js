@@ -6,7 +6,7 @@
  */
 
 define([ 'angular', '_', 'moment'], function (angular, _, moment) {
-    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm, notification, AccountService) {
+    var ProjectsTaskController = function ($scope, $location, $route, $q, projectsDao, $routeParams, confirm, notification, AccountService) {
 
         $scope.tasks = [];
 
@@ -26,10 +26,12 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         $scope.title = $routeParams.title;
 
         $scope.page = 1;
-        $scope.pageSize = 20;
+        $scope.pageSize = 10;
 
         // 观察page，向后端获取数据
         $scope.setPage = function (page) {
+            var deferred = $q.defer();
+
             // get project list
             projectsDao.project.getTasks(
                 { title: $routeParams.title, page: page, pageSize: $scope.pageSize }
@@ -43,10 +45,24 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
 
                     $scope.tasks = tasks.body;
                     $scope.max   = tasks.max;
+
+                    deferred.resolve(tasks.body);
                 });
+
+            return deferred.promise;
         };
 
-        $scope.setPage($scope.page);
+        // 第一次进入页面获取数据
+        $scope.setPage($scope.page).then(function (tasks) {
+            if (typeof $routeParams.isOpen !== 'undefined') {
+                // 第一次进入页面，打开第一个console
+                // FIXED: 由于task与hook之间没有对应关系，此处当从hook run跳过来后
+                // 直接以打开第一个task console（当此间有人又build的时候，可以会有问题，但问题不大）
+
+                // 主动打开当前console panle
+                tasks[0].showConsole = true;
+            }
+        });
 
 
         // 获取project 内容
@@ -256,7 +272,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         });
     };
 
-    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm', 'notification', 'AccountService' ];
+    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', '$q', 'projectsDao', '$routeParams', 'confirm', 'notification', 'AccountService' ];
 
     return ProjectsTaskController;
 });
