@@ -7,7 +7,7 @@
                 projectTasksList: 'project/:title/task',
                 projectHooksList: 'project/:title/hooks',
                 trigger: 'project/:title/trigger/:evt',
-                hookApi: 'hook/:title',
+                hookApi: 'hook/:id',
                 hookRun: 'hook/:title/run',
                 taskApi: 'task/:title'
             };
