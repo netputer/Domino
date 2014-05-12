@@ -125,6 +125,17 @@ define([ 'angular', 'jQuery', '_' ], function (angular, $, _) {
 
                 $scope.isLoading = true;
 
+                // toTopBtn add click event
+                var btn       = el.find('.to-top-btn');
+                var scrollBtn = el.find('.scroll-to-end');
+                var isScrollBtnActive = false;
+
+
+                var getScrollHandler = _.throttle(scrollHandler, 64);
+                btn.on('click', btnClickHandler);
+                scrollBtn.on('click', scrollBtnClickHandler);
+                $(window).on('scroll', getScrollHandler);
+
                 render($scope.allLog);
 
                 // note: 此处监听allLog，如果监听incrementLog, 当每次增量log相同的时候不能更新
@@ -148,46 +159,80 @@ define([ 'angular', 'jQuery', '_' ], function (angular, $, _) {
                     });
 
                     el.find('.pre-log').append(currArr.join(''));
+
+                    // 激活scrollBtn
+                    scrollBtn.show();
+                    if (scrollBtn.hasClass('active')) {
+                        scrollToPanelBottom();
+
+                        setTimeout(function () {
+                            scrollBtn.addClass('active');
+                        }, 12);
+                    }
                 }
 
-                // toTopBtn add click event
-                var btn  = el.find('.to-top-btn');
-
-                btn.bind('click', btnClickHandler);
                 function btnClickHandler() {
                     var panelPos = el.offset();
                     $(document).scrollTop(panelPos.top);
                 }
 
-                // 绑定滚动事件
-                var getScrollHandler = _.throttle(scrollHandler, 64);
+                function scrollToPanelBottom() {
+                    var panelPos = el.offset();
+                    var panelBottomToWindowTop = panelPos.top + el.height();
+                    var windowTopAndHeight = $(window).height() + $(document).scrollTop();
+                    var fixedBottom = 100;
 
-                $(window).bind('scroll', getScrollHandler);
-                function scrollHandler() {
+                    if (panelBottomToWindowTop > windowTopAndHeight) {
+
+                        $(document).scrollTop(panelBottomToWindowTop + fixedBottom - $(window).height());
+                    }
+                }
+
+                function scrollBtnClickHandler() {
+
+                    scrollToPanelBottom();
+                    setTimeout(function () {
+                        scrollBtn.toggleClass('active');
+                    }, 12);
+                }
+
+                function scrollHandler(event) {
                     var panelPos      = el.offset();
                     var bodyScrollTop = $(document).scrollTop();
 
                     if (panelPos.top < bodyScrollTop) {
 
+                        var rightPos = $(window).width() - (panelPos.left + el.width() - 2);
+
+                        scrollBtn.css({
+                            position: 'fixed',
+                            right: rightPos
+                        });
+
                         if (bodyScrollTop + $(window).height() < panelPos.top + el.height()) {
                             btn.css({
-                                right:  $(window).width() - (panelPos.left + el.width() - 2),
-                                bottom: 4,
+                                right:  rightPos,
                                 position: 'fixed'
                             });
                         }
                         else {
                             btn.css({
                                 right: 2,
-                                bottom: 4,
                                 position: 'absolute'
                             });
                         }
                         btn.show();
                     }
                     else {
+                        scrollBtn.css({
+                            right: 2,
+                            position: 'absolute'
+                        });
                         btn.hide();
                     }
+
+                    // 去除活动状态
+                    scrollBtn.removeClass('active');
                 }
 
                 // dispose
@@ -196,7 +241,7 @@ define([ 'angular', 'jQuery', '_' ], function (angular, $, _) {
                     $(window).unbind('scroll', getScrollHandler);
                     getScrollHandler = null;
 
-                    btn.unbind('click', btnClickHandler);
+                    btn.off('click', btnClickHandler);
                 });
 
             }
