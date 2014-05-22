@@ -6,22 +6,13 @@
  */
 
 define([ 'angular', '_', 'moment'], function (angular, _, moment) {
-    var ProjectsTaskController = function ($scope, $location, $route, $q, projectsDao, $routeParams, confirm, notification, AccountService) {
+    var ProjectsTaskController = function ($scope, $location, $route, $q, projectsDao, $routeParams, confirm, notification, AccountService, CONFIG) {
 
         $scope.tasks = [];
 
         // 根据返回的status，添加状态class
-        $scope.statusClass = [ 'info', 'warning', 'default', 'warning', 'danger', 'default', 'success' ];
-
-        $scope.statusText = {
-            0 : 'created',
-            1 : 'queue',
-            2 : 'executing',
-            3 : 'pause',
-            4 : 'fail',
-            5 : 'force executing',
-            6 : 'success'
-        };
+        $scope.statusClass = CONFIG.STATUS_CLASS;
+        $scope.statusText  = CONFIG.STATUS_TEXT;
 
         $scope.title = $routeParams.title;
 
@@ -272,7 +263,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         });
     };
 
-    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', '$q', 'projectsDao', '$routeParams', 'confirm', 'notification', 'AccountService' ];
+    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', '$q', 'projectsDao', '$routeParams', 'confirm', 'notification', 'AccountService', 'CONFIG' ];
 
     return ProjectsTaskController;
 });

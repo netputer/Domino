@@ -52,7 +52,7 @@
                     };
                     gapi.signin.render('googleLogin', additionalParams);
                 };
-            }
+            };
 
             return {
                 renderSignIn: renderSignIn
