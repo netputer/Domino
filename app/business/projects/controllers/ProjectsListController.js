@@ -6,27 +6,14 @@
  */
 
 define([ '_' ], function (_) {
-    var ProjectsListController = function ($scope, $location, $route, projectsDao, confirm) {
+    var ProjectsListController = function ($scope, $location, $route, projectsDao, confirm, CONFIG) {
 
         $scope.projects = [];
 
         // 根据返回的status，添加状态class
-        $scope.statusClass = [ 'info', 'info', 'danger' ];
+        $scope.statusClass = CONFIG.STATUS_CLASS;
 
-        // 根据后台返回的status，更新dom的class
-        $scope.statusMap = {
-            style: [ 'success', 'warning', 'important' ],
-            text: [ 'Success', 'Pending', 'failed' ]
-        };
-
-        $scope.statusText = {
-            0 : 'created',
-            1 : 'executing',
-            2 : 'pause',
-            3 : 'fail',
-            4 : 'executing',
-            5 : 'success'
-        };
+        $scope.statusText = CONFIG.STATUS_TEXT;
 
         // 进入新建项目页面
         $scope.createProject = function () {
@@ -39,7 +26,7 @@ define([ '_' ], function (_) {
         });
     };
 
-    ProjectsListController.$inject = [ '$scope', '$location', '$route', 'projectsDao', 'confirm' ];
+    ProjectsListController.$inject = [ '$scope', '$location', '$route', 'projectsDao', 'confirm', 'CONFIG' ];
 
     return ProjectsListController;
 });
