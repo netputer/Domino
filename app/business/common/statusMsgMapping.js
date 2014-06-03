@@ -7,7 +7,8 @@ define([],
             'PROJECT_TITLE_ERROR': 'Project title error',
             'PROJECT_URL_ERROR': 'Url error',
             'STAGINGSERVERS_ERROR': 'StagingServers error',
-            'PRODUCTIONSERVERS_ERROR': 'ProductionServers error'
+            'PRODUCTIONSERVERS_ERROR': 'ProductionServers error',
+            'NO_PUBLISH_AUTH': 'You no publish auth'
         };
 
         return httpStatusMsg;
