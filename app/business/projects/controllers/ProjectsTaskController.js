@@ -110,6 +110,17 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                 });
         };
 
+        $scope.review = function (taskId, reviewStatus) {
+            // 确认
+            projectsDao.task.review({ reviewStatus: reviewStatus, id: taskId})
+                .$promise.then(function (result) {
+                    _.find($scope.tasks, function (item) {
+                        return item.id === taskId;
+                    }).reviewStatus = reviewStatus;
+                    //
+                });
+        };
+
         $scope.goHookList = function () {
             $location.path('/projects/' + $routeParams.title + '/hooks');
         };
@@ -193,6 +204,8 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
 
                     task.status = data.status;
                     task.duration = getDuration(data, task);
+                    task.reviewStatus = data.reviewStatus;
+
                     $scope.$apply();
 
                     clearInterval(task.timer);

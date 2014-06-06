@@ -9,7 +9,8 @@
                 trigger: 'project/:title/trigger/:evt',
                 hookApi: 'hook/:id',
                 hookRun: 'hook/:title/run',
-                taskApi: 'task/:title'
+                taskApi: 'task/:title',
+                taskReview: 'task/review',
             };
 
             for (var key in actions) {
@@ -51,7 +52,12 @@
                     }
                 }),
 
-                task: $resource(actions.taskApi, {})
+                task: $resource(actions.taskApi, {}, {
+                    review: {
+                        url: actions.taskReview,
+                        method: 'put'
+                    }
+                })
             };
         };
 
