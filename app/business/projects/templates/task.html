@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="list">
-        <table class="table table-striped table-hover ">
+        <table class="table table-hover ">
           <thead>
             <tr>
               <th>Title</th>
@@ -54,16 +54,17 @@
               <th>Initiator</th>
               <th width="145">Status</th>
               <th width="50">jenkins</th>
-              <th width="130" class="text-right">Console Log</th>
+              <th width="100" class="text-center">Log</th>
+              <th width="100" class="text-center">Review</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-if="!tasks || !tasks.length">
-                <td colspan="7" align="center">
+                <td colspan="8" align="center">
                     暂无内容
                 </td>
             </tr>
-            <tr ng-repeat-start="item in tasks">
+            <tr ng-repeat-start="item in tasks" ng-class="{'warning':item.reviewStatus==0&&item.status==6}">
               <td>
                 {{ item.title }}
               </td>
@@ -84,9 +85,24 @@
                     <i class="fa fa-chevron-down" ng-class="{'fa-chevron-up':item.showConsole, 'fa-chevron-down':!item.showConsole}"></i>
                 </a>
               </td>
+              <td class="text-center">
+                <span ng-if="item.title=='Build Production'">
+                  <a ng-click="review(item.id,1)" ng-if="item.reviewStatus==0">
+                    <i class="fa fa-check green" style="margin: 0 10px;font-size:20px;" ></i>
+                  </a>
+                  <a ng-click="review(item.id,2)" ng-if="item.reviewStatus==0">
+                    <i class="fa fa-times red" style="margin: 0 10px; font-size:20px;"></i>
+                  </a>
+                  <i class="fa fa-check-circle green" style="margin: 0 10px; font-size:20px;" ng-if="item.reviewStatus==1"></i>
+                  <i class="fa fa-times-circle red" style="margin: 0 10px; font-size:20px;" ng-if="item.reviewStatus==2"></i>
+                </span>
+                <span ng-if="item.title!='Build Production'">
+                    <i class="fa fa-minus-circle yellow" style="font-size: 20px;"></i>
+                </span>
+              </td>
             </tr>
             <tr ng-repeat-end ng-if="item.showConsole">
-                <td colspan="7"><log-console all-log="item.log" increment-log="item.incrementLog"></log-console></td>
+                <td colspan="8"><log-console all-log="item.log" increment-log="item.incrementLog"></log-console></td>
             </tr>
           </tbody>
     </table>
