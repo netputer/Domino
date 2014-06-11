@@ -64,7 +64,7 @@
                     暂无内容
                 </td>
             </tr>
-            <tr ng-repeat-start="item in tasks" ng-class="{'warning':item.reviewStatus==0&&item.status==6}">
+            <tr ng-repeat-start="item in tasks" ng-class="{'warning':(item.title=='Build Production'&&item.reviewStatus==0&&item.status==6)}">
               <td>
                 {{ item.title }}
               </td>
