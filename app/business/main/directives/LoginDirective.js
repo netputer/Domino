@@ -56,10 +56,10 @@
                                 function () {
                                     // 授权失败，打开登录弹层，以便用户点击登录
                                     console.log('open login panel');
-                                    //$rootScope.$apply(function () {
+                                    $rootScope.$apply(function () {
                                         $rootScope.isLoading = false;
                                         $rootScope.loginPanelShow = true;
-                                    //});
+                                    });
                                 }
                             );
                         }
