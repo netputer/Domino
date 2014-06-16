@@ -7,10 +7,11 @@
                 projectTasksList: 'project/:title/task',
                 projectHooksList: 'project/:title/hooks',
                 trigger: 'project/:title/trigger/:evt',
+                rollback: 'project/:title/rollback',
                 hookApi: 'hook/:id',
                 hookRun: 'hook/:title/run',
                 taskApi: 'task/:title',
-                taskReview: 'task/review',
+                taskReview: 'task/review'
             };
 
             for (var key in actions) {
@@ -38,7 +39,12 @@
                     },
                     trigger: {
                         url: actions.trigger,
-                        method: 'get'
+                        method: 'put'
+                    },
+                    rollback: {
+                        url: actions.rollback,
+                        method: 'get',
+                        noLoading: true
                     }
                 }),
 

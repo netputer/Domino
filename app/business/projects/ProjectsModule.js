@@ -14,7 +14,8 @@ define([
     'projects/controllers/ProjectsTaskController', //项目任务编辑
     'projects/controllers/ProjectsHookListController', //项目hook列表
 
-    'projects/directives/editScriptDirective'
+    'projects/directives/editScriptDirective',
+    'projects/directives/editModalDirective'
 ], function (
     angular,
     ngRouter,
@@ -23,7 +24,8 @@ define([
     ProjectsEditController,
     ProjectsTaskController,
     ProjectsHookListController,
-    editScriptDirective
+    editScriptDirective,
+    editModalDirective
 ) {
     angular.module('dmnProjects', [])
 
@@ -38,6 +40,8 @@ define([
     .controller('ProjectsHookListController', ProjectsHookListController)
 
     .directive('dmnScriptEdit', editScriptDirective)
+
+    .directive('dmnModalEdit', editModalDirective)
 
     .run(['socket', function (socket) {
 
