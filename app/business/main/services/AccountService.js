@@ -28,8 +28,9 @@
                             accountName: _.find(data.emails, function (item) {
                                 return item.type === 'account';
                             }).value.split('@')[0]
-                        }).$promise.then(function () {
+                        }).$promise.then(function (userData) {
                                 accountService.isLogin = true;
+                                data.auth = userData.body.auth;
                                 accountService.userInfo = data;
                                 deferred.resolve(data);
                             },

@@ -37,10 +37,13 @@
         </div>
         <div class="row">
             <div class="col-sm-2">
-                <button type="button" class="btn btn-warning btn-large" ng-click="publish('buildStaging');" ng-disabled="disabled-hookItem1">Staging Publish</button>
+                <button type="button" class="btn btn-warning btn-large" dmn-modal-edit data="{branch: '{{tasks[0].branch || 'master'}}'}" onok="trigger(data,'buildStaging')">Staging Publish</button>
+            </div>
+            <div class="col-sm-2" ng-if="accountService.userInfo.auth.freePublishPro || canPublishProduction">
+                <button type="button" class="btn btn-success btn-large" dmn-modal-edit data="{branch: '{{tasks[0].branch || 'master'}}'}" onok="trigger(data,'buildProduction')">Production Publish</button>
             </div>
             <div class="col-sm-2">
-                <button type="button" class="btn btn-success btn-large" ng-click="publish('buildProduction');" ng-disabled="disabled-hookItem0">Producting Publish</button>
+                <button type="button" class="btn btn-success btn-large" ng-click="rollback('buildRollback');">Rollback</button>
             </div>
         </div>
     </div>
@@ -52,7 +55,8 @@
               <th>StartTime</th>
               <th>Duration(s)</th>
               <th>Initiator</th>
-              <th width="145">Status</th>
+              <th>branch</th>
+              <th width="100">Status</th>
               <th width="50">jenkins</th>
               <th width="100" class="text-center">Log</th>
               <th width="100" class="text-center">Review</th>
@@ -60,7 +64,7 @@
           </thead>
           <tbody>
             <tr ng-if="!tasks || !tasks.length">
-                <td colspan="8" align="center">
+                <td colspan="9" align="center">
                     暂无内容
                 </td>
             </tr>
@@ -71,6 +75,7 @@
               <td>{{ item.startTimeStr }}</td>
               <td>{{ item.duration }}s</td>
               <td>{{ item.initor }}</td>
+              <td>{{ item.branch || '-' }}</td>
               <td>
                 <span class="label label-{{statusClass[item.status]}}">{{ statusText[item.status] }}
               </td>
@@ -102,7 +107,7 @@
               </td>
             </tr>
             <tr ng-repeat-end ng-if="item.showConsole">
-                <td colspan="8"><log-console all-log="item.log" increment-log="item.incrementLog"></log-console></td>
+                <td colspan="9"><log-console all-log="item.log" increment-log="item.incrementLog"></log-console></td>
             </tr>
           </tbody>
     </table>

@@ -55,6 +55,16 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
             }
         });
 
+        // 添加监控，只有当staging发布成功后才可以发布production
+        // todo: 暂时按照时间来进行匹配，后续考虑按照commitId来匹配
+        $scope.$watch(function () {
+            var task = $scope.tasks[0];
+
+            return  (task && task.title === 'Build Staging' && task.status === 6);
+        }, function (mark) {
+
+            $scope.canPublishProduction = mark ? true : false;
+        });
 
         // 获取project 内容
         projectsDao.project.getUnloading({ title: $scope.title }).$promise.then(function (data) {
@@ -92,13 +102,21 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         }
 
         /**
+         * 发布
+         */
+        $scope.trigger = function (data, evt) {
+
+            publish(evt, data);
+        };
+
+        /**
          * publish hooks
          * @param  {string} evt staging or producting
          */
-        $scope.publish = function (evt) {
+        function publish(evt, data) {
 
             //$scope['disabled-hookItem' + id] = true;
-            projectsDao.project.trigger({ evt: evt,  title: $routeParams.title })
+            projectsDao.project.trigger({ evt: evt,  title: $routeParams.title }, data)
                 .$promise.then(function (result) {
                     var taskId = result.id;
 
@@ -108,6 +126,17 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                     //     $scope.tasks.unshift(task);
                     // });
                 });
+        }
+
+        /**
+         * 回滚
+         *
+         **/
+        $scope.rollback = function (evt) {
+            confirm('NO ZUO NO DIE, Are you sure to rollback?').then(function () {
+
+                projectsDao.project.rollback({ title: $routeParams.title });
+            });
         };
 
         $scope.review = function (taskId, reviewStatus) {
