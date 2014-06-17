@@ -11,14 +11,21 @@ define([
     'projects/services/ProjectsDaoService',
     'projects/controllers/ProjectsListController', //项目列表
     'projects/controllers/ProjectsEditController', //项目编辑
-    'projects/controllers/ProjectsTaskController' //项目任务编辑
+    'projects/controllers/ProjectsTaskController', //项目任务编辑
+    'projects/controllers/ProjectsHookListController', //项目hook列表
+
+    'projects/directives/editScriptDirective',
+    'projects/directives/editModalDirective'
 ], function (
     angular,
     ngRouter,
     ProjectsDaoService,
     ProjectsListController,
     ProjectsEditController,
-    ProjectsTaskController
+    ProjectsTaskController,
+    ProjectsHookListController,
+    editScriptDirective,
+    editModalDirective
 ) {
     angular.module('dmnProjects', [])
 
@@ -28,6 +35,18 @@ define([
 
     .controller('ProjectsEditController', ProjectsEditController)
 
-    .controller('ProjectsTaskController', ProjectsTaskController);
+    .controller('ProjectsTaskController', ProjectsTaskController)
+
+    .controller('ProjectsHookListController', ProjectsHookListController)
+
+    .directive('dmnScriptEdit', editScriptDirective)
+
+    .directive('dmnModalEdit', editModalDirective)
+
+    .run(['socket', function (socket) {
+
+        // 添加project模块的所有socket配置
+        socket.addEventName('task.add', 'task.change', 'task.progress');
+    }]);
 
 });

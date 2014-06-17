@@ -3,8 +3,8 @@
         'angular',
 
         'main/services/AccountService',
-
-        'main/controllers/LoginController',
+        'main/services/AccountDaoService',
+        'main/services/GoogleAuthService',
 
         'main/directives/LoginDirective',
         'main/directives/HeaderDirective',
@@ -14,8 +14,8 @@
         angular,
 
         AccountService,
-
-        LoginController,
+        AccountDaoService,
+        GoogleAuth,
 
         LoginDirective,
         HeaderDirective,
@@ -23,10 +23,35 @@
     ) {
         angular.module('dmnMain', [])
 
+        .factory('accountDao', AccountDaoService)
         .factory('AccountService', AccountService)
-        .controller('LoginController', LoginController)
+        .factory('googleAuth', GoogleAuth)
         .directive('dmnLogin', LoginDirective)
         .directive('dmnHeader', HeaderDirective)
-        .directive('dmnNavbar', NavbarDirective);
+        .directive('dmnNavbar', NavbarDirective)
+        .run(['AccountService', '$rootScope', function (accountService, $rootScope) {
+
+            // 记录并初始化所有的rootScope的全局变量，以便查阅
+            var config = {
+
+                //全局账户信息配置
+                accountService: accountService,
+
+                //用于记录全局loading状态
+                isLoading: false,
+
+                //用来记录登录面板的状态
+                loginPanelShow: false
+            };
+
+            for (var key in config) {
+
+                if (config.hasOwnProperty(key)) {
+
+                    $rootScope[key] = config[key];
+                }
+            }
+        }]);
+
     });
 }(this));

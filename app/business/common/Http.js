@@ -8,7 +8,7 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
     'use strict';
 
     angular.module('httpModule', [])
-    
+
         .constant('statusMsgMapping', statusMsgMapping)
 
         .factory('httpInterceptor', ['$q', '$rootScope', '$window', 'statusMsgMapping',
@@ -19,7 +19,7 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                     request: function (config) {
 
                         if (config.noLoading !== true) {
-                            
+
                             //loading状态
                             $rootScope.isLoading = true;
 
@@ -34,6 +34,7 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                             $rootScope.isLoading = false;
                         }
 
+
                         return response;
                     },
 
@@ -41,16 +42,28 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
                         var status = response.status;
                         var data   = response.data;
 
-                        if (response.config.noLoading !== true) {
+                        // 没有权限
+                        if (status === 403) {
 
-                            $rootScope.isLoading = false;
-                        }
+                            //目前为非登录状态
+                            if (data.msg === 'NO_LOGIN') {
+                                $rootScope.accountService.isLogin = false;
+                                $rootScope.viewNeedRerander = true;
+                            }
+                            else {
+                                if (response.config.noLoading !== true) {
 
-                        //表单处理,传递给下层进行处理，其余进行统一弹窗处理
-                        if (status === 508) {
-                            return $q.reject(response);
+                                    $rootScope.isLoading = false;
+                                }
+                                window.alert(statusMsgMapping[data.msg]);
+                            }
                         }
                         else {
+
+                            if (response.config.noLoading !== true) {
+
+                                $rootScope.isLoading = false;
+                            }
 
                             //window.alert(statusMsgMapping[data.error.msg]);
 
@@ -58,6 +71,8 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
 
                             // Alert(httpStatusMsg[data.error.msg]);
                         }
+
+                        return $q.reject(response);
                     }
                 };
             }

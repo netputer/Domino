@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Hello world!</title>
+        <title>domino</title>
         <meta charset="utf-8">
+        <!-- TODO: Polish this -->
         <link rel="stylesheet" type="text/css" href="/lib/simpliq/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/lib/simpliq/assets/css/style.min.css" />
         <link rel="stylesheet" type="text/css" href="/lib/simpliq/assets/css/retina.min.css" />
-        <link rel="stylesheet" type="text/css" href="/stylesheets/common.css" />
+        <!-- build:css(.tmp) /stylesheets/main.css -->
         <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+        <!-- endbuild -->
     </head>
     <body>
         <dmn-header></dmn-header>
-        <div class="container" ng-show="accountService.hasInit">
+        <div class="container">
             <div class="row">
-                <div class="ng-cloak" dmn-navbar ng-show="accountService.isLogin"></div>
-                <div class="col-lg-10 col-sm-11 ng-cloak" ng-show="accountService.isLogin" id="content" ng-class="{'full': !sidebarIsShow}">
+                <div class="ng-cloak" dmn-navbar></div>
+                <div class="col-lg-10 col-sm-11 ng-cloak" id="content" ng-class="{'full': !sidebarIsShow}">
                     <div ng-view></div>
                 </div>
-                <div class="ng-cloak" dmn-login ng-show="!accountService.isLogin"></div>
             </div>
         </div>
+        <footer>
+            <p>
+                <span style="text-align:left;float:left">© 2014 wandouLabs. </span>
+                <span class="hidden-phone" style="text-align:right;float:right">Powered by: <a href="xxx" alt="Bootstrap Admin Templates">front-end</a></span>
+            </p>
+        </footer>
+        <div class="ng-cloak" dmn-login  ng-show="loginPanelShow"></div>
         <div class="loading-mask" ng-show="isLoading">
             <div class="loading"></div>
         </div>
-        <footer>
-        <p>
-            <span style="text-align:left;float:left">© 2014 wandouLabs. </span>
-            <span class="hidden-phone" style="text-align:right;float:right">Powered by: <a href="xxx" alt="Bootstrap Admin Templates">front-end</a></span>
-        </p>
-        </footer>
+
+        <!--(if target !(staging || production))><!-->
+        <script>
+            window.API_URL_PREFIX = 'http://127.0.0.1:1337/';
+        </script>
+        <!--<!(endif)-->
         <script type="text/javascript" data-main="/business/AppLoader" src="/components/requirejs/require.js"></script>
     </body>
 </html>

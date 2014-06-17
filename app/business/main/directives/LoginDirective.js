@@ -3,94 +3,73 @@
         'text!main/templates/login.html'
     ], function (template) {
 
-        var LoginDirective = function (AccountService, $q, $location) {
+        var LoginDirective = function (AccountService, $q, $route, $rootScope, googleAuth) {
             return {
                 replace : true,
-                //scope: true,
                 template : template,
-                controller : 'LoginController',
                 link : function ($scope, $element, $attributes) {
-                    $scope.googleLogin = {
-                        token : '' // get google api token
-                        //isLogin: false // 标示当前google login是否成功
-                    };
 
-                    $scope.accountService.hasInit = true;
-
-                    if (true) {
-                        return;
-                    }
-
-                    var loginAsync = function () {
+                    function loginAsync(authResult) {
                         var deferred = $q.defer();
 
-                        AccountService.loginAsync($scope.googleLogin).then(deferred.resolve, deferred.reject);
-                        
+                        AccountService.loginAsync(authResult).then(deferred.resolve, deferred.reject);
+
                         return deferred.promise;
-                    };
+                    }
 
-                    // load google sign in Script
-                   ;(function () {
-                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                        po.src = 'https://apis.google.com/js/client:plusone.js?onload=GOOGLE_GET_AUTH';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                    /**
+                     * 此处的登录逻辑为：
+                     * 1. 每次加载页面都会向google获取数据
+                     * 分为3种逻辑情况
+                     * 1. session过期，google过期
+                     * 2. session没有过期，google账户过期（此处还需要登录google账户，取回用户数据）
+                     * 3. session过期，google账户没有过期
+                     */
+                    $scope.$watch(function () {
+                        return AccountService.isLogin;
+                    }, function (isLogin) {
 
-                   })();
+                        if (!isLogin) {
 
-                   /**
-                    * google api回调函数
-                    *
-                    * @const
-                    */
-                    window.GOOGLE_GET_AUTH = function () {
-                        
-                        var additionalParams = {
+                            googleAuth.renderSignIn(
+                                function (authResult) {
+                                    console.log('authResult:', authResult);
+                                    // google auth登录succ, 进一步进行系统后台验证
+                                    loginAsync(authResult)
+                                        .then(
+                                            function (data) {
+                                                console.info('auth succ');
+                                                // 登录成功后，刷新当前view, 以便获取数据
+                                                if ($rootScope.viewNeedRerander) {
 
-                            theme : 'dark',
-                            clientid: '389328904191.apps.googleusercontent.com',
-                            cookiepolicy: 'single_host_origin',
-                            requestvisibleactions: 'http://schemas.google.com/AddActivity',
-
-                            callback: function (authResult) {
-
-                                // 授权成功
-                                if (authResult.status.signed_in) {
-
-                                    //$scope.googleLogin.isLogin = true;
-                                    $scope.googleLogin.token = authResult.access_token;
-                                    //loginAsync();
-                                    console.log('google sign in success');
-
-                                    // 登录状态验证完毕后显示页面，之前一片空白
-                                    loginAsync().finally(
-                                        function () {
-                                            
-                                            $scope.accountService.hasInit = true;
-                                        }
-                                    );
-
-
-                                }
-                                else {
-                                    
-                                    $scope.$apply(function () {
-                                        $scope.googleLogin.token = '';
-                                        $scope.accountService.hasInit = true;
+                                                    $route.reload();
+                                                }
+                                            }
+                                        )
+                                        .finally(
+                                            function () {
+                                                $rootScope.loginPanelShow = false;
+                                                $rootScope.isLoading = false;
+                                            }
+                                        );
+                                },
+                                function () {
+                                    // 授权失败，打开登录弹层，以便用户点击登录
+                                    console.log('open login panel');
+                                    $rootScope.$apply(function () {
+                                        $rootScope.isLoading = false;
+                                        $rootScope.loginPanelShow = true;
                                     });
-                                    //loginAsync();
-                                    console.log('google sign in error:' + authResult.error);
                                 }
-                            }
-                        };
+                            );
+                        }
 
-                        gapi.signin.render('googleLogin', additionalParams);
-
-                   };
+                    });
                 }
             };
         };
 
-        LoginDirective.$inject = ['AccountService', '$q', '$location'];
+        LoginDirective.$inject = ['AccountService', '$q', '$route', '$rootScope', 'googleAuth'];
 
         return LoginDirective;
     });

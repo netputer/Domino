@@ -9,16 +9,24 @@ define([
     'common/Http',
     'common/Dao',
     'common/Modal',
-    'common/ServerEventCenter',
-    'common/Config',
-    'common/CommonDirective'
+    'common/Socketio',
+    'common/Notification',
+    'common/CONFIG',
+    'common/Util',
+    'common/CommonDirective',
+    'common/CommonFilter'
 ], function (
     angular
 ) {
-
     angular.module('dmnCommon', [
-        'httpModule', 'daoModule', 'modalModule',
-        'configModule', 'serverEventCenterModule',
-        'directiveModule'
+        'httpModule',
+        'daoModule',
+        'modalModule',
+        'notificationModule',
+        'configModule',
+        'ioModule',
+        'utilModule',
+        'directiveModule',
+        'filterModule'
     ]);
 });

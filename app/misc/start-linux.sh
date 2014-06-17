@@ -90,9 +90,12 @@ installDomino() {
     npm i yo -g
     npm i bower -g
     npm i generator-wdj -g
-    gem sources --remove https://rubygems.org/
-    gem sources --remove https://rubygems.org
+    gem sources -r https://rubygems.org/
+    gem sources -r https://rubygems.org
+    gem sources -r http://rubygems.org
+    gem sources -r http://rubygems.org/
     gem sources -a http://ruby.taobao.org
+    gem install ruby-devel
     gem install compass --pre
 }
 installDomino

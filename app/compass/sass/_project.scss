@@ -1,0 +1,127 @@
+// TODO: Add prefix for selectors
+.project-name {
+	margin-bottom: 20px;
+}
+
+.project-operate {
+    width: 350px
+}
+
+.task-project-title {
+    padding: 20px 0 0 20px;
+}
+
+.link-icon-hover {
+    vertical-align: top;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.d-project-item {
+    padding-bottom: 30px;
+    .status  {
+        border-right: 1px #e7e7e7 solid;
+        color: #78cd51;
+        font-size: 30px;
+        text-align: center;
+        width: 60px;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+    }
+
+    .body {
+        -webkit-flex: 1;
+
+        .title {
+            border-bottom: 1px #e7e7e7 solid;
+            margin-bottom: 5px;
+            padding: 5px 10px;
+        }
+
+        .envs {
+            padding: 0 10px;
+
+            .env-ctn {
+                height: 25px;
+                -webkit-align-items: center;
+
+                .env-title {
+                    display: inline-block;
+                    border-radius: 50%;
+                    color: #fff;
+                    font-size: 14px;
+                    height: 20px;
+                    line-height: 20px;
+                    margin-right: 10px;
+                    text-align: center;
+                    width: 20px;
+
+                    &.production {
+                        background-color: #67c2ef;
+                    }
+                }
+
+                .label {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    .btn-open {
+        font-size: 45px;
+        text-align: center;
+        width: 50px;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+    }
+}
+
+.task-link {
+    margin-bottom: 10px;
+}
+
+.task-script-edit {
+    color: #428bca;
+}
+
+.script-edit-area {
+    width: 100%;
+}
+
+.pre-log {
+    min-height: 12px;
+    padding: 1em 0;
+    color: #f1f1f1;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 19px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #222;
+    overflow-x: scroll;
+    counter-reset: line-numbering;
+    p {
+        padding: 0 15px 0 55px;
+        margin: 0;
+        min-height: 16px;
+    }
+    a {
+        color: #5ff;
+    }
+    a.num {
+        display: inline-block;
+        text-align: right;
+        min-width: 40px;
+        cursor: pointer;
+        text-decoration: none;
+        margin-left: -33px;
+        color: #666;
+        &:before {
+            content: counter(line-numbering);
+            counter-increment: line-numbering;
+            padding-right: 1em;
+        }
+    }
+}

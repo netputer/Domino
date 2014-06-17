@@ -10,16 +10,11 @@ define([
             restrict: 'EA',
             replace : true,
             template : template,
-            controller : [ '$scope', function ($scope) {
+            controller : ['$scope', function ($scope) {
                 $scope.sidebarIsShow = true;
-            } ],
-            link : function ($scope, $element, $attributes) {
-                //alert(111);
-            }
+            } ]
         };
     };
-
-    //HeaderDirective.$inject = ['AccountService', '$q', '$location'];
 
     return HeaderDirective;
 });

@@ -1,3 +1,34 @@
+@import "reset";
+
+@import "typograhy";
+@import "layout";
+
+@import "common";
+@import "project";
+
+
+@import "compass/css3";
+
+/** cover bootstrap css **/
+a.navbar-brand span {
+    display: inline-block;
+    @include single-transition(all, .6s, ease-in-out);
+    &:hover {
+        @include transform2d(scale(1.5) rotate(360deg));
+    }
+}
+
+.header-nav .avatar img {
+    position: relative;
+    z-index: 1;
+
+    @include single-transition(all, .6s, ease-in-out);
+    &:hover {
+        @include transform2d(scale(4) translate(-10px, 10px));
+    }
+}
+/** cover bootstrap css over**/
+
 .d-main {
     padding-top: 51px;
 }
@@ -8,4 +39,15 @@
 
 .d-login-title {
 	padding-bottom: 20px;
+}
+
+// TODO: Add prefix
+.login-mask {
+    z-index: 10001;
+    background: #383e4b;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
 }
