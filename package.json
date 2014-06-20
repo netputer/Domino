@@ -44,7 +44,8 @@
     "karma-requirejs": "0.2.1",
     "matchdep": "0.3.0",
     "connect-livereload": "0.3.2",
-    "connect-modrewrite": "0.5.11"
+    "connect-modrewrite": "0.5.11",
+    "grunt-brand-log": "0.2.0"
   },
   "engines": {
     "node": ">=0.8.0"

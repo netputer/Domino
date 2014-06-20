@@ -53,6 +53,7 @@ module.exports = function (grunt) {
     };
 
     grunt.initConfig({
+        pkg   : grunt.file.readJSON('package.json'),
         paths : pathConfig,
         watch : {
             compass : {
@@ -325,6 +326,13 @@ module.exports = function (grunt) {
                     '<%= paths.tmp %>/index.html': '<%= paths.app %>/index.html',
                 }
             }
+        },
+        brand_log: {
+            options: {
+                type: 'Domino',
+                name: '<%= pkg.name %>',
+                msg: 'v<%= pkg.version %>'
+            }
         }
     });
 
@@ -334,6 +342,7 @@ module.exports = function (grunt) {
         'connect:server',
         'karma:server',
         'open',
+        'brand_log',
         'watch'
     ]);
 

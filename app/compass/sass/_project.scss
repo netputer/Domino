@@ -3,6 +3,21 @@
 	margin-bottom: 20px;
 }
 
+.project-operate {
+    width: 350px
+}
+
+.task-project-title {
+    padding: 20px 0 0 20px;
+}
+
+.link-icon-hover {
+    vertical-align: top;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
 .d-project-item {
     padding-bottom: 30px;
     .status  {

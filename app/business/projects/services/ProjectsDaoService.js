@@ -7,9 +7,11 @@
                 projectTasksList: 'project/:title/task',
                 projectHooksList: 'project/:title/hooks',
                 trigger: 'project/:title/trigger/:evt',
-                hookApi: 'hook/:title',
+                rollback: 'project/:title/rollback',
+                hookApi: 'hook/:id',
                 hookRun: 'hook/:title/run',
-                taskApi: 'task/:title'
+                taskApi: 'task/:title',
+                taskReview: 'task/review'
             };
 
             for (var key in actions) {
@@ -20,6 +22,10 @@
 
             return {
                 project: $resource(actions.projectApi, {}, {
+                    getUnloading: {
+                        method: 'get',
+                        noLoading: true
+                    },
                     getTasks: {
                         url: actions.projectTasksList,
                         method: 'get'
@@ -33,7 +39,12 @@
                     },
                     trigger: {
                         url: actions.trigger,
-                        method: 'get'
+                        method: 'put'
+                    },
+                    rollback: {
+                        url: actions.rollback,
+                        method: 'get',
+                        noLoading: true
                     }
                 }),
 
@@ -47,7 +58,12 @@
                     }
                 }),
 
-                task: $resource(actions.taskApi, {})
+                task: $resource(actions.taskApi, {}, {
+                    review: {
+                        url: actions.taskReview,
+                        method: 'put'
+                    }
+                })
             };
         };
 

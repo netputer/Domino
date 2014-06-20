@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h3>build configuration</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" name="newForm" novalidate>
+        <div class="form-group" ng-class="{'has-error': newForm.branchInput.$invalid}">
+            <label for="inputEmail3" class="col-sm-2 control-label">branch:</label>
+            <div class="col-sm-10">
+                <input ng-model="data.branch" type="text" class="form-control script-edit-area" id="branchInput" name="branchInput" required>
+                <form-tooltip hint="eg: branch or commitId" required="NO_BLANK" for="branchInput" custom="ignore">
+                  </form-tooltip>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">start</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

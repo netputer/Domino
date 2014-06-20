@@ -50,7 +50,7 @@
                 controller : 'ProjectsEditController'
             })
 
-            .when('/projects/:title/task', {
+            .when('/projects/:title/task/:isOpen?', {
 
                 templateUrl : '/business/projects/templates/task.html',
                 controller : 'ProjectsTaskController'

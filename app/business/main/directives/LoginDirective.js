@@ -33,6 +33,7 @@
 
                             googleAuth.renderSignIn(
                                 function (authResult) {
+                                    console.log('authResult:', authResult);
                                     // google auth登录succ, 进一步进行系统后台验证
                                     loginAsync(authResult)
                                         .then(
@@ -54,6 +55,7 @@
                                 },
                                 function () {
                                     // 授权失败，打开登录弹层，以便用户点击登录
+                                    console.log('open login panel');
                                     $rootScope.$apply(function () {
                                         $rootScope.isLoading = false;
                                         $rootScope.loginPanelShow = true;

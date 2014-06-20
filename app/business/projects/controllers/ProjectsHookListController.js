@@ -38,11 +38,16 @@ define([ 'angular', '_' ], function (angular, _) {
         };
 
         $scope.run = function (id) {
-            $scope['disabled-hookItem' + id] = true;
-            projectsDao.hook.run({ id: id }).$promise.then(function (result) {
-
-                //$scope['disabled-hookItem' + id] = false;
+            var hook = _.find($scope.hooks, function (hook) {
+                return hook.id === id;
             });
+
+            // trigger current hook
+            projectsDao.project.trigger({ evt: hook.event,  title: $routeParams.title })
+                .$promise.then(function (hook) {
+                    // 跳转到task页面查看task log
+                    $location.path('/projects/' + $routeParams.title + '/task/open');
+                });
         };
 
         $scope.fallback = function () {

@@ -1,5 +1,11 @@
 <div class="d-log-console">
     <pre class="pre-log" ng-show="!isLoading"></pre>
     <a href="#" class="to-top-btn" >To top</a>
+    <a href="#" class="scroll-to-end" ng-show="!isLoading">
+        <span class="status"></span>
+        <label>
+            Scroll to end of logs
+        </label>
+    </a>
     <inner-loading text="Loading console log" ng-if="isLoading" class="text-center"></inner-loading>
 </div>

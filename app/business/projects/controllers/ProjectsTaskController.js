@@ -6,36 +6,74 @@
  */
 
 define([ 'angular', '_', 'moment'], function (angular, _, moment) {
-    var ProjectsTaskController = function ($scope, $location, $route, projectsDao, $routeParams, confirm, notification, AccountService) {
+    var ProjectsTaskController = function ($scope, $location, $route, $q, projectsDao, $routeParams, confirm, notification, AccountService, CONFIG) {
 
         $scope.tasks = [];
 
         // 根据返回的status，添加状态class
-        $scope.statusClass = [ 'info', 'warning', 'default', 'warning', 'danger', 'default', 'success' ];
+        $scope.statusClass = CONFIG.STATUS_CLASS;
+        $scope.statusText  = CONFIG.STATUS_TEXT;
 
-        $scope.statusText = {
-            0 : 'created',
-            1 : 'queue',
-            2 : 'executing',
-            3 : 'pause',
-            4 : 'fail',
-            5 : 'force executing',
-            6 : 'success'
+        $scope.title = $routeParams.title;
+
+        $scope.page = 1;
+        $scope.pageSize = 10;
+
+        // 观察page，向后端获取数据
+        $scope.setPage = function (page) {
+            var deferred = $q.defer();
+
+            // get project list
+            projectsDao.project.getTasks(
+                { title: $routeParams.title, page: page, pageSize: $scope.pageSize }
+            )
+                .$promise.then(function (tasks) {
+
+                    // TODO filter
+                    _.forEach(tasks.body, function (item, name) {
+                        filterTask(item);
+                    });
+
+                    $scope.tasks = tasks.body;
+                    $scope.max   = tasks.max;
+
+                    deferred.resolve(tasks.body);
+                });
+
+            return deferred.promise;
         };
 
-        //$scope.totalItems = 64;
-        //$scope.currentPage = 4;
+        // 第一次进入页面获取数据
+        $scope.setPage($scope.page).then(function (tasks) {
+            if (typeof $routeParams.isOpen !== 'undefined') {
+                // 第一次进入页面，打开第一个console
+                // FIXED: 由于task与hook之间没有对应关系，此处当从hook run跳过来后
+                // 直接以打开第一个task console（当此间有人又build的时候，可以会有问题，但问题不大）
 
-        // get project list
-        projectsDao.project.getTasks({ title: $routeParams.title }).$promise.then(function (tasks) {
-
-            // TODO filter
-            _.forEach(tasks.body, function (item, name) {
-                filterTask(item);
-            });
-
-            $scope.tasks = tasks.body;
+                // 主动打开当前console panle
+                tasks[0].showConsole = true;
+            }
         });
+
+        // 添加监控，只有当staging发布成功后才可以发布production
+        // todo: 暂时按照时间来进行匹配，后续考虑按照commitId来匹配
+        $scope.$watch(function () {
+            var task = $scope.tasks[0];
+
+            return  (task && task.title === 'Build Staging' && task.status === 6);
+        }, function (mark) {
+
+            $scope.canPublishProduction = mark ? true : false;
+        });
+
+        // 获取project 内容
+        projectsDao.project.getUnloading({ title: $scope.title }).$promise.then(function (data) {
+
+            var body = data.body;
+
+            $scope.project = body;
+        });
+
 
         // 过滤处理item数据
         function filterTask(item) {
@@ -64,13 +102,21 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         }
 
         /**
+         * 发布
+         */
+        $scope.trigger = function (data, evt) {
+
+            publish(evt, data);
+        };
+
+        /**
          * publish hooks
          * @param  {string} evt staging or producting
          */
-        $scope.publish = function (evt) {
+        function publish(evt, data) {
 
             //$scope['disabled-hookItem' + id] = true;
-            projectsDao.project.trigger({ evt: evt,  title: $routeParams.title })
+            projectsDao.project.trigger({ evt: evt,  title: $routeParams.title }, data)
                 .$promise.then(function (result) {
                     var taskId = result.id;
 
@@ -79,6 +125,28 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                     //     filterTask(task);
                     //     $scope.tasks.unshift(task);
                     // });
+                });
+        }
+
+        /**
+         * 回滚
+         *
+         **/
+        $scope.rollback = function (evt) {
+            confirm('NO ZUO NO DIE, Are you sure to rollback?').then(function () {
+
+                projectsDao.project.rollback({ title: $routeParams.title });
+            });
+        };
+
+        $scope.review = function (taskId, reviewStatus) {
+            // 确认
+            projectsDao.task.review({ reviewStatus: reviewStatus, id: taskId})
+                .$promise.then(function (result) {
+                    _.find($scope.tasks, function (item) {
+                        return item.id === taskId;
+                    }).reviewStatus = reviewStatus;
+                    //
                 });
         };
 
@@ -163,7 +231,28 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
 
                 if (task.id === data.id) {
 
+                    task.status = data.status;
+                    task.duration = getDuration(data, task);
+                    task.reviewStatus = data.reviewStatus;
+
+                    $scope.$apply();
+
+                    clearInterval(task.timer);
+                    task.timer = setInterval(function () {
+                        $scope.$apply(function () {
+                            task.duration = getDuration({}, task);
+                        });
+                    }, 1000);
+
+                    // build完成后，停止监听
+                    if (data.status === 4 || data.status === 6) {
+
+                        clearInterval(task.timer);
+                    }
+
+
                     // 状态变化的时候，fail or success会触发notification
+                    // 可能两个change的status是一样的
                     if (task.status !== data.status) {
                         //添加通知
                         switch (data.status) {
@@ -172,19 +261,17 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                                 icon: '/images/fail.png',
                                 body: data.title + ' of ' + data.projectTitle + ' build fail'
                             });
+
                             break;
                         case 6:
                             notification.createNotification('Success', {
                                 icon: '/images/success.png',
                                 body: data.title + ' of ' + data.projectTitle + ' build success'
                             });
+
                             break;
                         }
                     }
-
-                    task.status = data.status;
-                    task.duration = getDuration(data, task);
-                    $scope.$apply();
                 }
             });
         });
@@ -208,9 +295,17 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
                 }
             });
         });
+
+        $scope.$on('$destroy', function () {
+            // 干掉监听器
+            _.forEach($scope.tasks, function (task) {
+
+                clearInterval(task.timer);
+            });
+        });
     };
 
-    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$routeParams', 'confirm', 'notification', 'AccountService' ];
+    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', '$q', 'projectsDao', '$routeParams', 'confirm', 'notification', 'AccountService', 'CONFIG' ];
 
     return ProjectsTaskController;
 });

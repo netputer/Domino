@@ -17,6 +17,7 @@
             };
 
             var renderSignIn = function (callback, fallback) {
+                console.log('googleHasInit', googleHasInit);
                 // 防止多次加载 Google API
                 if (googleHasInit) {
                     fallback();
@@ -52,7 +53,7 @@
                     };
                     gapi.signin.render('googleLogin', additionalParams);
                 };
-            }
+            };
 
             return {
                 renderSignIn: renderSignIn
