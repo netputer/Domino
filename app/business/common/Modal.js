@@ -25,7 +25,7 @@ define(['angular'], function (angular) {
                             '<button class="btn btn-warning" ng-click="cancel()">Cancel</button>' +
                         '</div>',
 
-                    controller: function ($scope, $modalInstance) {
+                    controller: [ '$scope', '$modalInstance', function ($scope, $modalInstance) {
 
                         $scope.ok = function () {
                             $modalInstance.close();
@@ -34,7 +34,7 @@ define(['angular'], function (angular) {
                         $scope.cancel = function () {
                             $modalInstance.dismiss();
                         };
-                    }
+                    } ]
                 }).result.then(function () {
 
                     deferred.resolve();
@@ -65,12 +65,12 @@ define(['angular'], function (angular) {
                             '<button class="btn btn-primary" ng-click="ok()">sure</button>' +
                         '</div>',
 
-                    controller: function ($scope, $modalInstance) {
+                    controller: [ '$scope', '$modalInstance', function ($scope, $modalInstance) {
 
                         $scope.ok = function () {
                             $modalInstance.close();
                         };
-                    }
+                    } ]
                 }).result.then(function () {
 
                     deferred.resolve();
