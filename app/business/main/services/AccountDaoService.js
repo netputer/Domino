@@ -3,7 +3,8 @@
         var AccountDaoService = function ($resource, $rootScope, CONFIG) {
             var actions = {
                 login: 'account/auth',
-                logout: 'account/logout'
+                logout: 'account/logout',
+                accountApi: 'account/:accountName'
             };
 
             for (var key in actions) {
@@ -30,7 +31,9 @@
                         noLoading: true,
                         withCredentials: false
                     }
-                })
+                }),
+
+                account: $resource(actions.accountApi)
             };
         };
 

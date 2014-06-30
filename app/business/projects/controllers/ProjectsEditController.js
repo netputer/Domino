@@ -8,7 +8,8 @@
 define([ 'angular', '_' ], function (angular, _) {
     var ProjectsEditController = function (
             $scope, $location, $window, projectsDao,
-            confirm, $routeParams, statusMsgMapping
+            confirm, $routeParams, statusMsgMapping, accountDao,
+            AccountService
         ) {
 
         // 初始化
@@ -17,6 +18,36 @@ define([ 'angular', '_' ], function (angular, _) {
         $scope.project = {
             type: 0
         };
+
+        $scope.members = [];
+
+        // 请求所有用户列表
+        // todo:  前期用户少，全部请求，后期可以做suggestion
+        accountDao.account.get().$promise.then(function (data) {
+
+            var body = data.body;
+
+            $scope.members = body;
+
+            if (!$scope.isModify) {
+
+                var unregister = $scope.$watch(function () {
+
+                    return AccountService.userInfo.accountName;
+
+                }, function (accountName) {
+
+                    if (accountName) {
+
+                        // 初始化所有成员为当前创立用户
+                        $scope.project.developers = [ accountName ];
+                        $scope.project.designers  = [ accountName ];
+                        $scope.project.managers   = [ accountName ];
+                        unregister();
+                    }
+                });
+            }
+        });
 
 
         //console.info('routeParams', $routeParams.id);
@@ -84,7 +115,6 @@ define([ 'angular', '_' ], function (angular, _) {
                 angular.forEach(form, function (input, key) {
 
                     if (input.hasOwnProperty('$dirty')) {
-
                         if (input.$pristine && (input.$viewValue === null || input.$viewValue === undefined)) {
                             input.$setViewValue('');
                         }
@@ -120,7 +150,8 @@ define([ 'angular', '_' ], function (angular, _) {
 
     ProjectsEditController.$inject = [
         '$scope', '$location', '$window', 'projectsDao',
-        'confirm', '$routeParams', 'statusMsgMapping'
+        'confirm', '$routeParams', 'statusMsgMapping', 'accountDao',
+        'AccountService'
     ];
 
     return ProjectsEditController;

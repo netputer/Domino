@@ -177,6 +177,17 @@ module.exports = function (grunt) {
                         'lib/**/*'
                     ]
                 }]
+            },
+            components: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= paths.app %>',
+                    dest: '<%= paths.dist %>',
+                    src: [
+                        'components/**/*.{css,gif,png,jpg,jpeg,ttf,svg,woff,eot,otf,swf,svg}'
+                    ]
+                }]
             }
         },
         compass : {
@@ -370,6 +381,7 @@ module.exports = function (grunt) {
         'htmlmin',
         'requirejs:dist',
         'rev',
+        'copy:components',
         'usemin'
     ]);
 
@@ -384,6 +396,7 @@ module.exports = function (grunt) {
         'htmlmin',
         'requirejs:dist',
         'rev',
+        'copy:components',
         'usemin'
     ]);
 

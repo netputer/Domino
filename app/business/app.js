@@ -6,6 +6,7 @@
         'ngResource',
         'ngSanitize',
         'uiBootstrap',
+        'ngUiSelect2',
 
         'common/CommonModule',
         'main/mainModule',
@@ -16,7 +17,7 @@
     ) {
         angular.module('domino', [
             'ngRoute', 'ngAnimate', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'dmnCommon', 'dmnMain', 'dmnProjects',
-            'dmnUtils'
+            'dmnUtils', 'ui.select2'
         ])
 
         .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {

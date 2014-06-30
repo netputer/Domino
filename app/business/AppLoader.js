@@ -11,6 +11,8 @@ require.config({
         ngMock:     '../components/angular-mocks/angular-mocks',
         ngSanitize: '../components/angular-sanitize/angular-sanitize',
         uiBootstrap: '../components/angular-bootstrap/ui-bootstrap-tpls',
+        select2: '../components/select2/select2',
+        ngUiSelect2: '../components/angular-ui-select2/src/select2',
         text: '../components/requirejs-text/text',
         io: '../components/socket.io-client/dist/socket.io'
     },
@@ -48,6 +50,14 @@ require.config({
         uiBootstrap: {
             deps: ['angular'],
             exports: 'uiBootstrap'
+        },
+        select2: {
+            deps: ['jQuery'],
+            exports: 'select2'
+        },
+        ngUiSelect2: {
+            deps: ['jQuery', 'select2', 'angular'],
+            exports: 'ngUiSelect2'
         },
         io: {
             exports: 'io'
