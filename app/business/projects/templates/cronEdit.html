@@ -1,0 +1,43 @@
+<div>
+    <div class="page-header clearfix">
+        <h1>
+            <button type="button" class="btn btn-prev pull-right" ng-click="createProject();">
+                <i class="fa fa-arrow-left" ng-click="fallback()"> Back</i>
+            </button>
+            {{  isModify ? cron.title : 'New cronTab' }}
+        </h1>
+    </div>
+    <div class="list">
+        <form class="form-horizontal" name="newForm" novalidate>
+            <div class="form-group" ng-class="{'has-error': newForm.serverInvalid.title || (newForm.title.$dirty && newForm.title.$invalid)}" ng-show="!isModify" id="titleWrap">
+                <label class="control-label" for="title">Title<span class="red">*</span></label>
+                <div class="controls">
+                  <input class="form-control" id="title" name="title" type="text" ng-model="cron.title" required autofocus>
+                  <form-tooltip hint="ex.Domino" required="NO_BLANK" for="title" custom="newForm.serverInvalid.title">
+                  </form-tooltip>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error':newForm.serverInvalid.time || (newForm.time.$dirty && newForm.time.$invalid)}" id="timeWrap">
+              <label class="control-label">Time<span class="red">*</span></label>
+              <div class="controls">
+                <input class="form-control" name="time" type="text" ng-model="cron.time" required ng-pattern="/^([0-5]?[0-9]\s)(((([*])|(((([0-5])?[0-9])((-(([0-5])?[0-9])))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?))(,(((([*])|(((([0-5])?[0-9])((-(([0-5])?[0-9])))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?)))* (((([*])|(((((([0-1])?[0-9]))|(([2][0-3])))((-(((([0-1])?[0-9]))|(([2][0-3])))))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?))(,(((([*])|(((((([0-1])?[0-9]))|(([2][0-3])))((-(((([0-1])?[0-9]))|(([2][0-3])))))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?)))* (((((((([*])|(((((([1-2])?[0-9]))|(([3][0-1]))|(([1-9])))((-(((([1-2])?[0-9]))|(([3][0-1]))|(([1-9])))))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?))|(L)|(((((([1-2])?[0-9]))|(([3][0-1]))|(([1-9])))W))))(,(((((([*])|(((((([1-2])?[0-9]))|(([3][0-1]))|(([1-9])))((-(((([1-2])?[0-9]))|(([3][0-1]))|(([1-9])))))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?))|(L)|(((((([1-2])?[0-9]))|(([3][0-1]))|(([1-9])))W)))))*)|([?])) (((([*])|((((([1-9]))|(([1][0-2])))((-((([1-9]))|(([1][0-2])))))?))|((((JAN)|(FEB)|(MAR)|(APR)|(MAY)|(JUN)|(JUL)|(AUG)|(SEP)|(OKT)|(NOV)|(DEC))((-((JAN)|(FEB)|(MAR)|(APR)|(MAY)|(JUN)|(JUL)|(AUG)|(SEP)|(OKT)|(NOV)|(DEC))))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?))(,(((([*])|((((([1-9]))|(([1][0-2])))((-((([1-9]))|(([1][0-2])))))?))|((((JAN)|(FEB)|(MAR)|(APR)|(MAY)|(JUN)|(JUL)|(AUG)|(SEP)|(OKT)|(NOV)|(DEC))((-((JAN)|(FEB)|(MAR)|(APR)|(MAY)|(JUN)|(JUL)|(AUG)|(SEP)|(OKT)|(NOV)|(DEC))))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?)))* (((((((([*])|((([0-6])((-([0-6])))?))|((((SUN)|(MON)|(TUE)|(WED)|(THU)|(FRI)|(SAT))((-((SUN)|(MON)|(TUE)|(WED)|(THU)|(FRI)|(SAT))))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?))|((([0-6])L))|(W)|(([#][1-5]))))(,(((((([*])|((([0-6])((-([0-6])))?))|((((SUN)|(MON)|(TUE)|(WED)|(THU)|(FRI)|(SAT))((-((SUN)|(MON)|(TUE)|(WED)|(THU)|(FRI)|(SAT))))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?))|((([0-6])L))|(W)|(([#][1-5])))))*)|([?]))((( (((([*])|((([1-2][0-9][0-9][0-9])((-([1-2][0-9][0-9][0-9])))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?))(,(((([*])|((([1-2][0-9][0-9][0-9])((-([1-2][0-9][0-9][0-9])))?)))((/(([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?([0-9])?[0-9])))?)))*))?)$/">
+                <form-tooltip hint="ex. 00 * * * * *; ss(0-59) mm(0-59) h(0-23) DD(1-31) MM(0-11) dd(0-6)" required="NO_BLANK" for="time" custom="newForm.serverInvalid.time" pattern="FORMAT_ERROR">
+                </form-tooltip>
+              </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error':newForm.serverInvalid.hooks || (newForm.hooks.$dirty && newForm.hooks.$invalid)}" id="hooksWrap">
+              <label class="control-label">hooks<span class="red">*</span></label>
+              <div class="controls">
+                <textarea rows="6" style="width: 100%; overflow: hidden; word-wrap: break-word; resize: horizontal; height: 126px;" ng-model="cron.hooks" name="hooks" required></textarea>
+                <form-tooltip hint="ex. Build Production|branch=master" required="NO_BLANK" for="hooks" custom="newForm.serverInvalid.hooks">
+                </form-tooltip>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" ng-click="saveFun(cron)">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

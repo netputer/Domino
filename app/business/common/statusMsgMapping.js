@@ -2,6 +2,7 @@ define([],
     function () {
         var httpStatusMsg = {
             'NO_BLANK': 'Not allow blank',
+            'FORMAT_ERROR': 'Invalid format',
             'NOT_URL': 'Not a Git url',
             'INPUT_INVALID': 'Input is not invalid',
             'PROJECT_TITLE_ERROR': 'Project title error',

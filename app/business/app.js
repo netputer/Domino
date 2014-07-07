@@ -63,6 +63,24 @@
                 controller : 'ProjectsHookListController'
             })
 
+            .when('/projects/:title/crons', {
+
+                templateUrl : '/business/projects/templates/cronList.html',
+                controller : 'ProjectsCronListController'
+            })
+
+            .when('/projects/:projectTitle/crons/new', {
+
+                templateUrl : '/business/projects/templates/cronEdit.html',
+                controller : 'ProjectsCronEditController'
+            })
+
+            .when('/projects/:projectTitle/crons/:title', {
+
+                templateUrl : '/business/projects/templates/cronEdit.html',
+                controller : 'ProjectsCronEditController'
+            })
+
             .when('/utils', {
 
                 templateUrl : '/business/utils/templates/utils.html',

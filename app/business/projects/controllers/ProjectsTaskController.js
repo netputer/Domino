@@ -154,6 +154,10 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
             $location.path('/projects/' + $routeParams.title + '/hooks');
         };
 
+        $scope.goCronList = function () {
+            $location.path('/projects/' + $routeParams.title + '/crons');
+        };
+
         $scope.goEdit = function () {
             $location.path('/projects/' + $routeParams.title);
         };

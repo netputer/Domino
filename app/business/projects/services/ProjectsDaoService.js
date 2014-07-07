@@ -11,7 +11,9 @@
                 hookApi: 'hook/:id',
                 hookRun: 'hook/:title/run',
                 taskApi: 'task/:title',
-                taskReview: 'task/review'
+                taskReview: 'task/review',
+                cronApi: 'project/:projectTitle/cron/:title',
+                cronToggle: 'project/:projectTitle/cron/:title/toggle'
             };
 
             for (var key in actions) {
@@ -63,6 +65,16 @@
                         url: actions.taskReview,
                         method: 'put'
                     }
+                }),
+
+                cron: $resource(actions.cronApi, {}, {
+                    toggle: {
+                        url: actions.cronToggle,
+                        method: 'put'
+                    },
+                    update: {
+                        method: 'put'
+                    },
                 })
             };
         };
