@@ -62,7 +62,7 @@
             <div class="form-group" ng-class="{'has-error':newForm.serverInvalid.managers || (newForm.managers.$dirty && newForm.managers.$invalid)}">
               <label class="control-label">managers<span class="red">*</span></label>
               <div class="controls">
-                <select style="width:100%" name="managers" ui-select2 multiple ng-model="project.managers" ng-required="true">
+                <select style="width:100%" name="managers" ui-select2 multiple ng-model="project.managers" ng-required="true" ng-disabled="disabledMangerSele">
                     <option ng-repeat="member in members" value="{{member.accountName}}">{{member.accountName}}</option>
                 </select>
                 <form-tooltip hint="ex. input email prefix" required="NO_BLANK" for="managers" custom="newForm.serverInvalid.managers">

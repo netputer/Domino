@@ -1,6 +1,7 @@
 <div>
+    <alert ng-if="!canOperate" type="info">You are not Manager, so can't operate crontab.</alert>
     <div class="page-header clearfix">
-      <button type="button" class="btn btn-small btn-primary pull-right" ng-click="goCreate();">
+      <button type="button" class="btn btn-small btn-primary pull-right" ng-click="goCreate();" ng-disabled="!canOperate">
         <i class="fa fa-plane"></i> create
       </button>
         <h1>CronTab</h1>
@@ -34,13 +35,13 @@
               <td>{{item.times}}</td>
               <td>
                 <label class="switch switch-success">
-                  <input type="checkbox" class="switch-input" ng-model="item.status" ng-true-value="0" ng-false-value="1" ng-change="toggleCron(item.title, item.status)">
+                  <input type="checkbox" class="switch-input" ng-model="item.status" ng-true-value="0" ng-false-value="1" ng-change="toggleCron(item.title, item.status)" ng-disabled="!canOperate">
                   <span class="switch-label" data-on="On" data-off="Off"></span>
                   <span class="switch-handle"></span>
                 </label>
               </td>
               <td>
-                <button class="btn btn-info" ng-click="goEdit(item.title);" title="edit" >
+                <button class="btn btn-info" ng-click="goEdit(item.title);" title="edit" ng-disabled="!canOperate">
                     <i class="fa fa-edit "></i>
                 </button>
               </td>

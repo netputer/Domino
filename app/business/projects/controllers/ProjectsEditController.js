@@ -9,7 +9,7 @@ define([ 'angular', '_' ], function (angular, _) {
     var ProjectsEditController = function (
             $scope, $location, $window, projectsDao,
             confirm, $routeParams, statusMsgMapping, accountDao,
-            AccountService
+            AccountService, isProjectManagerFilter
         ) {
 
         // 初始化
@@ -68,6 +68,19 @@ define([ 'angular', '_' ], function (angular, _) {
                 body.notificationList = body.notificationList.join('|');
 
                 $scope.project = body;
+
+
+                var unregister = $scope.$watch(function () {
+                    return AccountService.userInfo.accountName;
+                }, function (accountName) {
+
+                    if (accountName) {
+                        // 修改需要disabled判断
+                        var dis = !isProjectManagerFilter(body.managers);
+                        $scope.disabledMangerSele = dis;
+                        unregister();
+                    }
+                });
             });
         }
 
@@ -151,7 +164,7 @@ define([ 'angular', '_' ], function (angular, _) {
     ProjectsEditController.$inject = [
         '$scope', '$location', '$window', 'projectsDao',
         'confirm', '$routeParams', 'statusMsgMapping', 'accountDao',
-        'AccountService'
+        'AccountService', 'isProjectManagerFilter'
     ];
 
     return ProjectsEditController;

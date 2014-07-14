@@ -5,7 +5,7 @@
  */
 
 define([ 'angular', '_' ], function (angular, _) {
-    var ProjectsCronListController = function ($scope, $location, $route, projectsDao, $modal, $routeParams, $window) {
+    var ProjectsCronListController = function ($scope, $location, $route, projectsDao, $modal, $routeParams, $window, isProjectManagerFilter) {
 
         $scope.crons = [];
 
@@ -30,13 +30,27 @@ define([ 'angular', '_' ], function (angular, _) {
             });
         };
 
+        $scope.canOperate = true;
+        projectsDao.project.get({ title: projectTitle }).$promise.then(function (data) {
+
+            var body = data.body;
+
+            $scope.$watch(function () {
+
+                return isProjectManagerFilter(body.managers);
+            }, function (isCan) {
+
+                $scope.canOperate = isCan;
+            });
+        });
+
         projectsDao.cron.get({ projectTitle:  projectTitle }).$promise.then(function (crons) {
 
             $scope.crons = crons.body;
         });
     };
 
-    ProjectsCronListController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$modal', '$routeParams', '$window' ];
+    ProjectsCronListController.$inject = [ '$scope', '$location', '$route', 'projectsDao', '$modal', '$routeParams', '$window', 'isProjectManagerFilter' ];
 
     return ProjectsCronListController;
 });
