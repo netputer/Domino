@@ -12,19 +12,27 @@
                         <h2><i class="fa fa-hand-o-up"></i>Project operate</h2>
                     </div>
                     <div class="box-content clearfix">
-                        <div class="col-lg-4 col-md-4 col-xs-6">
+                        <div class="box-content-row clearfix">
+                            <div class="col-lg-6 col-md-6 col-xs-6">
+                                <a class="quick-button-small" ng-click="goHookList()">
+                                    <i class="fa fa-bars"></i>
+                                    <p>Hooks</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-xs-6">
+                                <a class="quick-button-small" ng-click="goCronList()">
+                                    <i class="fa fa-anchor"></i>
+                                    <p>Crons</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6" ng-if="project.managers | isProjectManager">
                             <a class="quick-button-small" ng-click="goEdit()">
                                 <i class="fa fa-edit"></i>
                                 <p>Edit</p>
                             </a>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-xs-6">
-                            <a class="quick-button-small" ng-click="goHookList()">
-                                <i class="fa fa-bars"></i>
-                                <p>Hooks</p>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-xs-6">
+                        <div class="col-lg-6 col-md-6 col-xs-6" ng-if="project.managers | isProjectManager">
                             <a class="quick-button-small" ng-click="delete()">
                                 <i class="fa fa-times"></i>
                                 <p>Delete</p>
@@ -33,17 +41,18 @@
                     </div>
                 </div>
             </div><!--/col-->
-
         </div>
-        <div class="row">
+        <div class="run-area row">
             <div class="col-sm-2">
                 <button type="button" class="btn btn-warning btn-large" dmn-modal-edit data="{branch: '{{tasks[0].branch || 'master'}}'}" onok="trigger(data,'buildStaging')">Staging Publish</button>
             </div>
-            <div class="col-sm-2" ng-if="accountService.userInfo.auth.freePublishPro || canPublishProduction">
-                <button type="button" class="btn btn-success btn-large" dmn-modal-edit data="{branch: '{{tasks[0].branch || 'master'}}'}" onok="trigger(data,'buildProduction')">Production Publish</button>
-            </div>
-            <div class="col-sm-2">
-                <button type="button" class="btn btn-success btn-large" ng-click="rollback('buildRollback');">Rollback</button>
+            <div ng-if="project.managers | isProjectManager">
+                <div class="col-sm-2" ng-if="accountService.userInfo.auth.super || canPublishProduction">
+                    <button type="button" class="btn btn-success btn-large" dmn-modal-edit data="{branch: '{{tasks[0].branch || 'master'}}'}" onok="trigger(data,'buildProduction')">Production Publish</button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-success btn-large" ng-click="rollback('buildRollback');">Rollback</button>
+                </div>
             </div>
         </div>
     </div>

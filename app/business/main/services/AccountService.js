@@ -31,7 +31,7 @@
                         }).$promise.then(function (userData) {
                                 accountService.isLogin = true;
                                 data.auth = userData.body.auth;
-                                accountService.userInfo = data;
+                                accountService.userInfo = userData.body;
                                 deferred.resolve(data);
                             },
                             function () {

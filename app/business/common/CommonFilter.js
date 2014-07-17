@@ -4,7 +4,7 @@
  * @author  miaojian@wandoujia.com
  */
 
-define([ 'angular' ], function (angular) {
+define([ 'angular', '_' ], function (angular, _) {
 
     angular.module('filterModule', [])
 
@@ -25,6 +25,17 @@ define([ 'angular' ], function (angular) {
             }
 
             return '';
+        };
+    }])
+
+    .filter('isProjectManager', ['AccountService', function (AccountService) {
+        return function (arr) {
+
+            var userInfo    = AccountService.userInfo;
+            var accountName = userInfo.accountName;
+            var isSuperAuth = userInfo.auth ? userInfo.auth.super : false;
+
+            return isSuperAuth || _.contains(arr, accountName);
         };
     }]);
 });

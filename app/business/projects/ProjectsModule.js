@@ -13,6 +13,8 @@ define([
     'projects/controllers/ProjectsEditController', //项目编辑
     'projects/controllers/ProjectsTaskController', //项目任务编辑
     'projects/controllers/ProjectsHookListController', //项目hook列表
+    'projects/controllers/ProjectsCronListController',
+    'projects/controllers/ProjectsCronEditController',
 
     'projects/directives/editScriptDirective',
     'projects/directives/editModalDirective'
@@ -24,6 +26,9 @@ define([
     ProjectsEditController,
     ProjectsTaskController,
     ProjectsHookListController,
+    ProjectsCronListController,
+    ProjectsCronEditController,
+
     editScriptDirective,
     editModalDirective
 ) {
@@ -38,6 +43,10 @@ define([
     .controller('ProjectsTaskController', ProjectsTaskController)
 
     .controller('ProjectsHookListController', ProjectsHookListController)
+
+    .controller('ProjectsCronListController', ProjectsCronListController)
+
+    .controller('ProjectsCronEditController', ProjectsCronEditController)
 
     .directive('dmnScriptEdit', editScriptDirective)
 

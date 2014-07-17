@@ -6,6 +6,7 @@
         'ngResource',
         'ngSanitize',
         'uiBootstrap',
+        'ngUiSelect2',
 
         'common/CommonModule',
         'main/mainModule',
@@ -16,7 +17,7 @@
     ) {
         angular.module('domino', [
             'ngRoute', 'ngAnimate', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'dmnCommon', 'dmnMain', 'dmnProjects',
-            'dmnUtils'
+            'dmnUtils', 'ui.select2'
         ])
 
         .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
@@ -60,6 +61,24 @@
 
                 templateUrl : '/business/projects/templates/hookList.html',
                 controller : 'ProjectsHookListController'
+            })
+
+            .when('/projects/:title/crons', {
+
+                templateUrl : '/business/projects/templates/cronList.html',
+                controller : 'ProjectsCronListController'
+            })
+
+            .when('/projects/:projectTitle/crons/new', {
+
+                templateUrl : '/business/projects/templates/cronEdit.html',
+                controller : 'ProjectsCronEditController'
+            })
+
+            .when('/projects/:projectTitle/crons/:title', {
+
+                templateUrl : '/business/projects/templates/cronEdit.html',
+                controller : 'ProjectsCronEditController'
             })
 
             .when('/utils', {
