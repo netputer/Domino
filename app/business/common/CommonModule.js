@@ -14,7 +14,8 @@ define([
     'common/CONFIG',
     'common/Util',
     'common/CommonDirective',
-    'common/CommonFilter'
+    'common/CommonFilter',
+    'common/Bugsnag'
 ], function (
     angular
 ) {
@@ -27,6 +28,7 @@ define([
         'ioModule',
         'utilModule',
         'directiveModule',
-        'filterModule'
+        'filterModule',
+        'bugsnagModule'
     ]);
 });

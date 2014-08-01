@@ -12,6 +12,7 @@
         <!-- build:css(.tmp) /stylesheets/main.css -->
         <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
         <!-- endbuild -->
+        <script src="//img.wdjimg.com/static-files/devcenter/bugsnag-2.min.js"></script>
     </head>
     <body>
         <dmn-header></dmn-header>
@@ -37,11 +38,22 @@
         <!--(if target !(staging || production))><!-->
         <script>
             window.API_URL_PREFIX = 'http://127.0.0.1:1337/';
+            window.JS_ENV = 'development';
         </script>
         <!--<!(endif)-->
-        <script type="text/javascript" data-main="/business/AppLoader" src="/components/requirejs/require.js"></script>
 
-        <script async src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js" data-apikey="b6a065f7d9c5e19f272cdc06881f6067">
+        <!--(if target staging)>
+        <script>
+            window.JS_ENV = 'staging';
+        </script>
+        <!(endif)-->
+
+        <!--(if target production)>
+        <script>
+            window.JS_ENV = 'production';
+        </script>
+        <!(endif)-->
+        <script type="text/javascript" data-main="/business/AppLoader" src="/components/requirejs/require.js"></script>
 </script>
     </body>
 </html>
