@@ -20,13 +20,29 @@
             'dmnUtils', 'ui.select2'
         ])
 
+        .config(['bugsnagProvider', function (bugsnagProvider) {
+            bugsnagProvider
+                .apiKey('b6a065f7d9c5e19f272cdc06881f6067')
+                .releaseStage(window.JS_ENV)
+                .notifyReleaseStages(['staging', 'production'])
+                .user({
+                    id: 'domino.id',
+                    name: 'domino'
+                })
+                .appVersion('0.1.0')
+                .beforeNotify(['$log', function ($log) {
+                    return function (error, metaData) {
+                        $log.debug('error:' + error.name + ' has notified the bugsnag');
+                        return true;
+                    };
+                }]);
+        }])
+
         .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
             $httpProvider.defaults.withCredentials = true;
-
             $locationProvider.html5Mode(true);
 
             $routeProvider
-
             .when('/', {
 
                 templateUrl : '/business/projects/templates/list.html',

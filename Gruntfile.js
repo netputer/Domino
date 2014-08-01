@@ -239,11 +239,14 @@ module.exports = function (grunt) {
                 dir:　'<%= paths.dist %>/business',
                 baseUrl: './',
                 mainConfigFile: '<%= paths.app %>/business/AppLoader.js',
-                optimize: 'uglify',
+                optimize: 'uglify2',
                 removeCombined: true,
                 //wrap: true,
                 useStrict: false,
-                preserveLicenseComments: true
+
+                preserveLicenseComments: false,
+                generateSourceMaps: true,
+                useSourceUrl: false
             },
             dist : {
                 options : {
@@ -401,7 +404,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('server:build', [
-        'build',
+        'build:staging',
         'connect:build:keepalive'
     ]);
 
