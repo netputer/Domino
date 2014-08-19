@@ -17,6 +17,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         $scope.title = $routeParams.title;
 
         $scope.page = 1;
+        $scope.maxSize = 5;
         $scope.pageSize = 10;
 
         // 观察page，向后端获取数据
