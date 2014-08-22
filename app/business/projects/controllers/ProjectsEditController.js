@@ -109,14 +109,15 @@ define([ 'angular', '_' ], function (angular, _) {
                     $location.path('/projects');
                 }, function (res) {
 
-                    if (res.status === 508) {
+                    if (res.status === 514 || res.status === 512) {
 
                         // _.forEach(res.data.error, function (val, name, item) {
 
                         //     item[name] = statusMsgMapping[val];
                         // });
+                        console.log(res.data);
 
-                        $scope.newForm.serverInvalid = res.data.error;
+                        $scope.newForm.serverInvalid = res.data.err;
                     }
                 });
 

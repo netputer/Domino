@@ -74,7 +74,7 @@
               <label class="control-label" for="stagingServer">StagingServers<span class="red">*</span></label>
               <div class="controls">
                 <input class="form-control" id="stagingServer" name="stagingServers" type="text" ng-model="project.stagingServers" required ng-pattern="/^(([\w-]+\.)+([\w]+)\|?)+$/">
-                <form-tooltip hint="ex. 127.0.0.1 | tc00.xx.xxx" required="NO_BLANK" for="stagingServers" custom="newForm.serverInvalid.stagingServers" pattern="INPUT_INVALID">
+                <form-tooltip hint="ex. 127.0.0.1|tc00.xx.xxx" required="NO_BLANK" for="stagingServers" custom="newForm.serverInvalid.stagingServers" pattern="INPUT_INVALID">
                 </form-tooltip>
 
               </div>
@@ -84,7 +84,7 @@
               <label class="control-label" for="productionServers">ProductionServers<span class="red">*</span></label>
               <div class="controls">
                 <input class="form-control" id="productionServers" name="productionServers" type="text" ng-model="project.productionServers" required ng-pattern="/^(([\w-]+\.)+([\w]+)\|?)+$/">
-                <form-tooltip hint="ex. 127.0.0.1 | tc00.xx.xxx" required="NO_BLANK" for="productionServers" custom="newForm.serverInvalid.productionServers" pattern="INPUT_INVALID">
+                <form-tooltip hint="ex. 127.0.0.1|tc00.xx.xxx" required="NO_BLANK" for="productionServers" custom="newForm.serverInvalid.productionServers" pattern="INPUT_INVALID">
                 </form-tooltip>
               </div>
             </div>
