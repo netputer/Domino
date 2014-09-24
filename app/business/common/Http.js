@@ -15,26 +15,23 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
 
             function ($q, $rootScope, window, statusMsgMapping) {
 
+                var API_PREFIX = /\/api\//;
+                function isApi(config) {
+                    return API_PREFIX.test(config.url);
+                }
+
                 return {
                     request: function (config) {
-
-                        if (config.noLoading !== true) {
-
-                            //loading状态
+                        if (isApi(config) && config.noLoading !== true) {
                             $rootScope.isLoading = true;
-
                         }
                         return config;
                     },
 
                     response: function (response) {
-
-                        if (response.config.noLoading !== true) {
-
+                        if (isApi(response.config) && response.config.noLoading !== true) {
                             $rootScope.isLoading = false;
                         }
-
-
                         return response;
                     },
 
@@ -44,7 +41,6 @@ define(['angular', 'common/statusMsgMapping'], function (angular, statusMsgMappi
 
                         // 没有权限
                         if (status === 403) {
-
                             //目前为非登录状态
                             if (data.msg === 'NO_LOGIN') {
                                 $rootScope.accountService.isLogin = false;

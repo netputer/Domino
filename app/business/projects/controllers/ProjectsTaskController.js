@@ -204,6 +204,9 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         $scope.$on('io.task.add', function (event, data) {
 
             console.info('task.add:', data);
+            if (data.projectTitle !== $scope.title) {
+                return;
+            }
 
             // progress 初始化为空
             data.log = '';
@@ -232,6 +235,9 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         $scope.$on('io.task.change', function (event, data) {
 
             console.info('task.change:', data);
+            if (data.projectTitle !== $scope.title) {
+                return;
+            }
             _.forEach($scope.tasks, function (task, name, tasks) {
 
                 if (task.id === data.id) {
@@ -284,6 +290,9 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         $scope.$on('io.task.progress', function (event, data) {
 
             console.info('task.progress:', data.id, data);
+            if (data.projectTitle !== $scope.title) {
+                return;
+            }
 
             _.forEach($scope.tasks, function (task) {
 
