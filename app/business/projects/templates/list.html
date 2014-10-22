@@ -24,14 +24,14 @@
                         <span class="label label-info">master</span>
                         <!-- <span class="label label-info">one hours ago</span> -->
                         <!-- <span class="label label-info">v2.0.10</span> -->
-                        <span class="label label-{{statusClass[item.lastStagTask.status] || 'default'}}">Build {{ statusText[item.lastStagTask.status] || 'none' }}</span>
+                        <span class="label label-{{statusClass[item.lastProTask.status] || 'default'}}">Build {{ statusText[item.lastProTask.status] || 'none' }}</span>
                     </li>
                     <li class="env-ctn hbox">
                         <span class="env-title production">S</span>
                         <span class="label label-info">master</span>
                         <!-- <span class="label label-info">one hours ago</span> -->
                         <!-- <span class="label label-info">v2.0.10</span> -->
-                        <span class="label label-{{statusClass[item.lastProTask.status] || 'default'}}">Build {{ statusText[item.lastProTask.status] || 'none' }}</span>
+                        <span class="label label-{{statusClass[item.lastStagTask.status] || 'default'}}">Build {{ statusText[item.lastStagTask.status] || 'none' }}</span>
                     </li>
                 </ul>
                 <!--
