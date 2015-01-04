@@ -89,7 +89,7 @@
                 <span class="label label-{{statusClass[item.status]}}">{{ statusText[item.status] }}
               </td>
               <td ng-if="item.entrance">
-                <a ng-href="{{item.entrance}}" class="task-script-edit" target="_blank">Go</a>
+                <a ng-href="{{item.entrance}}" class="task-script-edit" target="_blank" title="if 404, please login at first">Go</a>
               </td>
               <td ng-if="!item.entrance">
                   -
