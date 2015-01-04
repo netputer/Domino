@@ -30,9 +30,10 @@
                             }).value.split('@')[0]
                         }).$promise.then(function (userData) {
                                 accountService.isLogin = true;
-                                data.auth = userData.body.auth;
-                                accountService.userInfo = userData.body;
-                                deferred.resolve(data);
+
+                                var allData = _.extend(data, userData.body);
+                                accountService.userInfo = allData;
+                                deferred.resolve(allData);
                             },
                             function () {
                                 accountService.isLogin = false;
