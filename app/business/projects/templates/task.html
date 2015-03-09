@@ -47,7 +47,7 @@
                 <button type="button" class="btn btn-warning btn-large" dmn-modal-edit data="{branch: '{{tasks[0].branch || 'master'}}'}" onok="trigger(data,'buildStaging')">Staging Publish</button>
             </div>
             <div ng-if="project.managers | isProjectManager">
-                <div class="col-sm-2" ng-if="accountService.userInfo.auth.super || canPublishProduction">
+                <div class="col-sm-2" ng-if="userInfo.auth.super || canPublishProduction">
                     <button type="button" class="btn btn-success btn-large" dmn-modal-edit data="{branch: '{{tasks[0].branch || 'master'}}'}" onok="trigger(data,'buildProduction')">Production Publish</button>
                 </div>
                 <div class="col-sm-2">
