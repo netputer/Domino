@@ -6,6 +6,7 @@
 
 define([
     'angular',
+    'common/SsoLogin',
     'common/Http',
     'common/Dao',
     'common/Modal',
@@ -20,6 +21,7 @@ define([
     angular
 ) {
     angular.module('dmnCommon', [
+        'ssoLoginModule',
         'httpModule',
         'daoModule',
         'modalModule',

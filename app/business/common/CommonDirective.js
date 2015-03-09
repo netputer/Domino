@@ -136,11 +136,9 @@ define([ 'angular', 'jQuery', '_' ], function (angular, $, _) {
                 scrollBtn.on('click', scrollBtnClickHandler);
                 $(window).on('scroll', getScrollHandler);
 
-                render($scope.allLog);
-
                 // note: 此处监听allLog，如果监听incrementLog, 当每次增量log相同的时候不能更新
                 $scope.$watch('allLog', function () {
-                    render($scope.incrementLog);
+                    render($scope.incrementLog || '');
                 });
 
                 function render(log) {

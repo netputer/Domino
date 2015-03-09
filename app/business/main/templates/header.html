@@ -8,20 +8,12 @@
                 <!-- start: User Dropdown -->
                 <li class="dropdown">
                     <a class="btn account dropdown-toggle" data-toggle="dropdown" href="index.html#">
-                        <div class="avatar"><img ng-src="{{ accountService.userInfo.image.url }}" alt="Avatar"></div>
+                        <div class="avatar"><img ng-src="{{ userInfo.img }}" alt="Avatar"></div>
                         <div class="user">
                             <span class="hello">Welcome!</span>
-                            <span class="name">{{ accountService.userInfo.displayName }}</span>
+                            <span class="name">{{ userInfo.name }}</span>
                         </div>
                     </a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-menu-title">
-                        </li>
-                        <!-- <li><a href="index.html#"><i class="fa fa-user"></i> Profile</a></li>
-                        <li><a href="index.html#"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="index.html#"><i class="fa fa-envelope"></i> Messages</a></li> -->
-                        <li><a href="login.html"><i class="fa fa-off"></i> Logout</a></li>
-                    </ul>
                 </li>
                 <!-- end: User Dropdown -->
             </ul>

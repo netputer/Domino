@@ -28,10 +28,10 @@ define([ 'angular', '_' ], function (angular, _) {
         };
     }])
 
-    .filter('isProjectManager', ['AccountService', function (AccountService) {
+    .filter('isProjectManager', ['$rootScope', function ($rootScope) {
         return function (arr) {
 
-            var userInfo    = AccountService.userInfo;
+            var userInfo    = $rootScope.userInfo;
             var accountName = userInfo.accountName;
             var isSuperAuth = userInfo.auth ? userInfo.auth.super : false;
 
