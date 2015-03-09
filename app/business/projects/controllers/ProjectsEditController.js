@@ -9,7 +9,7 @@ define([ 'angular', '_' ], function (angular, _) {
     var ProjectsEditController = function (
             $scope, $location, $window, projectsDao,
             confirm, $routeParams, statusMsgMapping, accountDao,
-            AccountService, isProjectManagerFilter
+            $rootScope, isProjectManagerFilter
         ) {
 
         // 初始化
@@ -33,7 +33,7 @@ define([ 'angular', '_' ], function (angular, _) {
 
                 var unregister = $scope.$watch(function () {
 
-                    return AccountService.userInfo.accountName;
+                    return $rootScope.userInfo.accountName;
 
                 }, function (accountName) {
 
@@ -71,7 +71,7 @@ define([ 'angular', '_' ], function (angular, _) {
 
 
                 var unregister = $scope.$watch(function () {
-                    return AccountService.userInfo.accountName;
+                    return $rootScope.userInfo.accountName;
                 }, function (accountName) {
 
                     if (accountName) {
@@ -165,7 +165,7 @@ define([ 'angular', '_' ], function (angular, _) {
     ProjectsEditController.$inject = [
         '$scope', '$location', '$window', 'projectsDao',
         'confirm', '$routeParams', 'statusMsgMapping', 'accountDao',
-        'AccountService', 'isProjectManagerFilter'
+        '$rootScope', 'isProjectManagerFilter'
     ];
 
     return ProjectsEditController;

@@ -13,7 +13,8 @@
                 taskApi: 'task/:title',
                 taskReview: 'task/review',
                 cronApi: 'project/:projectTitle/cron/:title',
-                cronToggle: 'project/:projectTitle/cron/:title/toggle'
+                cronToggle: 'project/:projectTitle/cron/:title/toggle',
+                taskLog: 'task/:taskId/log'
             };
 
             for (var key in actions) {
@@ -64,6 +65,10 @@
                     review: {
                         url: actions.taskReview,
                         method: 'put'
+                    },
+                    getLog: {
+                        url: actions.taskLog,
+                        method: 'get'
                     }
                 }),
 

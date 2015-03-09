@@ -6,7 +6,7 @@
  */
 
 define([ 'angular', '_', 'moment'], function (angular, _, moment) {
-    var ProjectsTaskController = function ($scope, $location, $route, $q, projectsDao, $routeParams, confirm, notification, AccountService, CONFIG) {
+    var ProjectsTaskController = function ($scope, $location, $route, $q, projectsDao, $routeParams, confirm, notification, $rootScope, CONFIG) {
 
         $scope.tasks = [];
 
@@ -179,17 +179,20 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
 
 
         $scope.toggleConsole = function (id) {
-
             var tasks = $scope.tasks;
 
             _.forEach(tasks, function (task) {
-
                 if (task.id === id) {
-
                     task.showConsole = !task.showConsole;
+                    if (task.showConsole && !task.log) {
+                        projectsDao.task.getLog({ taskId: id })
+                            .$promise.then(function (data) {
+                                task.incrementLog = data.body;
+                                task.log = data.body;
+                            });
+                    }
                 }
                 else {
-
                     task.showConsole = false;
                 }
 
@@ -212,7 +215,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
             data.log = '';
 
             // 当此task操作人为当前用户时，打开log panel
-            if (data.accountName === AccountService.userInfo.accountName) {
+            if (data.accountName === $rootScope.userInfo.accountName) {
 
                 // 关闭所有 console 面板
                 _.forEach($scope.tasks, function (task) {
@@ -319,7 +322,7 @@ define([ 'angular', '_', 'moment'], function (angular, _, moment) {
         });
     };
 
-    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', '$q', 'projectsDao', '$routeParams', 'confirm', 'notification', 'AccountService', 'CONFIG' ];
+    ProjectsTaskController.$inject = [ '$scope', '$location', '$route', '$q', 'projectsDao', '$routeParams', 'confirm', 'notification', '$rootScope', 'CONFIG' ];
 
     return ProjectsTaskController;
 });
