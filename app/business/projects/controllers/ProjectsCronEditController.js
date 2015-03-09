@@ -8,7 +8,7 @@
 define([ 'angular', '_' ], function (angular, _) {
     var ProjectsCronEditController = function (
             $scope, $location, $window, projectsDao,
-            confirm, $routeParams, statusMsgMapping, accountDao
+            confirm, $routeParams, statusMsgMapping
         ) {
 
         // 初始化
@@ -108,7 +108,7 @@ define([ 'angular', '_' ], function (angular, _) {
 
     ProjectsCronEditController.$inject = [
         '$scope', '$location', '$window', 'projectsDao',
-        'confirm', '$routeParams', 'statusMsgMapping', 'accountDao'
+        'confirm', '$routeParams', 'statusMsgMapping'
     ];
 
     return ProjectsCronEditController;
