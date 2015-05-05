@@ -223,7 +223,7 @@ $(document).ready(function(){
 	/* ---------- Vertical Chart ---------- */
 	if($('.verticalChart')) {
 		
-		$('.singleBar').each(function(){
+		$('.verticalChart > .singleBar').each(function(){
 			
 			var percent = $(this).find('.value span').html();
 			
@@ -240,7 +240,7 @@ $(document).ready(function(){
 	/* ---------- Main Chart ---------- */
 	if($('.main-chart')) {
 		
-		$('.bar').each(function(){
+		$('.main-chart > .bar').each(function(){
 			
 			var percent = $(this).find('.value').html();
 			

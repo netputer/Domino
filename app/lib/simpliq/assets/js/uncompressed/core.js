@@ -236,8 +236,14 @@ jQuery(document).ready(function($){
 			);
 			
 			if (jQuery.browser.mozilla) {
-				$(".boxchart").css('MozTransform','scale(0.5,0.5)').css('height','30px;');
-				$(".boxchart").css('height','30px;').css('margin','-15px 15px -15px -15px');
+				
+				if (!!navigator.userAgent.match(/Trident\/7\./)) {
+					$(".boxchart").css('zoom',0.5);
+				} else {
+					$(".boxchart").css('MozTransform','scale(0.5,0.5)').css('height','30px;');
+					$(".boxchart").css('height','30px;').css('margin','-15px 15px -15px -15px');
+				}
+				
 			} else {
 				$(".boxchart").css('zoom',0.5);
 			}
@@ -278,8 +284,14 @@ jQuery(document).ready(function($){
 				});
 				
 				if (jQuery.browser.mozilla) {
-					$(this).css('MozTransform','scale(0.5,0.5)');
-					$(this).css('height','40px;').css('margin','-20px 0px -20px -25%');
+					
+					if (!!navigator.userAgent.match(/Trident\/7\./)) {
+						$(this).css('zoom',0.5);
+					} else {
+						$(this).css('MozTransform','scale(0.5,0.5)');
+						$(this).css('height','40px;').css('margin','-20px 0px -20px -25%');
+					}
+					
 				} else {
 					$(this).css('zoom',0.5);
 				}
@@ -399,29 +411,28 @@ function widthFunctions(e) {
 	var contentHeight = $('#content').height();
 	var contentHeightOuter = $('#content').outerHeight();
 	
+	var headerHeight = $('header').height();
+	var footerHeight = $('footer').height();
+	
     var winHeight = $(window).height();
     var winWidth = $(window).width();
 
 	if (winWidth > 767) {
 		
-		if (sidebarLeftHeight > contentHeight) {			
-			
-			$('#content').css("min-height",sidebarLeftHeight);
-			
-		} else {
-			
-			$('#content').css("min-height","auto");
-			
+		if (winHeight - 80 > sidebarLeftHeight) {
+			$('#sidebar-left').css('min-height',winHeight-headerHeight-footerHeight);
 		}
-				
+		
+		if (winHeight - 80 > contentHeight) {
+			$('#content').css('min-height',winHeight-headerHeight-footerHeight);
+		}
+		
 		$('#white-area').css('height',contentHeightOuter);
-
+				
 	} else {
-		
-		$('#white-area').css('height','auto');
-		
+		$('#sidebar-left').css('min-height','0px');
+			$('#white-area').css('height','auto');
 	}
-	 
 	
 	if (winWidth < 768) {
 		
