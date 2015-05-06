@@ -31,8 +31,14 @@ $(document).ready(function(){
 			
 			//only firefox sux in this case
 			if (jQuery.browser.mozilla) {
-				$(placeholder).css('MozTransform','scale(0.5,0.5)').css('margin-top','-10px');
-				$(placeholder).css('height','30px').css('width','100px').css('margin-left','-20px').css('margin-right','40px');
+				
+				if (!!navigator.userAgent.match(/Trident\/7\./)) {
+					$(placeholder).css('zoom',0.5);
+				} else {
+					$(placeholder).css('MozTransform','scale(0.5,0.5)').css('margin-top','-10px');
+					$(placeholder).css('height','30px').css('width','100px').css('margin-left','-20px').css('margin-right','40px');
+				}
+				
 			} else {
 				$(placeholder).css('zoom',0.5);
 			}
