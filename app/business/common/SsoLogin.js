@@ -28,7 +28,7 @@ define(['angular'], function (angular) {
                 return {
                     redirectToLogin: redirectToLogin,
                     loginSuccess: loginSuccess
-                }
+                };
             }
         ])
 
@@ -37,7 +37,7 @@ define(['angular'], function (angular) {
 
                 function getUserInfoByClient() {
                     $http.jsonp(ssoConfig.infoUrl).success(function (data) {
-                        if (data.code == 200) {
+                        if (data.code === 200) {
                             loginService.loginSuccess(data);
                         } else {
                             loginService.redirectToLogin();
@@ -47,7 +47,7 @@ define(['angular'], function (angular) {
 
                 function getUserInfoByServer() {
                     $http.get(CONFIG.API_URL_PREFIX + ssoConfig.infoUrlByServer).success(function (data, status) {
-                        if (status == 200) {
+                        if (status === 200) {
                             loginService.loginSuccess(data);
                         } else {
                             loginService.redirectToLogin();
@@ -58,7 +58,7 @@ define(['angular'], function (angular) {
                 return {
                     getUserInfoByClient: getUserInfoByClient,
                     getUserInfoByServer: getUserInfoByServer
-                }
+                };
             }
         ])
 
