@@ -174,7 +174,8 @@ module.exports = function (grunt) {
                     dest : '<%= paths.tmp %>',
                     src : [
                         'images/**/*.{webp,gif,png,jpg,jpeg}',
-                        'lib/**/*'
+                        'lib/**/*',
+                        'components/**/*'
                     ]
                 }]
             },
