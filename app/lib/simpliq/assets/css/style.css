@@ -1,7 +1,7 @@
 /*!
 * Author: Łukasz Holeczek
 * Template: SimpliQ - Flat & Responsive Bootstrap Admin Template
-* Version: 2.1.3 
+* Version: 2.1.3
 * Bootstrap version: 3.0.3
 * Copyright 2013 creativeLabs
 * www: http://bootstrapmaster.com
@@ -374,7 +374,6 @@ a.navbar-brand:hover {
 .header-nav .user {
   display: inline-block;
   text-align: left;
-  margin-top: -5px;
   padding: 0px;
 }
 .header-nav .user .hello {
@@ -4610,7 +4609,7 @@ ul.messagesList li span.date {
 /*
 * Author: Łukasz Holeczek
 * Template: SimpliQ - Flat & Responsive Bootstrap Admin Template
-* Version: 1.0.2 
+* Version: 1.0.2
 * Bootstrap version: 2.3.2
 * Copyright 2013 creativeLabs
 * www: http://bootstrapmaster.com

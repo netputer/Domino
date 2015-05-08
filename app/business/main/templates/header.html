@@ -7,9 +7,9 @@
                 <li ng-show="!userInfo">
                     <a class="btn" href="http://sso.wandoulabs.com/?redirect=http://domino.wandoulabs.com&nobreak=1">Login</a>
                 </li>
-                <li ng-show="userInfo" class="dropdown">
+                <li ng-show="userInfo">
                     <a class="btn account dropdown-toggle" data-toggle="dropdown" href="index.html#">
-                        <div class="avatar" style="backgroud-image: url({{ userInfo.img }})"></div>
+                        <div class="avatar" style="background-image: url({{ userInfo.img }})"></div>
                         <div class="user">
                             <span class="hello">Welcome!</span>
                             <span class="name">{{ userInfo.name }}</span>

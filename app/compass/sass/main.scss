@@ -19,15 +19,6 @@ a.navbar-brand span {
     }
 }
 
-.header-nav .avatar img {
-    position: relative;
-    z-index: 1;
-
-    @include single-transition(all, .6s, ease-in-out);
-    &:hover {
-        @include transform2d(scale(4) translate(-10px, 10px));
-    }
-}
 /** cover bootstrap css over**/
 
 .d-main {
